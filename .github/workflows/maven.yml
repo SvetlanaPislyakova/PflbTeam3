@@ -31,5 +31,3 @@ jobs:
         cache: maven
     - name: Tests Run
       run: mvn clean -Demail=$USER -Dpassword=$PASSWORD test
-
-
