@@ -18,7 +18,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    env:
+      USER: ${{secrets.USER}
+      PASSWORD: ${{secrets.PASSWORD}
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -28,6 +30,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Tests Run
-      run: mvn clean test
+      run: mvn clean -Demail=$USER -Dpassword=$PASSWORD test
 
 
