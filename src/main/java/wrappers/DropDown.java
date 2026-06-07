@@ -12,6 +12,6 @@ public class DropDown {
 
     public void selectOption(String option) {
         $x(String.format("//a[contains(text(), '%s')]", label)).click();
-        $x(String.format("//a[contains(text(), '%s')]", option)).click();
+        $x(String.format("//a[contains(text(), '%s')]/parent::div//a[contains(text(), '%s')]", label, option)).click();
     }
 }
