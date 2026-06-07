@@ -41,4 +41,9 @@ public class LoginPage extends BasePage {
         switchTo().alert().accept();
         return this;
     }
+
+    public LoginPage rejectAlert() {
+        switchTo().alert().dismiss();
+        return this;
+    }
 }

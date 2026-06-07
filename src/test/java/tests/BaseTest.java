@@ -12,8 +12,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class BaseTest {
 
-    protected String email = System.getProperty("email", PropertyReader.getProperty("email"));
-    protected String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
+    protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     protected LoginSteps loginSteps;
 
     @BeforeEach
@@ -27,7 +27,6 @@ public class BaseTest {
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
-        options.addArguments("--headless");
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
