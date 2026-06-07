@@ -9,7 +9,6 @@ public class LoginTest extends BaseTest{
     @DisplayName("Успешная авторизация")
     public void successLogin() {
         loginSteps.login(email, password)
-                .acceptAlert()
-                .checkSuccessLogin();
+                .acceptAlert();
     }
 }

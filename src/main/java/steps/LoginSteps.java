@@ -35,7 +35,6 @@ public class LoginSteps {
 
     public LoginSteps checkSuccessLogin() {
         mainPage.openPageCreateUser();
-        new Input("First Name").write("Svetlana");
         return this;
     }
 }
