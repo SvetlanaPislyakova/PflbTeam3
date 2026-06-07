@@ -3,9 +3,7 @@ package steps;
 import io.qameta.allure.Step;
 import pages.LoginPage;
 import pages.MainPage;
-import wrappers.Input;
 
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LoginSteps {
@@ -21,20 +19,31 @@ public class LoginSteps {
         return this;
     }
 
-    public LoginSteps acceptAlert() {
-        assertThat(loginPage.getAlertMsg()).isEqualTo("Successful authorization");
+    @Step("Принять алерт '{message}'")
+    public LoginSteps acceptAlert(String message) {
+        assertThat(loginPage.getAlertMsg()).isEqualTo(message);
         loginPage.acceptAlert();
         return this;
     }
 
-    public LoginSteps rejectAlert() {
-        assertThat(loginPage.getAlertMsg()).isEqualTo("Successful authorization");
+    @Step("Отклонить алерт '{message}'")
+    public LoginSteps rejectAlert(String message) {
+        assertThat(loginPage.getAlertMsg()).isEqualTo(message);
         loginPage.rejectAlert();
         return this;
     }
 
+    @Step("Проверить успешность авторизации")
     public LoginSteps checkSuccessLogin() {
+        mainPage.openPageCreateUser()
+                .isPageOpened();
+        return this;
+    }
+
+    @Step("Проверить неуспешность авторизации")
+    public LoginSteps checkNegativeLogin() {
         mainPage.openPageCreateUser();
+        loginPage.isPageOpened();
         return this;
     }
 }

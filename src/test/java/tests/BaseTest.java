@@ -12,8 +12,8 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class BaseTest {
 
-    protected String email = System.getProperty("email", PropertyReader.getProperty("email"));
-    protected String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
+    protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     protected LoginSteps loginSteps;
 
     @BeforeEach

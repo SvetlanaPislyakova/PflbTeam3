@@ -2,8 +2,6 @@ package pages;
 
 import wrappers.DropDown;
 
-import static com.codeborne.selenide.Selenide.sleep;
-
 public class MainPage extends BasePage {
 
     @Override
@@ -17,7 +15,8 @@ public class MainPage extends BasePage {
         return this;
     }
 
-    public void openPageCreateUser() {
+    public CreateUserPage openPageCreateUser() {
         new DropDown("Users").selectOption("Create new");
+        return new CreateUserPage();
     }
 }
