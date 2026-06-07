@@ -27,7 +27,6 @@ public class BaseTest {
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
-        options.addArguments("--headless");
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
