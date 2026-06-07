@@ -42,4 +42,13 @@ public class LoginTest extends BaseTest{
                 .acceptAlert("Incorrect input data")
                 .checkNegativeLogin();
     }
+
+
+    @Test
+    public void checkInput() {
+        loginSteps.login(email, password)
+                .acceptAlert("Successful authorization")
+                .checkInput();
+    }
+
 }
