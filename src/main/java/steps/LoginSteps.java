@@ -1,10 +1,17 @@
 package steps;
 
+import dto.User;
 import io.qameta.allure.Step;
+import org.assertj.core.api.AssertionsForClassTypes;
 import pages.LoginPage;
 import pages.MainPage;
 import wrappers.DropDown;
 import wrappers.Input;
+import wrappers.Table;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selectors.byText;
@@ -55,32 +62,93 @@ public class LoginSteps {
         return this;
     }
 
-    public LoginSteps checkInput() {
-        new DropDown("Users").selectOption("Create new");
+    public LoginSteps createUser() {
+        User user = User.builder().build();
+        Table table = new Table("User");
+        table.setValueToInput("First Name", user.getFirstName());
+        table.setValueToInput("Last Name", user.getLastName());
+        table.setValueToInput("Age", user.getAge());
+        table.setValueToInput("Money", user.getMoney());
+        $x("//*[text()='FEMALE']/input").click(); // Гаяз сделает радиобаттон
+        table.clickPushToApi();
         sleep(2000);
-        new Input("Create new user", "First Name").write("Kotik");
-        new Input("Create new user", "Last Name").write("Obormotik");
-        new Input("Create new user", "Age").write("12");
-        new Input("Create new user", "Money").write("250000");
+        System.out.println(table.getMessagePushToApi());
+        System.out.println(table.getResultInt());
+        return this;
+    }
+
+    public LoginSteps createCar() {
+        Table table = new Table("Car");
+        table.setValueToInput("Engine Type", "Engine");
+        table.setValueToInput("Mark", "Mark");
+        table.setValueToInput("Model", "Model");
+        table.setValueToInput("Price", "300.01");
+        table.clickPushToApi();
         sleep(2000);
-        new DropDown("Users").selectOption("Add money");
-        new Input("Add money", "User ID").write("13000");
-        new Input("Add money", "Money").write("333000");
+        System.out.println(table.getMessagePushToApi());
+        System.out.println(table.getResultInt());
+        return this;
+    }
+
+    public LoginSteps addMoney() {
+        Table table = new Table("Add money");
+        table.setValueToInput("Money", "30000");
+        sleep(1000);
+        table.setValueToInput("User ID", "13093");
+        table.clickPushToApi();
         sleep(2000);
-        new DropDown("Cars").selectOption("Create new");
-        new Input("Create new car", "Engine Type").write("Engine Type");
-        new Input("Create new car", "Mark").write("Mark");
-        new Input("Create new car", "Model").write("Model");
-        new Input("Create new car", "Price").write("20000");
+        System.out.println(table.getMessagePushToApi());
+        System.out.println(table.getResult());
+        return this;
+    }
+
+    public LoginSteps checkSort(String label) {
+        Table table = new Table("User");
         sleep(2000);
-        $(byText("All POST")).click();
-        switchTo().window(1);
+        List<String> first = table.getListOfValues(label);
+        System.out.println(first);
+        first.sort(Comparator.comparingInt(Integer::parseInt));
+        System.out.println(first);
+        $x(String.format("//button[contains(text(), '%s')]", label)).click();
         sleep(2000);
-        new Input("Create new user", "First Name").write("Name");
-        new Input("Create new user", "Last Name").write("Obormotik");
-        new Input("Create new user", "Age").write("12");
-        new Input("Create new user", "Money").write("250000");
+        List<String> sorted = table.getListOfValues(label);
+        System.out.println(sorted);
+        AssertionsForClassTypes.assertThat(first).isEqualTo(sorted);
+        $x(String.format("//button[contains(., '%s')]", label)).click();
         sleep(2000);
+        List<String> sorted2 = table.getListOfValues(label);
+        first.sort(Collections.reverseOrder(Comparator.comparingInt(Integer::parseInt)));
+        System.out.println(sorted2);
+        System.out.println(first);
+        AssertionsForClassTypes.assertThat(first).isEqualTo(sorted2);
+        return this;
+    }
+
+    public LoginSteps checkSortCar(String label) {
+        Table table = new Table("Car");
+        sleep(2000);
+        List<String> first = table.getListOfValues(label);
+        System.out.println(first);
+        first.sort(Comparator.naturalOrder());
+        System.out.println(first);
+        $x(String.format("//button[contains(text(), '%s')]", label)).click();
+        sleep(2000);
+        List<String> sorted = table.getListOfValues(label);
+        System.out.println(sorted);
+        AssertionsForClassTypes.assertThat(first).isEqualTo(sorted);
+        $x(String.format("//button[contains(., '%s')]", label)).click();
+        sleep(2000);
+        List<String> sorted2 = table.getListOfValues(label);
+        first.sort(Comparator.reverseOrder());
+        System.out.println(sorted2);
+        System.out.println(first);
+        AssertionsForClassTypes.assertThat(first).isEqualTo(sorted2);
+        return this;
+    }
+
+    public LoginSteps createHouse() {
+        Table table = new Table("House");
+        $x("//div[normalize-space(text() = 'Has warm and covered parking places:')]").shouldBe(visible);
         return this;
     }
 }

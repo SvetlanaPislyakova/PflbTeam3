@@ -2,6 +2,7 @@ package wrappers;
 
 import java.util.List;
 
+import static com.codeborne.selenide.CollectionCondition.texts;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
@@ -13,6 +14,7 @@ public class Input {
     public Input(String tableName, String label) {
         switch (tableName) {
             case "Create new user":
+            case "First Name":
                 this.tableName = "First";
                 break;
             case "Add money":
@@ -55,5 +57,12 @@ public class Input {
         int columnIndex = findColumnIndex() + 1;
         $x(String.format("//table//th[2][contains(text(), '%s')]/ancestor::" +
                 "table/tbody//td[" + columnIndex + "]/input", tableName)).setValue(value);
+    }
+
+    public List<String> getValues() {
+        int columnIndex = findColumnIndex() + 1;
+        List<String> values = $$x(String.format("//table//th[2][contains(text(), '%s')]/ancestor::" +
+                "table/tbody//td[" + columnIndex + "]", tableName)).texts();
+        return values;
     }
 }
