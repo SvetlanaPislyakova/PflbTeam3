@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$x;
 public class Table {
 
     private final String tableName;
-    private final String PATTERN = "//table//th[2][contains(text(), '%s')]/ancestor::table";
+    private final String PATTERN = "//table//th[2][contains(text(), '%s')]/ancestor::table/parent::div";
 
     public Table(String tableName) {
         switch (tableName) {
@@ -51,30 +51,30 @@ public class Table {
 
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
-        $x(String.format(PATTERN + "/tbody//td[" + columnIndex + "]/input", tableName)).setValue(value);
+        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input", tableName)).setValue(value);
     }
 
     public List<String> getListOfValues (String label) {
         int columnIndex = findColumnIndex(label) + 1;
-        return $$x(String.format(PATTERN + "/tbody//td[" + columnIndex + "]", tableName)).texts();
+        return $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]", tableName)).texts();
     }
 
     public void clickPushToApi() {
-        $x(String.format(PATTERN + "/following::div[1]/button[contains(text(), 'PUSH')]", tableName)).click();
+        $x(String.format(PATTERN + "/div/button[contains(text(), 'PUSH')]", tableName)).click();
     }
 
     public String getMessagePushToApi() {
-        return $x(String.format(PATTERN + "/following::div[1]/button[contains(text(), 'Status')]", tableName)).getText();
+        return $x(String.format(PATTERN + "/div/button[contains(text(), 'Status')]", tableName)).getText();
     }
 
     public int getResultInt() {
-        String message = $x(String.format(PATTERN + "/following::div[1]/button[3]",
+        String message = $x(String.format(PATTERN + "/div/button[3]",
                 tableName)).getText();
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 
-    public double getResult() {
-        String message = $x(String.format(PATTERN + "/following::div[1]/button[3]",
+    public double getResultDouble() {
+        String message = $x(String.format(PATTERN + "/div[1]/button[3]",
                 tableName)).getText();
         return Double.parseDouble(message.replaceAll("[^\\d.]", ""));
     }
