@@ -8,6 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import pages.AddMoneyPage;
 import pages.AllUsersPage;
 import pages.CreateUserPage;
+import pages.MainPage;
 import steps.LoginSteps;
 import utils.PropertyReader;
 
@@ -18,9 +19,10 @@ public class BaseTest {
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     protected LoginSteps loginSteps;
-    CreateUserPage createUserPage;
-    AllUsersPage allUsersPage;
-    AddMoneyPage addMoneyPage;
+    protected CreateUserPage createUserPage;
+    protected AllUsersPage allUsersPage;
+    protected AddMoneyPage addMoneyPage;
+    protected MainPage mainPage;
 
 
     @BeforeEach
@@ -40,6 +42,7 @@ public class BaseTest {
         createUserPage = new CreateUserPage();
         allUsersPage = new AllUsersPage();
         addMoneyPage = new AddMoneyPage();
+        mainPage = new MainPage();
     }
 
     @AfterEach
