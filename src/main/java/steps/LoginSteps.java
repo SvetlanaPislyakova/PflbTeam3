@@ -5,8 +5,6 @@ import io.qameta.allure.Step;
 import org.assertj.core.api.AssertionsForClassTypes;
 import pages.LoginPage;
 import pages.MainPage;
-import wrappers.DropDown;
-import wrappers.Input;
 import wrappers.Table;
 
 import java.util.Collections;
@@ -14,11 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selectors.withText;
 import static com.codeborne.selenide.Selenide.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static com.codeborne.selenide.Selenide.switchTo;
 
 
 public class LoginSteps {
@@ -64,7 +59,7 @@ public class LoginSteps {
 
     public LoginSteps createUser() {
         User user = User.builder().build();
-        Table table = new Table("User");
+        Table table = new Table("Create new user");
         table.setValueToInput("First Name", user.getFirstName());
         table.setValueToInput("Last Name", user.getLastName());
         table.setValueToInput("Age", user.getAge());
@@ -78,7 +73,7 @@ public class LoginSteps {
     }
 
     public LoginSteps createCar() {
-        Table table = new Table("Car");
+        Table table = new Table("Create new car");
         table.setValueToInput("Engine Type", "Engine");
         table.setValueToInput("Mark", "Mark");
         table.setValueToInput("Model", "Model");
@@ -98,12 +93,12 @@ public class LoginSteps {
         table.clickPushToApi();
         sleep(2000);
         System.out.println(table.getMessagePushToApi());
-        System.out.println(table.getResult());
+        System.out.println(table.getResultDouble());
         return this;
     }
 
     public LoginSteps checkSort(String label) {
-        Table table = new Table("User");
+        Table table = new Table("Read all users");
         sleep(2000);
         List<String> first = table.getListOfValues(label);
         System.out.println(first);
@@ -125,7 +120,7 @@ public class LoginSteps {
     }
 
     public LoginSteps checkSortCar(String label) {
-        Table table = new Table("Car");
+        Table table = new Table("Read all cars");
         sleep(2000);
         List<String> first = table.getListOfValues(label);
         System.out.println(first);
@@ -147,8 +142,13 @@ public class LoginSteps {
     }
 
     public LoginSteps createHouse() {
-        Table table = new Table("House");
-        $x("//div[normalize-space(text() = 'Has warm and covered parking places:')]").shouldBe(visible);
+        Table table = new Table("Create new house");
+        table.setValueToInput("Floor", "2");
+        table.setValueToInput("Price", "2000");
+        sleep(2000);
+        table.clickPushToApi();
+        sleep(2000);
+        System.out.println(table.getMessagePushToApi());
         return this;
     }
 }

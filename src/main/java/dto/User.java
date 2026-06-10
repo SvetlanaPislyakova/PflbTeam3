@@ -19,5 +19,5 @@ public class User {
     @Builder.Default
     private final String Sex = "FEMALE";
     @Builder.Default
-    private final String money = String.valueOf(faker.number().randomDouble(5, 0, 1000000));
+    private final String money = String.valueOf(faker.number().randomDouble(2, 0, 1000000));
 }

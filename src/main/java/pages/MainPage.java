@@ -19,4 +19,5 @@ public class MainPage extends BasePage {
         new DropDown("Users").selectOption("Create new");
         return new CreateUserPage();
     }
+
 }

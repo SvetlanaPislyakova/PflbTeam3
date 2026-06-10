@@ -5,8 +5,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import pages.AddMoneyPage;
+import pages.AllUsersPage;
+import pages.CreateUserPage;
 import steps.LoginSteps;
-import steps.UserSteps;
 import utils.PropertyReader;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -16,7 +18,10 @@ public class BaseTest {
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     protected LoginSteps loginSteps;
-    protected UserSteps userSteps;
+    CreateUserPage createUserPage;
+    AllUsersPage allUsersPage;
+    AddMoneyPage addMoneyPage;
+
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +37,9 @@ public class BaseTest {
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
-        userSteps = new UserSteps();
+        createUserPage = new CreateUserPage();
+        allUsersPage = new AllUsersPage();
+        addMoneyPage = new AddMoneyPage();
     }
 
     @AfterEach
