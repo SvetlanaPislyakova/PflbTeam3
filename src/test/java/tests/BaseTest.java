@@ -1,8 +1,14 @@
 package tests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import ui.pages.AddMoneyPage;
@@ -11,9 +17,12 @@ import ui.pages.CreateUserPage;
 import ui.pages.MainPage;
 import ui.steps.LoginSteps;
 import utils.PropertyReader;
+import utils.TestListener;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
+@Log4j2
+@ExtendWith(TestListener.class)
 public class BaseTest {
 
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
@@ -24,6 +33,19 @@ public class BaseTest {
     protected AddMoneyPage addMoneyPage;
     protected MainPage mainPage;
 
+
+    @BeforeAll
+    public static void setupAllure() {
+        SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
+                .screenshots(true)
+                .savePageSource(true));
+    }
+
+    @BeforeEach
+    void beforeEach(TestInfo testInfo) {
+        log.info("======================================== STARTING TEST {} ========================================",
+                testInfo.getDisplayName());
+    }
 
     @BeforeEach
     public void setUp() {

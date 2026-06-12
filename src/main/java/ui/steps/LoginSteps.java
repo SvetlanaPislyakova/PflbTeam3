@@ -6,7 +6,6 @@ import ui.pages.MainPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class LoginSteps {
 
     private final LoginPage loginPage = new LoginPage();
