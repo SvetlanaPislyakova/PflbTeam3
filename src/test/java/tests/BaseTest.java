@@ -5,7 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import steps.LoginSteps;
+import ui.steps.LoginSteps;
 import utils.PropertyReader;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
