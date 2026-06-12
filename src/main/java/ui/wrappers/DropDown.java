@@ -1,4 +1,4 @@
-package wrappers;
+package ui.wrappers;
 
 import static com.codeborne.selenide.Selenide.$x;
 

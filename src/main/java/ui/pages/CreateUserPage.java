@@ -1,4 +1,4 @@
-package pages;
+package ui.pages;
 
 import static com.codeborne.selenide.CollectionCondition.size;
 import static com.codeborne.selenide.Condition.visible;

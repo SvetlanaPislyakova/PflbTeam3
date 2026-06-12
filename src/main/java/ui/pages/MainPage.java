@@ -1,6 +1,6 @@
-package pages;
+package ui.pages;
 
-import wrappers.DropDown;
+import ui.wrappers.DropDown;
 
 public class MainPage extends BasePage {
 

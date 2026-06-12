@@ -1,8 +1,8 @@
-package steps;
+package ui.steps;
 
 import io.qameta.allure.Step;
-import pages.LoginPage;
-import pages.MainPage;
+import ui.pages.LoginPage;
+import ui.pages.MainPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

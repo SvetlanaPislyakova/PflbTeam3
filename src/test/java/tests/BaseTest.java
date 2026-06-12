@@ -11,7 +11,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import steps.LoginSteps;
+import ui.steps.LoginSteps;
 import utils.PropertyReader;
 import utils.TestListener;
 
