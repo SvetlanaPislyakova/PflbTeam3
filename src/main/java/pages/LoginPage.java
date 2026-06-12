@@ -1,12 +1,14 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import lombok.extern.log4j.Log4j2;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
+@Log4j2
 public class LoginPage extends BasePage {
 
     private final SelenideElement TITLE = $(byText("Authorization"));
@@ -16,12 +18,14 @@ public class LoginPage extends BasePage {
 
     @Override
     public LoginPage openPage() {
+        log.info("Открытие страницы авторизации");
         open(baseUrl);
         return this;
     }
 
     @Override
     public LoginPage isPageOpened() {
+        log.info("Страница авторизации открыта");
         TITLE.shouldBe(visible);
         return this;
     }
