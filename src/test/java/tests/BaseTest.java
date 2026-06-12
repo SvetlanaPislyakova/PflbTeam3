@@ -43,7 +43,8 @@ public class BaseTest {
 
     @BeforeEach
     void beforeEach(TestInfo testInfo) {
-        log.info("======================================== STARTING TEST {} ========================================",
+        log.info("======================================== STARTING TEST {} " +
+                        "========================================",
                 testInfo.getDisplayName());
     }
 
@@ -53,8 +54,9 @@ public class BaseTest {
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
         Configuration.headless = true;
+        Configuration.browserSize = "1920x1080";
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--start-maximized");
+//        options.addArguments("--start-maximized");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
