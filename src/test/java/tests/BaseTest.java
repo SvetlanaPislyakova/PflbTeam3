@@ -11,6 +11,10 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import ui.pages.AddMoneyPage;
+import ui.pages.AllUsersPage;
+import ui.pages.CreateUserPage;
+import ui.pages.MainPage;
 import ui.steps.LoginSteps;
 import utils.PropertyReader;
 import utils.TestListener;
@@ -24,6 +28,11 @@ public class BaseTest {
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     protected LoginSteps loginSteps;
+    protected CreateUserPage createUserPage;
+    protected AllUsersPage allUsersPage;
+    protected AddMoneyPage addMoneyPage;
+    protected MainPage mainPage;
+
 
     @BeforeAll
     public static void setupAllure() {
@@ -52,6 +61,10 @@ public class BaseTest {
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
+        createUserPage = new CreateUserPage();
+        allUsersPage = new AllUsersPage();
+        addMoneyPage = new AddMoneyPage();
+        mainPage = new MainPage();
     }
 
     @AfterEach
