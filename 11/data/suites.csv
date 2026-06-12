@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","3425","Негативная авторизация с некорректными кредами Негативный логин c email: user@pflb.ru, password: ","","2026-06-12","passed","2026-06-12","","tests.LoginTest","tests.LoginTest","negativeLoginWith"
+"","3355","Негативная авторизация с некорректными кредами Негативный логин c email: test, password: test","","2026-06-12","passed","2026-06-12","","tests.LoginTest","tests.LoginTest","negativeLoginWith"
+"","19945","Негативная авторизация с некорректными кредами Негативный логин c email: , password: user","","2026-06-12","passed","2026-06-12","","tests.LoginTest","tests.LoginTest","negativeLoginWith"
+"","4104","Успешная авторизация с корректными кредами","","2026-06-12","passed","2026-06-12","","tests.LoginTest","tests.LoginTest","successLogin"
+"","4043","Негативная авторизация с корректными кредами","","2026-06-12","passed","2026-06-12","","tests.LoginTest","tests.LoginTest","negativeLogin"
