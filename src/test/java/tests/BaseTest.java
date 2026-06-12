@@ -5,11 +5,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import pages.AddMoneyPage;
-import pages.AllUsersPage;
-import pages.CreateUserPage;
-import pages.MainPage;
-import steps.LoginSteps;
+import ui.pages.AddMoneyPage;
+import ui.pages.AllUsersPage;
+import ui.pages.CreateUserPage;
+import ui.pages.MainPage;
+import ui.steps.LoginSteps;
 import utils.PropertyReader;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
@@ -30,7 +30,7 @@ public class BaseTest {
         Configuration.timeout = 10000;
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
-        Configuration.headless = false;
+        Configuration.headless = true;
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         options.addArguments("--disable-notifications");

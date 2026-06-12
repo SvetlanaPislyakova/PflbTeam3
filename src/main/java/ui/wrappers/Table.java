@@ -1,4 +1,4 @@
-package wrappers;
+package ui.wrappers;
 
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;

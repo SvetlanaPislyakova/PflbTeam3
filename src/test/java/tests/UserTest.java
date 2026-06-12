@@ -1,7 +1,7 @@
 package tests;
 
 import com.github.javafaker.Faker;
-import dto.User;
+import ui.dto.User;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

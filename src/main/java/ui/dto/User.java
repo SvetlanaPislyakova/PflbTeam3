@@ -1,4 +1,4 @@
-package dto;
+package ui.dto;
 
 import com.github.javafaker.Faker;
 import lombok.Builder;

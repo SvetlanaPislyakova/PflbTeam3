@@ -1,7 +1,7 @@
-package pages;
+package ui.pages;
 
-import dto.User;
-import wrappers.Table;
+import ui.dto.User;
+import ui.wrappers.Table;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;

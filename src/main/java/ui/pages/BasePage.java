@@ -1,7 +1,7 @@
-package pages;
+package ui.pages;
 
 import org.assertj.core.api.SoftAssertions;
-import wrappers.Table;
+import ui.wrappers.Table;
 
 import java.util.Comparator;
 import java.util.List;

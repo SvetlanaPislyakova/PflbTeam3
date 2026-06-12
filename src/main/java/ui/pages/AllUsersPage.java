@@ -1,6 +1,6 @@
-package pages;
+package ui.pages;
 
-import wrappers.Table;
+import ui.wrappers.Table;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
