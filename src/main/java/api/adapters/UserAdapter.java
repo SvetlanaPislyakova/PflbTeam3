@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class UserAdapter extends BaseAdapter {
 
-    public static UserRs createUser(UserRq userRq, String token) {
+    public UserRs createUser(UserRq userRq, String token) {
         log.info("POST - создание нового пользователя, 201ok");
         return given()
                 .spec(spec)
@@ -27,7 +27,21 @@ public class UserAdapter extends BaseAdapter {
                 .as(UserRs.class);
     }
 
-    public static int createUserAndGetId(UserRq userRq, String token) {
+    public void createUserWithNullFields(UserRq userRq, String token) {
+        log.info("POST - создание нового пользователя с невалидными данными, 400");
+        given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .body(gson.toJson(userRq))
+                .log().all()
+                .when()
+                .post("/user")
+                .then()
+                .log().all()
+                .spec(badRequest400);
+    }
+
+    public int createUserAndGetId(UserRq userRq, String token) {
         log.info("POST - создание нового пользователя и получение его id, 201ok");
         return given()
                 .spec(spec)
@@ -41,7 +55,7 @@ public class UserAdapter extends BaseAdapter {
                 .path("id");
     }
 
-    public static UserRs getUserById(Integer userId) {
+    public UserRs getUserById(Integer userId) {
         log.info("GET - получение пользователя по id, 200ok");
         return given()
                 .spec(spec)
@@ -56,7 +70,20 @@ public class UserAdapter extends BaseAdapter {
                 .as(UserRs.class);
     }
 
-    public static List<UserRs> getUsers() {
+    public void getNotExistingUserById(Integer userId) {
+        log.info("GET - получение несуществующего пользователя, 204ok");
+        given()
+                .spec(spec)
+                .pathParam("userId", userId)
+                .log().all()
+                .when()
+                .get("/user/{userId}")
+                .then()
+                .log().all()
+                .spec(ok204);
+    }
+
+    public List<UserRs> getUsers() {
         log.info("GET - получение списка пользователей, 200ok");
         return given()
                 .spec(spec)
@@ -71,7 +98,7 @@ public class UserAdapter extends BaseAdapter {
                 .getList("", UserRs.class);
     }
 
-    public static void getUserCars(Integer userId) {
+    public void getUserCars(Integer userId) {
         log.info("GET - получение автомобилей пользователя, 201ok");
         given()
                 .spec(spec)
@@ -84,7 +111,7 @@ public class UserAdapter extends BaseAdapter {
                 .spec(ok200);
     }
 
-    public static void getUserInfo(Integer userId) {
+    public void getUserInfo(Integer userId) {
         log.info("GET - получение информации о пользователе, 201ok");
         given()
                 .spec(spec)
@@ -97,7 +124,7 @@ public class UserAdapter extends BaseAdapter {
                 .spec(ok200);
     }
 
-    public static void deleteUser(Integer userId, String token) {
+    public void deleteUser(Integer userId, String token) {
         log.info("DELETE - удаление пользователя, 201ok");
         given()
                 .spec(spec)

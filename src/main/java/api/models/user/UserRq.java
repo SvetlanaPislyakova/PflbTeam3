@@ -29,7 +29,7 @@ public class UserRq {
     @Expose
     @Builder.Default
     public BigDecimal money = BigDecimal.valueOf
-            (faker.number().randomDouble(5, 0, 1000000));
+            (faker.number().randomDouble(2, 0, 1000000));
     @SerializedName("secondName")
     @Expose
     @Builder.Default

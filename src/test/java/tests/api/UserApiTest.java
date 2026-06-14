@@ -6,16 +6,22 @@ import api.models.user.UserRs;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class UserApiTest extends  BaseApiTest {
+
+    UserAdapter userAdapter = new UserAdapter();
 
     @Test
     @DisplayName("API - Создание нового пользователя")
     public void createUser() {
         UserRq userRq = UserRq.builder().build();
-        UserRs userRs = UserAdapter.createUser(userRq, accessToken);
+        UserRs userRs = userAdapter.createUser(userRq, accessToken);
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(userRs.firstName).isEqualTo(userRq.firstName);
             softly.assertThat(userRs.secondName).isEqualTo(userRq.secondName);
@@ -23,13 +29,28 @@ public class UserApiTest extends  BaseApiTest {
             softly.assertThat(userRs.sex).isEqualTo(userRq.sex);
             softly.assertThat(userRs.money).isEqualTo(userRq.money);
         });
-        UserAdapter.deleteUser(userRs.id, accessToken);
+        userAdapter.deleteUser(userRs.id, accessToken);
+    }
+
+    static Stream<Arguments> invalidUsers() {
+        return Stream.of(
+                Arguments.of(UserRq.builder().firstName(null).build()),
+                Arguments.of(UserRq.builder().secondName(null).build()),
+                Arguments.of(UserRq.builder().age(null).build()),
+                Arguments.of(UserRq.builder().money(null).build())
+        );
+    }
+
+    @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
+    @MethodSource("invalidUsers")
+    void createUserWithNullFields(UserRq userRq) {
+        userAdapter.createUserWithNullFields(userRq, accessToken);
     }
 
     @Test
     @DisplayName("API - Получение списка пользователей")
     public void getUsers() {
-        List<UserRs> users = UserAdapter.getUsers();
+        List<UserRs> users = userAdapter.getUsers();
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(users).isNotNull();
             softly.assertThat(users).isNotEmpty();
@@ -49,16 +70,16 @@ public class UserApiTest extends  BaseApiTest {
     @DisplayName("API - Удаление пользователя по id")
     public void deleteUser() {
         UserRq userRq = UserRq.builder().build();
-        int userId = UserAdapter.createUserAndGetId(userRq, accessToken);
-        UserAdapter.deleteUser(userId, accessToken);
+        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        userAdapter.deleteUser(userId, accessToken);
     }
 
     @Test
     @DisplayName("API - Получение пользователя по id")
     public void getUserById() {
         UserRq userRq = UserRq.builder().build();
-        int userId = UserAdapter.createUserAndGetId(userRq, accessToken);
-        UserRs userRs = UserAdapter.getUserById(userId);
+        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        UserRs userRs = userAdapter.getUserById(userId);
         SoftAssertions.assertSoftly((softly -> {
             softly.assertThat(userRs.firstName).isEqualTo(userRq.firstName);
             softly.assertThat(userRs.secondName).isEqualTo(userRq.secondName);
@@ -66,16 +87,24 @@ public class UserApiTest extends  BaseApiTest {
             softly.assertThat(userRs.sex).isEqualTo(userRq.sex);
             softly.assertThat(userRs.money).isEqualTo(userRq.money);
         }));
-        UserAdapter.deleteUser(userId, accessToken);
+        userAdapter.deleteUser(userId, accessToken);
     }
 
     @Test
+    @DisplayName("API - Получение несуществующего пользователя по id")
+    public void getNotExistUserById() {
+        UserRq userRq = UserRq.builder().build();
+        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        userAdapter.deleteUser(userId, accessToken);
+        userAdapter.getNotExistingUserById(userId);
+    }
+    @Test
     public void getUserCars() {
-        UserAdapter.getUserCars(13304);
+        userAdapter.getUserCars(13304);
     }
 
     @Test
     public void getUserInfo() {
-        UserAdapter.getUserInfo(13304);
+        userAdapter.getUserInfo(13304);
     }
 }

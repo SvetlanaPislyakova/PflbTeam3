@@ -31,4 +31,12 @@ public class BaseAdapter {
     public static ResponseSpecification ok204 = new ResponseSpecBuilder()
             .expectStatusCode(204)
             .build();
+
+    public static ResponseSpecification nook403 = new ResponseSpecBuilder()
+            .expectStatusCode(403)
+            .build();
+
+    public static ResponseSpecification badRequest400 = new ResponseSpecBuilder()
+            .expectStatusCode(400)
+            .build();
 }
