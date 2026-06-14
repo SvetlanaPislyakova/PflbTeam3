@@ -14,7 +14,7 @@ public class LoginAdapter extends BaseAdapter {
                 .when()
                 .post("/login")
                 .then()
-                .spec(access202)
+                .spec(ok202)
                 .extract()
                 .path("access_token");
     }

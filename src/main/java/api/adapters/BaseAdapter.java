@@ -24,7 +24,11 @@ public class BaseAdapter {
             .expectStatusCode(201)
             .build();
 
-    public static ResponseSpecification access202 = new ResponseSpecBuilder()
+    public static ResponseSpecification ok202 = new ResponseSpecBuilder()
             .expectStatusCode(202)
+            .build();
+
+    public static ResponseSpecification ok204 = new ResponseSpecBuilder()
+            .expectStatusCode(204)
             .build();
 }

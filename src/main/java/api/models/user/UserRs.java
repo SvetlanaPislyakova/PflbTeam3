@@ -3,6 +3,8 @@ package api.models.user;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigDecimal;
+
 public class UserRs {
 
     @SerializedName("age")
@@ -16,7 +18,7 @@ public class UserRs {
     public Integer id;
     @SerializedName("money")
     @Expose
-    public Integer money;
+    public BigDecimal money;
     @SerializedName("secondName")
     @Expose
     public String secondName;

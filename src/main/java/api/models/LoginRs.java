@@ -1,9 +1,11 @@
 package api.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class LoginRs {
 
-    @JsonProperty("access_token")
-    String accessToken;
+    @SerializedName("access_token")
+    @Expose
+    public String accessToken;
 }
