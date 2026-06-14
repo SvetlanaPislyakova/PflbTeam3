@@ -1,7 +1,7 @@
 package api.adapters;
 
-import api.models.UserRq;
-import api.models.UserRs;
+import api.models.user.UserRq;
+import api.models.user.UserRs;
 
 import static io.restassured.RestAssured.given;
 
@@ -10,7 +10,7 @@ public class UserAdapter extends BaseAdapter {
     public static UserRs createUser(UserRq userRq, String token) {
         return given()
                 .spec(spec)
-                .header("Authorization", "Bearer" + token)
+                .header("Authorization", "Bearer " + token)
                 .body(gson.toJson(userRq))
                 .log().all()
                 .when()
