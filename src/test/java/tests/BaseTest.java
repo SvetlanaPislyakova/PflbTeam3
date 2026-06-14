@@ -29,8 +29,7 @@ public class BaseTest {
 
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
-    protected static final String dbUser = System.getProperty("dbUser", PropertyReader.getProperty("dbUser"));
-    protected static final String dbPassword = System.getProperty("dbPassword", PropertyReader.getProperty("dbPassword"));
+
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
     protected DBSteps dbSteps;
@@ -63,7 +62,6 @@ public class BaseTest {
         Configuration.headless = false;
         Configuration.browserSize = "1920x1080";
         ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--start-maximized");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");

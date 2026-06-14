@@ -1,6 +1,7 @@
 package db;
 
 import lombok.extern.log4j.Log4j2;
+import utils.PropertyReader;
 
 import java.sql.*;
 
@@ -8,8 +9,8 @@ import java.sql.*;
 public class DBConnection {
 
     private final String URL = "jdbc:postgresql://82.142.167.37:4832/pflb_trainingcenter";
-    protected static final String DB_USER = "";
-    protected static final String DB_PASSWORD = "";
+    private final String DB_USER = System.getProperty("dbUser", PropertyReader.getProperty("dbUser"));
+    private final String DB_PASSWORD = System.getProperty("dbPassword", PropertyReader.getProperty("dbPassword"));
 
     private Connection connection;
     private Statement statement;
