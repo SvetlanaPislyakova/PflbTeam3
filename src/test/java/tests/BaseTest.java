@@ -15,7 +15,9 @@ import ui.pages.AddMoneyPage;
 import ui.pages.AllUsersPage;
 import ui.pages.CreateUserPage;
 import ui.pages.MainPage;
+import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
+import ui.steps.UserSteps;
 import utils.PropertyReader;
 import utils.TestListener;
 
@@ -27,7 +29,12 @@ public class BaseTest {
 
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    protected static final String dbUser = System.getProperty("dbUser", PropertyReader.getProperty("dbUser"));
+    protected static final String dbPassword = System.getProperty("dbPassword", PropertyReader.getProperty("dbPassword"));
     protected LoginSteps loginSteps;
+    protected UserSteps userSteps;
+    protected DBSteps dbSteps;
+
     protected CreateUserPage createUserPage;
     protected AllUsersPage allUsersPage;
     protected AddMoneyPage addMoneyPage;
@@ -53,7 +60,7 @@ public class BaseTest {
         Configuration.timeout = 10000;
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
-        Configuration.headless = true;
+        Configuration.headless = false;
         Configuration.browserSize = "1920x1080";
         ChromeOptions options = new ChromeOptions();
 //        options.addArguments("--start-maximized");
@@ -63,6 +70,9 @@ public class BaseTest {
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
+        userSteps = new UserSteps();
+        dbSteps = new DBSteps();
+
         createUserPage = new CreateUserPage();
         allUsersPage = new AllUsersPage();
         addMoneyPage = new AddMoneyPage();

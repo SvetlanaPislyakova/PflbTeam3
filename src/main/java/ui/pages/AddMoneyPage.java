@@ -2,12 +2,15 @@ package ui.pages;
 
 import ui.wrappers.Table;
 
+import java.math.BigDecimal;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 
 public class AddMoneyPage extends BasePage {
 
     private final String tableName = "Add money";
+    Table table = new Table(tableName);
 
     @Override
     public AddMoneyPage openPage() {
@@ -17,31 +20,26 @@ public class AddMoneyPage extends BasePage {
 
     @Override
     public AddMoneyPage isPageOpened() {
-        Table table = new Table(tableName);
         table.checkTableVisible();
         return this;
     }
 
-    public AddMoneyPage addMoneyToUser(int userId, double count) {
-        Table table = new Table("Add money");
+    public AddMoneyPage addMoneyToUser(Long userId, BigDecimal count) {
         table.setValueToInput("User ID", String.valueOf(userId));
         table.setValueToInput("Money", String.valueOf(count));
-        table.clickPushToApi();
+        table.clickPushToApiBtn();
         return this;
     }
 
     public double getUserMoney() {
-        Table table = new Table(tableName);
         return table.getResultDouble();
     }
 
     public String getStatusMessage () {
-        Table table = new Table(tableName);
         return table.getMessagePushToApi();
     }
 
     public int getStatusCode () {
-        Table table = new Table(tableName);
         return table.getStatus();
     }
 }

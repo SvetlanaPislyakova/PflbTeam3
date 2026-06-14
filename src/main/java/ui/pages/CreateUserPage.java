@@ -1,11 +1,13 @@
 package ui.pages;
 
+import lombok.extern.log4j.Log4j2;
 import ui.dto.User;
 import ui.wrappers.Table;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
 
+@Log4j2
 public class CreateUserPage extends BasePage {
 
     private final String tableName = "Create new user";
@@ -27,10 +29,10 @@ public class CreateUserPage extends BasePage {
     public CreateUserPage createNewUser(User user) {
         table.setValueToInput("First Name", user.getFirstName());
         table.setValueToInput("Last Name", user.getLastName());
-        table.setValueToInput("Age", user.getAge());
-        table.setValueToInput("Money", user.getMoney());
-        $x("//*[text()='FEMALE']/input").click();
-        table.clickPushToApi();
+        table.setValueToInput("Age", String.valueOf(user.getAge()));
+        table.setValueToInput("Money", String.valueOf(user.getMoney()));
+        $x(String.format("//input[@value='%s']", user.getSex())).click();
+        table.clickPushToApiBtn();
         return this;
     }
 
@@ -42,7 +44,7 @@ public class CreateUserPage extends BasePage {
         return table.getStatus();
     }
 
-    public int getUserId() {
+    public Long getUserId() {
         return table.getResultInt();
     }
 }

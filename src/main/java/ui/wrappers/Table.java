@@ -3,12 +3,15 @@ package ui.wrappers;
 import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import lombok.extern.log4j.Log4j2;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
+@Log4j2
 public class Table {
 
     private final String firstColumn;
@@ -57,7 +60,7 @@ public class Table {
     }
 
     private int findColumnIndex(String label) {
-        List<String> headers = $$x(String.format(PATTERN + "/parent::div//th", firstColumn, secondColumn)).texts();
+        List<String> headers = $$x(String.format(PATTERN + "//th", firstColumn, secondColumn)).texts();
         for (int i = 0; i < headers.size(); i++) {
             String normHeader = headers.get(i).replaceAll("\\u00A0", " ");
             if (normHeader.contains(label)) {
@@ -69,25 +72,38 @@ public class Table {
 
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
-        $x(String.format(PATTERN + "/parent::div//tbody//td[" + columnIndex + "]/input",
+        log.info("Заполнить поле '{}' значением '{}'", label, value);
+        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn)).setValue(value);
     }
 
     public void checkValueInInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
-        $x(String.format(PATTERN + "/parent::div//tbody//td[" + columnIndex + "]/input",
+        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn)).shouldHave(value(value));
     }
 
     public List<String> getListOfValues (String label) {
+        log.info("Получить список значений из столбца '{}'", label);
         int columnIndex = findColumnIndex(label) + 1;
-        ElementsCollection listOfValues = $$x(String.format(PATTERN + "/parent::div//tbody//td[" + columnIndex + "]",
+        List<String> values = new ArrayList<>();
+        ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
                 firstColumn, secondColumn));
         listOfValues.shouldHave(CollectionCondition.sizeGreaterThanOrEqual(1));
         return listOfValues.texts();
     }
 
-    public void clickPushToApi() {
+    public void clickPushToApiBtn() {
+        log.info("Нажать на кнопку 'Push to api'");
+        $x(String.format(PATTERN + "/parent::div/div/button[contains(@class, 'tableButton')]",
+                firstColumn, secondColumn)).click();
+        SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
+                firstColumn, secondColumn));
+        message.shouldNotHave(text("Status: not pushed"));
+    }
+
+    public void clickIssueLoanBtn() {
+        log.info("Нажать на кнопку 'Запросить кредит'");
         $x(String.format(PATTERN + "/parent::div/div/button[contains(@class, 'tableButton')]",
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
@@ -108,10 +124,10 @@ public class Table {
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 
-    public int getResultInt() {
+    public Long getResultInt() {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).getText();
-        return Integer.parseInt(messageResult.replaceAll("\\D+", ""));
+        return Long.parseLong(messageResult.replaceAll("\\D+", ""));
     }
 
     public double getResultDouble() {

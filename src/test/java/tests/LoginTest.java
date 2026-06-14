@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -28,9 +29,9 @@ public class LoginTest extends BaseTest{
 
     static Stream<Arguments> negativeCreds() {
         return Stream.of(
-                Arguments.of("", password),
-                Arguments.of(email, ""),
-                Arguments.of("test", "test")
+                Arguments.of("test@test.com", password),
+                Arguments.of(email, "test"),
+                Arguments.of("test@test.com", "test")
         );
     }
 
@@ -39,7 +40,26 @@ public class LoginTest extends BaseTest{
     @DisplayName("Негативная авторизация с некорректными кредами")
     public void negativeLoginWith(String login, String pass) {
         loginSteps.login(login, pass)
-                .acceptAlert("Incorrect input data")
+                .acceptAlert("Bad request")
                 .checkNegativeLogin();
+    }
+
+
+    @ParameterizedTest(name = "Ввод невалидных данных в поле 'email': {0}")
+    @ValueSource(strings = {"test", "test.com"})
+    @DisplayName("Ввод невалидных данных в поле 'email'")
+    public void validateEmailInput(String email) {
+        String errorMsg = "incorrect Email";
+        loginSteps.checkErrorEmailMsg(email, errorMsg)
+                .acceptAlert("Incorrect input data");
+    }
+
+    @ParameterizedTest(name = "Ввод невалидных данных в поле 'password': {0}")
+    @ValueSource(strings = {"ok", "loremipsum"})
+    @DisplayName("Ввод невалидных данных в поле 'email'")
+    public void validatePasswordInput(String password) {
+        String errorMsg = "password length must be more than 3 symbols and less than 8 symbols";
+        loginSteps.checkErrorPasswordMsg(password, errorMsg)
+                .acceptAlert("Incorrect input data");
     }
 }

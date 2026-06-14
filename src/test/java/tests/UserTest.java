@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 public class UserTest extends BaseTest {
@@ -25,22 +26,15 @@ public class UserTest extends BaseTest {
     @Test
     @DisplayName("Создание нового пользователя")
     public void createUser() {
-        SoftAssertions softly = new SoftAssertions();
         User user = User.builder().build();
-        createUserPage.openPage()
-                .isPageOpened()
-                .createNewUser(user);
-        softly.assertThat(createUserPage.getStatusMessage()).contains("Successfully pushed");
-        softly.assertThat(createUserPage.getUserId()).isPositive();
-        softly.assertThat(createUserPage.getStatusCode()).isEqualTo(201);
-        softly.assertAll();
+        userSteps.createNewUser(user);
+        Long userId = userSteps.checkCreateUserAndGetId();
+        dbSteps.checkUserInDB(user, userId);
     }
 
     static Stream<Arguments> sortingData() {
         return Stream.of(
                 Arguments.of("ID", true),
-                Arguments.of("First", false),
-                Arguments.of("Last", false),
                 Arguments.of("Age", true),
                 Arguments.of("Sex", false),
                 Arguments.of("Money", true)
@@ -50,9 +44,21 @@ public class UserTest extends BaseTest {
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @MethodSource("sortingData")
     public void checkSortingByField(String field, boolean isNumeric) {
-        allUsersPage.openPage()
-                .isPageOpened()
-                .checkSortUsers(field, isNumeric);
+        userSteps.checkSortUsers(field, isNumeric);
+    }
+
+
+    static Stream<Arguments> sortingData2() {
+        return Stream.of(
+                Arguments.of("First name", "First Name"),
+                Arguments.of("Last name", "Last Name")
+        );
+    }
+
+    @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
+    @MethodSource("sortingData2")
+    public void checkSortingByFieldInDb(String field, String btnName) {
+        userSteps.checkSortUsersInDb(field, btnName);
     }
 
     @Test
@@ -60,19 +66,34 @@ public class UserTest extends BaseTest {
     public void addMoney() {
         SoftAssertions softly = new SoftAssertions();
         User user = User.builder().build();
-        double money = faker.number().randomDouble(2, 0, 1000000);
+        BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         createUserPage.openPage()
                 .isPageOpened()
                 .createNewUser(user);
-        int userId = createUserPage.getUserId();
+        Long userId = createUserPage.getUserId();
         addMoneyPage.openPage()
                 .isPageOpened()
                 .addMoneyToUser(userId, money);
-        double result = Double.parseDouble(user.getMoney()) + money;
-        result = Math.round(result * 100.0) / 100.0;
+        BigDecimal result = user.getMoney().add(money);
         softly.assertThat(addMoneyPage.getStatusMessage()).contains("Successfully pushed");
         softly.assertThat(addMoneyPage.getStatusCode()).isEqualTo(200);
         softly.assertThat(addMoneyPage.getUserMoney()).isEqualTo(result);
         softly.assertAll();
     }
+
+//    @Test
+//    @DisplayName("Создание нового пользователя")
+//    public void create() {
+//        User user = User.builder().build();
+//        userSteps.checkUserInDB(user, 194L);
+//        userSteps.checkSortUsers("First name", false);
+//        new Button("First Name").clickBtn();
+//    }
+
+//    @Test
+//    @DisplayName("Создание нового пользователя")
+//    public void request() {
+//        userSteps.checkGetCredit();
+//
+//    }
 }

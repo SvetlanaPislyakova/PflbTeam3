@@ -15,4 +15,6 @@ public class AllPostPage extends BasePage {
     public AllPostPage isPageOpened() {
         return this;
     }
+
+
 }
