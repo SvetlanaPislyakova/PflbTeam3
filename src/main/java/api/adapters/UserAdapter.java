@@ -22,7 +22,7 @@ public class UserAdapter extends BaseAdapter {
                 .post("/user")
                 .then()
                 .log().all()
-                .spec(ok201)
+                .spec(created201)
                 .extract()
                 .as(UserRs.class);
     }
@@ -50,9 +50,26 @@ public class UserAdapter extends BaseAdapter {
                 .when()
                 .post("/user")
                 .then()
-                .spec(ok201)
+                .spec(created201)
                 .extract()
                 .path("id");
+    }
+
+    public UserRs changeUser(int userId, UserRq userRq, String token) {
+        log.info("PUT - Изменение пользователя, 201ok");
+        return given()
+                .spec(spec)
+                .pathParam("userId", userId)
+                .header("Authorization", "Bearer " + token)
+                .body(gson.toJson(userRq))
+                .log().all()
+                .when()
+                .put("/user/{userId}")
+                .then()
+                .log().all()
+                .spec(accepted202)
+                .extract()
+                .as(UserRs.class);
     }
 
     public UserRs getUserById(Integer userId) {
@@ -65,7 +82,7 @@ public class UserAdapter extends BaseAdapter {
                 .get("/user/{userId}")
                 .then()
                 .log().all()
-                .spec(ok200)
+                .spec(success200)
                 .extract()
                 .as(UserRs.class);
     }
@@ -80,7 +97,7 @@ public class UserAdapter extends BaseAdapter {
                 .get("/user/{userId}")
                 .then()
                 .log().all()
-                .spec(ok204);
+                .spec(noContent204);
     }
 
     public List<UserRs> getUsers() {
@@ -92,7 +109,7 @@ public class UserAdapter extends BaseAdapter {
                 .get("/users")
                 .then()
                 .log().all()
-                .spec(ok200)
+                .spec(success200)
                 .extract()
                 .jsonPath()
                 .getList("", UserRs.class);
@@ -108,7 +125,7 @@ public class UserAdapter extends BaseAdapter {
                 .get("/user/{userId}/cars")
                 .then()
                 .log().all()
-                .spec(ok200);
+                .spec(success200);
     }
 
     public void getUserInfo(Integer userId) {
@@ -121,7 +138,7 @@ public class UserAdapter extends BaseAdapter {
                 .get("/user/{userId}/info")
                 .then()
                 .log().all()
-                .spec(ok200);
+                .spec(success200);
     }
 
     public void deleteUser(Integer userId, String token) {
@@ -135,6 +152,6 @@ public class UserAdapter extends BaseAdapter {
                 .delete("/user/{userId}")
                 .then()
                 .log().all()
-                .spec(ok204);
+                .spec(noContent204);
     }
 }

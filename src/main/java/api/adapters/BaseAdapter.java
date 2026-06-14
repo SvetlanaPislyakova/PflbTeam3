@@ -16,23 +16,23 @@ public class BaseAdapter {
             .setContentType(ContentType.JSON)
             .build();
 
-    public static ResponseSpecification ok200 = new ResponseSpecBuilder()
+    public static ResponseSpecification success200 = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .build();
 
-    public static ResponseSpecification ok201 = new ResponseSpecBuilder()
+    public static ResponseSpecification created201 = new ResponseSpecBuilder()
             .expectStatusCode(201)
             .build();
 
-    public static ResponseSpecification ok202 = new ResponseSpecBuilder()
+    public static ResponseSpecification accepted202 = new ResponseSpecBuilder()
             .expectStatusCode(202)
             .build();
 
-    public static ResponseSpecification ok204 = new ResponseSpecBuilder()
+    public static ResponseSpecification noContent204 = new ResponseSpecBuilder()
             .expectStatusCode(204)
             .build();
 
-    public static ResponseSpecification nook403 = new ResponseSpecBuilder()
+    public static ResponseSpecification forbidden403 = new ResponseSpecBuilder()
             .expectStatusCode(403)
             .build();
 

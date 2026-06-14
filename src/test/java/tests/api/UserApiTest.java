@@ -27,7 +27,7 @@ public class UserApiTest extends  BaseApiTest {
             softly.assertThat(userRs.secondName).isEqualTo(userRq.secondName);
             softly.assertThat(userRs.age).isEqualTo(userRq.age);
             softly.assertThat(userRs.sex).isEqualTo(userRq.sex);
-            softly.assertThat(userRs.money).isEqualTo(userRq.money);
+            softly.assertThat(userRs.money).isEqualByComparingTo(userRq.money);
         });
         userAdapter.deleteUser(userRs.id, accessToken);
     }
@@ -85,7 +85,7 @@ public class UserApiTest extends  BaseApiTest {
             softly.assertThat(userRs.secondName).isEqualTo(userRq.secondName);
             softly.assertThat(userRs.age).isEqualTo(userRq.age);
             softly.assertThat(userRs.sex).isEqualTo(userRq.sex);
-            softly.assertThat(userRs.money).isEqualTo(userRq.money);
+            softly.assertThat(userRs.money).isEqualByComparingTo(userRq.money);
         }));
         userAdapter.deleteUser(userId, accessToken);
     }
@@ -98,6 +98,25 @@ public class UserApiTest extends  BaseApiTest {
         userAdapter.deleteUser(userId, accessToken);
         userAdapter.getNotExistingUserById(userId);
     }
+
+    @Test
+    @DisplayName("API - Изменение пользователя")
+    public void changeUser() {
+        UserRq userRq = UserRq.builder().build();
+        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        UserRq newUserRq = UserRq.builder().id(userId).build();
+        UserRs userRs = userAdapter.changeUser(userId, newUserRq, accessToken);
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(userRs.firstName).isEqualTo(newUserRq.firstName);
+            softly.assertThat(userRs.secondName).isEqualTo(newUserRq.secondName);
+            softly.assertThat(userRs.age).isEqualTo(newUserRq.age);
+            softly.assertThat(userRs.sex).isEqualTo(newUserRq.sex);
+            softly.assertThat(userRs.money).isEqualByComparingTo(newUserRq.money);
+            softly.assertThat(userId).isEqualTo(newUserRq.id);
+        });
+        userAdapter.deleteUser(userId, accessToken);
+    }
+
     @Test
     public void getUserCars() {
         userAdapter.getUserCars(13304);
