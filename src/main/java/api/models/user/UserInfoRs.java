@@ -10,26 +10,26 @@ public class UserInfoRs {
 
     @SerializedName("id")
     @Expose
-    public Integer id;
+    private Integer id;
     @SerializedName("age")
     @Expose
-    public Integer age;
+    private Integer age;
     @SerializedName("cars")
     @Expose
-    public List<Car> cars;
+    private List<Car> cars;
     @SerializedName("firstName")
     @Expose
-    public String firstName;
+    private String firstName;
     @SerializedName("house")
     @Expose
-    public Integer house;
+    private Integer house;
     @SerializedName("money")
     @Expose
-    public BigDecimal money;
+    private BigDecimal money;
     @SerializedName("secondName")
     @Expose
-    public String secondName;
+    private String secondName;
     @SerializedName("sex")
     @Expose
-    public String sex;
+    private String sex;
 }

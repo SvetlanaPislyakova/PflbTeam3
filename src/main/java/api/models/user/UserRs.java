@@ -2,27 +2,29 @@ package api.models.user;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.math.BigDecimal;
 
+@Data
 public class UserRs {
 
     @SerializedName("age")
     @Expose
-    public Integer age;
+    private Integer age;
     @SerializedName("firstName")
     @Expose
-    public String firstName;
+    private String firstName;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    private Integer id;
     @SerializedName("money")
     @Expose
-    public BigDecimal money;
+    private BigDecimal money;
     @SerializedName("secondName")
     @Expose
-    public String secondName;
+    private String secondName;
     @SerializedName("sex")
     @Expose
-    public String sex;
+    private String sex;
 }

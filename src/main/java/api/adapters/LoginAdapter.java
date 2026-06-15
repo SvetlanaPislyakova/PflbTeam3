@@ -17,5 +17,4 @@ public class LoginAdapter extends BaseAdapter {
                 .extract()
                 .path("access_token");
     }
-
 }

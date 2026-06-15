@@ -9,17 +9,17 @@ public class UserCarsRs {
 
     @SerializedName("engineType")
     @Expose
-    public String engineType;
+    private String engineType;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    private Integer id;
     @SerializedName("mark")
     @Expose
-    public String mark;
+    private String mark;
     @SerializedName("model")
     @Expose
-    public String model;
+    private String model;
     @SerializedName("price")
     @Expose
-    public BigDecimal price;
+    private BigDecimal price;
 }
