@@ -32,7 +32,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Tests Run
-      run: mvn clean -Demail=$USER -Dpassword=$PASSWORD -DdbUser=${DB_USER} -DdbPassword=${DB_PASSWORD} test
+      run: mvn clean -Demail=$USER -Dpassword=$PASSWORD -DdbUser=$DB_USER -DdbPassword=$DB_PASSWORD test
 
     - name: Get Allure history
       uses: actions/checkout@v2
