@@ -127,7 +127,8 @@ public class Table {
     public Long getResultInt() {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).getText();
-        return Long.parseLong(messageResult.replaceAll("\\D+", ""));
+        String result = messageResult.replaceAll("\\D+", "")
+        return Long.parseLong(result);
     }
 
     public double getResultDouble() {
