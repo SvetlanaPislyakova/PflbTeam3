@@ -31,7 +31,7 @@ public class Table {
                 break;
             case "Buy or sell car":
                 this.firstColumn = "User ID";
-                this.secondColumn = "Car ID";
+                this.secondColumn = "Car Id";
                 break;
             case "Settle to house":
                 this.firstColumn = "User ID";
