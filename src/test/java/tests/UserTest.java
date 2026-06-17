@@ -1,5 +1,8 @@
 package tests;
 
+import api.adapters.UserAdapter;
+import api.models.user.UserRq;
+import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
 import ui.dto.User;
 import org.assertj.core.api.SoftAssertions;
@@ -9,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import utils.TokenProvider;
 
 import java.math.BigDecimal;
 import java.util.stream.Stream;
@@ -16,6 +20,13 @@ import java.util.stream.Stream;
 public class UserTest extends BaseTest {
 
     private final Faker faker = new Faker();
+    private final UserAdapter userAdapter = new UserAdapter();
+
+    private Integer createUserAndGetId() {
+        UserRq userRq = UserRqFactory.validUser();
+        String token = TokenProvider.getAccessToken();
+        return userAdapter.createUserAndGetId(userRq, token);
+    }
 
     @BeforeEach
     public void login() {
@@ -28,8 +39,9 @@ public class UserTest extends BaseTest {
     public void createUser() {
         User user = User.builder().build();
         userSteps.createNewUser(user);
-        Long userId = userSteps.checkCreateUserAndGetId();
+        Integer userId = userSteps.checkCreateUserAndGetId();
         dbSteps.checkUserInDB(user, userId);
+        userAdapter.deleteUser(userId, TokenProvider.getAccessToken());
     }
 
     static Stream<Arguments> sortingData() {
@@ -64,36 +76,41 @@ public class UserTest extends BaseTest {
     @Test
     @DisplayName("Добавление денег пользователю")
     public void addMoney() {
+        UserRq userRq = UserRqFactory.validUser();
+        String token = TokenProvider.getAccessToken();
+        Integer userId = userAdapter.createUserAndGetId(userRq, token);
         SoftAssertions softly = new SoftAssertions();
-        User user = User.builder().build();
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
-        createUserPage.openPage()
-                .isPageOpened()
-                .createNewUser(user);
-        Long userId = createUserPage.getUserId();
         addMoneyPage.openPage()
                 .isPageOpened()
                 .addMoneyToUser(userId, money);
-        BigDecimal result = user.getMoney().add(money);
+        BigDecimal result = userRq.getMoney().add(money);
         softly.assertThat(addMoneyPage.getStatusMessage()).contains("Successfully pushed");
         softly.assertThat(addMoneyPage.getStatusCode()).isEqualTo(200);
         softly.assertThat(addMoneyPage.getUserMoney()).isEqualTo(result);
         softly.assertAll();
+        userAdapter.deleteUser(userId, token);
     }
 
-//    @Test
-//    @DisplayName("Создание нового пользователя")
-//    public void create() {
-//        User user = User.builder().build();
-//        userSteps.checkUserInDB(user, 194L);
-//        userSteps.checkSortUsers("First name", false);
-//        new Button("First Name").clickBtn();
-//    }
+    //Не понимаю как это работает, всегда 408
+    @Test
+    @DisplayName("Запросить кредит")
+    public void issueALoan() {
+        UserRq userRq = UserRqFactory.validUser();
+        String token = TokenProvider.getAccessToken();
+        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
 
-//    @Test
-//    @DisplayName("Создание нового пользователя")
-//    public void request() {
-//        userSteps.checkGetCredit();
-//
-//    }
+        userSteps.checkGetCredit(userId, money);
+        userAdapter.deleteUser(userId, token);
+    }
+
+    @Test
+    @DisplayName("Получение автомобиля пользователя")
+    public void readUserWithCar() {
+        //добавить пользователя
+        //добавить пользователю машину
+        userSteps.readUser();
+    }
+
 }

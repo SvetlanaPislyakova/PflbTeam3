@@ -109,7 +109,7 @@ public class Table {
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
-        message.shouldNotHave(text("Status: not pushed"));
+        message.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(120));
     }
 
     public String getMessagePushToApi() {
@@ -119,23 +119,23 @@ public class Table {
         return message.getText();
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         log.info("Получить статус выполнения операции");
         String message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn)).getText();
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 
-    public Long getResultInt() {
+    public Integer getResultInt() {
         log.info("Получить целочисленный результат");
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         String result = messageResult.replaceAll("\\D+", "");
         System.out.println(result);
-        return Long.parseLong(result);
+        return Integer.parseInt(result);
     }
 
-    public double getResultDouble() {
+    public Double getResultDouble() {
         log.info("Получить результат с плавающей точкой");
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();

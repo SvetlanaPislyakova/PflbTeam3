@@ -31,7 +31,7 @@ public class DBSteps {
     }
 
     @Step("Проверка наличия в БД пользователя с id = {}")
-    public void checkUserInDB(User user, Long userId) {
+    public void checkUserInDB(User user, Integer userId) {
         SoftAssertions softly = new SoftAssertions();
         DBConnection connection = new DBConnection();
         try {

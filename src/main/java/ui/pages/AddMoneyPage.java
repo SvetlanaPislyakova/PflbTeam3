@@ -24,7 +24,7 @@ public class AddMoneyPage extends BasePage {
         return this;
     }
 
-    public AddMoneyPage addMoneyToUser(Long userId, BigDecimal count) {
+    public AddMoneyPage addMoneyToUser(Integer userId, BigDecimal count) {
         table.setValueToInput("User ID", String.valueOf(userId));
         table.setValueToInput("Money", String.valueOf(count));
         table.clickPushToApiBtn();

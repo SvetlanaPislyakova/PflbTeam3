@@ -2,6 +2,8 @@ package ui.pages;
 
 import ui.wrappers.Table;
 
+import java.math.BigDecimal;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
@@ -23,9 +25,9 @@ public class IssueLoanPage extends BasePage {
         return this;
     }
 
-    public IssueLoanPage requestALoan() {
-        table.setValueToInput("User ID", "13004");
-        table.setValueToInput("Размер кредита", "2000.025");
+    public IssueLoanPage requestALoan(Integer userId, BigDecimal money) {
+        table.setValueToInput("User ID", String.valueOf(userId));
+        table.setValueToInput("Размер кредита", String.valueOf(money));
         table.clickIssueLoanBtn();
         return this;
     }

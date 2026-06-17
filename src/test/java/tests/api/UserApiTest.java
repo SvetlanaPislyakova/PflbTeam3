@@ -69,7 +69,7 @@ public class UserApiTest extends  BaseApiTest {
     @DisplayName("API - Удаление пользователя по id")
     public void deleteUser() {
         UserRq userRq = UserRqFactory.validUser();
-        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         userAdapter.deleteUser(userId, accessToken);
         // TODO проверить что удалился
     }
@@ -78,7 +78,7 @@ public class UserApiTest extends  BaseApiTest {
     @DisplayName("API - Получение пользователя по id")
     public void getUserById() {
         UserRq userRq = UserRqFactory.validUser();
-        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         UserRs userRs = userAdapter.getUserById(userId);
         SoftAssertions.assertSoftly((softly -> {
             softly.assertThat(userRs.getFirstName()).isEqualTo(userRq.getFirstName());
@@ -94,7 +94,7 @@ public class UserApiTest extends  BaseApiTest {
     @DisplayName("API - Получение несуществующего пользователя по id")
     public void getNotExistUserById() {
         UserRq userRq = UserRqFactory.validUser();
-        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         userAdapter.deleteUser(userId, accessToken);
         userAdapter.getNotExistingUserById(userId);
     }
@@ -103,7 +103,7 @@ public class UserApiTest extends  BaseApiTest {
     @DisplayName("API - Изменение пользователя")
     public void changeUser() {
         UserRq userRq = UserRqFactory.validUser();
-        int userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         UserRq newUserRq = UserRqFactory.validUserWithId(userId);
         UserRs userRs = userAdapter.changeUser(userId, newUserRq, accessToken);
         SoftAssertions.assertSoftly(softly -> {

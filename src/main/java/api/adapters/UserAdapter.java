@@ -41,7 +41,7 @@ public class UserAdapter extends BaseAdapter {
                 .spec(badRequest400);
     }
 
-    public int createUserAndGetId(UserRq userRq, String token) {
+    public Integer createUserAndGetId(UserRq userRq, String token) {
         log.info("POST - создание нового пользователя и получение его id, 201ok");
         return given()
                 .spec(spec)
@@ -55,7 +55,7 @@ public class UserAdapter extends BaseAdapter {
                 .path("id");
     }
 
-    public UserRs changeUser(int userId, UserRq userRq, String token) {
+    public UserRs changeUser(Integer userId, UserRq userRq, String token) {
         log.info("PUT - Изменение пользователя, 201ok");
         return given()
                 .spec(spec)
