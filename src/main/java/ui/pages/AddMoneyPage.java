@@ -31,8 +31,8 @@ public class AddMoneyPage extends BasePage {
         return this;
     }
 
-    public double getUserMoney() {
-        return table.getResultDouble();
+    public BigDecimal getUserMoney() {
+        return BigDecimal.valueOf(table.getResultDouble());
     }
 
     public String getStatusMessage () {
