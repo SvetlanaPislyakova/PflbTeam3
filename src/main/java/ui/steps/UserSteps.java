@@ -88,4 +88,9 @@ public class UserSteps {
                 .isPageOpened();
 
     }
+
+    @Step("Создание пользователя по ресту")
+    public UserRs createNewUserByApi() {
+
+    }
 }
