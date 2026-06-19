@@ -1,10 +1,11 @@
-package wrappers;
+package ui.wrappers;
 
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Radio {
     private final SelenideElement radio;
+    private final String PATTERN = "//*[th[contains(text(), '%s')] and th[contains(text(), '%s')]]/ancestor::table";
 
 
     public Radio(String name) {
