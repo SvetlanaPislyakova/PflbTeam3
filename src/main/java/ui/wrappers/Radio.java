@@ -5,15 +5,16 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class Radio {
     private final SelenideElement radio;
-    private final String PATTERN = "//*[th[contains(text(), '%s')] and th[contains(text(), '%s')]]/ancestor::table";
+    String name;
 
 
     public Radio(String name) {
+        this.name = name;
         this.radio = $x(String.format("//*[text()='%s']", name));
     }
 
 
-    public void click() {
+    public void click(String name) {
         radio.click();
     }
 
