@@ -23,6 +23,4 @@ public class ReadUserWithCarsPage extends BasePage{
         ID_INPUT.shouldBe(visible);
         return this;
     }
-
-
 }

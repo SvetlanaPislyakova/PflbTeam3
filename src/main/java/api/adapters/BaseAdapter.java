@@ -39,4 +39,12 @@ public class BaseAdapter {
     public static ResponseSpecification badRequest400 = new ResponseSpecBuilder()
             .expectStatusCode(400)
             .build();
+
+    public static ResponseSpecification notFound404 = new ResponseSpecBuilder()
+            .expectStatusCode(404)
+            .build();
+
+    public static ResponseSpecification conflict409 = new ResponseSpecBuilder()
+            .expectStatusCode(409)
+            .build();
 }

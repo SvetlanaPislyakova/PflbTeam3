@@ -51,4 +51,18 @@ public class DBSteps {
             connection.close();
         }
     }
+
+    @Step("Проверка отсутствия в БД пользователя с id = {}")
+    public boolean isUserNotExistsInDB(Integer userId) {
+        DBConnection connection = new DBConnection();
+        try {
+            connection.connect();
+            ResultSet result = connection.selectById("person", userId);
+            return !result.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.close();
+        }
+    }
 }

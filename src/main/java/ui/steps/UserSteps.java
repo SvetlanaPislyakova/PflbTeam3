@@ -89,8 +89,8 @@ public class UserSteps {
 
     }
 
-    @Step("Создание пользователя по ресту")
-    public UserRs createNewUserByApi() {
-
-    }
+//    @Step("Создание пользователя по ресту")
+//    public UserRs createNewUserByApi() {
+//
+//    }
 }
