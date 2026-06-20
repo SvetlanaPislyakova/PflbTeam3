@@ -83,14 +83,9 @@ public class UserSteps {
     }
 
     @Step("")
-    public void readUser() {
+    public void readUserWithCar() {
         readUserPage.openPage()
-                .isPageOpened();
-
+                .isPageOpened()
+                .findCarsByUserId(13304);
     }
-
-//    @Step("Создание пользователя по ресту")
-//    public UserRs createNewUserByApi() {
-//
-//    }
 }

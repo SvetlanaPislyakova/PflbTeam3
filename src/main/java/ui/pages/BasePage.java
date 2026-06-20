@@ -73,4 +73,33 @@ public abstract class BasePage {
         softly.assertAll();
         return this;
     }
+
+    public BasePage checkSortNumericField(Table table, String field) {
+        SoftAssertions softly = new SoftAssertions();
+        List<String> startList = table.getListOfValues(field);
+        List<String> sortedNaturalOrder = new ArrayList<>(startList);
+        List<String> sortedReverseOrder = new ArrayList<>(startList);
+
+        sortedNaturalOrder = sortNaturalOrder(sortedNaturalOrder, true);
+        new Button(field).clickBtn();
+        List<String> sortedNatural = table.getListOfValues(field);
+        softly.assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
+
+        sortedReverseOrder = sortReverseOrder(sortedReverseOrder, true);
+        new Button(field).clickBtn();
+        List<String> sortedReverse = table.getListOfValues(field);
+        softly.assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
+        softly.assertAll();
+        return this;
+    }
+
+    public BasePage checkSortTextField(Table table, String field) {
+
+        return this;
+    }
+
+    public BasePage checkSortTextFieldInDb(Table table, String field) {
+
+        return this;
+    }
 }

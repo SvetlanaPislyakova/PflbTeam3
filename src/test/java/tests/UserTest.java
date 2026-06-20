@@ -69,7 +69,7 @@ public class UserTest extends BaseTest {
     }
 
 
-
+    //TODO Сортировка????
 
 
     @Test
@@ -102,10 +102,10 @@ public class UserTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Получение автомобиля пользователя")
+    @DisplayName("Получение списка автомобилей пользователя")
     public void readUserWithCar() {
         //добавить пользователя
         //добавить пользователю машину
-        userSteps.readUser();
+        userSteps.readUserWithCar();
     }
 }

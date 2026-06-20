@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import ui.wrappers.Button;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.baseUrl;
@@ -21,6 +22,12 @@ public class ReadUserWithCarsPage extends BasePage{
     @Override
     public ReadUserWithCarsPage isPageOpened() {
         ID_INPUT.shouldBe(visible);
+        return this;
+    }
+
+    public ReadUserWithCarsPage findCarsByUserId(Integer userId) {
+        ID_INPUT.setValue(String.valueOf(userId));
+        new Button("Read").clickBtn();
         return this;
     }
 }

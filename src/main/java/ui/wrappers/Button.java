@@ -7,10 +7,13 @@ import static com.codeborne.selenide.Selenide.$x;
 public class Button {
 
     private final String label;
-    private final String PATTERN = "contains(., '%s')";
+
+    private final String PATTERN =
+            "contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '%s')";
+//    private final String PATTERN = "contains(., '%s')";
 
     public Button(String label) {
-        this.label = label;
+        this.label = label.toLowerCase();
     }
 
     public void clickBtn() {
