@@ -74,8 +74,10 @@ public class Table {
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
-        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn)).shouldBe(visible).shouldBe(enabled).setValue(value);
+        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
+                firstColumn, secondColumn));
+        input.shouldBe(visible).shouldBe(enabled).setValue(value);
+        input.shouldHave(text((value)));
     }
 
     public void checkValueInInput(String label, String value) {
