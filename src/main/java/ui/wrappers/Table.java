@@ -77,11 +77,11 @@ public class Table {
         log.info("Заполнить поле '{}' значением '{}'", label, value);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
-        input.shouldBe(visible).shouldBe(enabled).click();
-        input.setValue(value);
-        while(input.getValue().isEmpty()) input.setValue(value);
-//        if(input.getValue().isEmpty()) input.setValue(value);
-//        input.shouldHave(value((value)));
+        input.shouldBe(visible).shouldBe(enabled);
+        for (char ch : value.toCharArray()) {
+            input.sendKeys(String.valueOf(ch));
+        }
+        input.pressTab();
     }
 
     public void checkValueInInput(String label, String value) {

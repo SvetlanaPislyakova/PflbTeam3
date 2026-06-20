@@ -34,7 +34,7 @@ public class UserTest extends BaseTest {
         userSteps.createNewUser(user);
         Integer userId = userSteps.checkCreateUserAndGetId();
         dbSteps.checkUserInDB(user, userId);
-        userAdapter.deleteUser(userId, TokenProvider.getAccessToken());
+        userAdapter.deleteUser(userId, token);
     }
 
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
