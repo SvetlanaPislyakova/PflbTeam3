@@ -89,7 +89,6 @@ public class Table {
     public List<String> getListOfValues (String label) {
         log.info("Получить список значений из столбца '{}'", label);
         int columnIndex = findColumnIndex(label) + 1;
-        List<String> values = new ArrayList<>();
         ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
                 firstColumn, secondColumn));
         listOfValues.shouldHave(CollectionCondition.sizeGreaterThanOrEqual(1));

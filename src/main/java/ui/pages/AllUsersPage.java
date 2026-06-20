@@ -1,11 +1,14 @@
 package ui.pages;
 
+import ui.wrappers.Button;
 import ui.wrappers.Table;
 
 import java.util.List;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class AllUsersPage extends BasePage {
 
@@ -25,7 +28,8 @@ public class AllUsersPage extends BasePage {
     }
 
     public AllUsersPage checkSortUsers(String field, boolean isNumeric) {
-        checkSortObject(table, field, isNumeric);
+        checkSortObjectNaturalOrder(table, field, isNumeric);
+        checkSortObjectReverseOrder(table, field, isNumeric);
         return this;
     }
 

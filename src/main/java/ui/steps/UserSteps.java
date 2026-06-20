@@ -40,13 +40,6 @@ public class UserSteps {
         return userId;
     }
 
-    @Step("Проверка сортировки пользователей по полю {field}")
-    public void checkSortUsers(String field, boolean isNumeric) {
-        allUsersPage.openPage()
-                .isPageOpened()
-                .checkSortUsers(field, isNumeric);
-    }
-
     private List<String> getListFromDb(String field) {
         if (field.equals("First name"))
             return dbSteps.getListFromDB("person", "first_name");
@@ -55,8 +48,7 @@ public class UserSteps {
         return null;
     }
 
-    @Step("Проверка сортировки пользователей по полю 'First name'")
-    public void checkSortUsersInDb(String field, String btnName) {
+    private void checkSortUsersByTextFieldInDb(String field) {
         SoftAssertions softly = new SoftAssertions();
         List<String> temp = getListFromDb(field);
         List<String> sortedNaturalOrder = new ArrayList<>(temp);
@@ -64,15 +56,34 @@ public class UserSteps {
         allUsersPage.openPage()
                 .isPageOpened()
                 .getListValues(field);
-
-        allUsersPage.clickBtn(btnName);
+        allUsersPage.clickBtn(field);
         sortedNaturalOrder = allUsersPage.sortNaturalOrder(sortedNaturalOrder, false);
         softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedNaturalOrder);
-
-        allUsersPage.clickBtn(btnName);
+        allUsersPage.clickBtn("↑ " + field);
         sortedReverseOrder = allUsersPage.sortReverseOrder(sortedReverseOrder, false);
         softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedReverseOrder);
         softly.assertAll();
+    }
+
+    @Step("Проверка сортировки пользователей по полю {field}")
+    public void checkSortUsersByNumericField(String field) {
+        allUsersPage.openPage()
+                .isPageOpened()
+                .checkSortUsers(field, true);
+    }
+
+    @Step("Проверка сортировки пользователей по полю {field}")
+    public void checkSortUsersByFixedTextField(String field) {
+        allUsersPage.openPage()
+                .isPageOpened()
+                .checkSortUsers(field, false);
+    }
+
+    @Step("Проверка сортировки пользователей по полю {field}")
+    public void checkSortUsersByTextField(String field) {
+        allUsersPage.openPage()
+                .isPageOpened();
+        checkSortUsersByTextFieldInDb(field);
     }
 
     @Step("Получение кредита пользователем")

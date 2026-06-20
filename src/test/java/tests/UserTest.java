@@ -5,6 +5,7 @@ import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.provider.ValueSource;
 import ui.dto.User;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,22 +40,6 @@ public class UserTest extends BaseTest {
         userAdapter.deleteUser(userId, TokenProvider.getAccessToken());
     }
 
-    static Stream<Arguments> sortingData() {
-        return Stream.of(
-                Arguments.of("ID", true),
-                Arguments.of("Age", true),
-                Arguments.of("Sex", false),
-                Arguments.of("Money", true)
-        );
-    }
-
-    @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
-    @MethodSource("sortingData")
-    public void checkSortingByField(String field, boolean isNumeric) {
-        userSteps.checkSortUsers(field, isNumeric);
-    }
-
-
     static Stream<Arguments> sortingData2() {
         return Stream.of(
                 Arguments.of("First name", "First Name"),
@@ -64,13 +49,22 @@ public class UserTest extends BaseTest {
 
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @MethodSource("sortingData2")
-    public void checkSortingByFieldInDb(String field, String btnName) {
-        userSteps.checkSortUsersInDb(field, btnName);
+    public void checkSortingByTextField(String field) {
+        userSteps.checkSortUsersByTextField(field);
     }
 
 
-    //TODO Сортировка????
+    @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
+    @ValueSource(strings = {"ID", "Age", "Money"})
+    public void checkSortingByNumericField(String field) {
+        userSteps.checkSortUsersByNumericField(field);
+    }
 
+    @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
+    @ValueSource(strings = {"Sex"})
+    public void checkSortingByFixedTextField(String field) {
+        userSteps.checkSortUsersByFixedTextField(field);
+    }
 
     @Test
     @DisplayName("Добавление денег пользователю")
