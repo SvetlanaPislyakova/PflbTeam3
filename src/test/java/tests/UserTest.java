@@ -12,12 +12,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 import utils.TokenProvider;
 
 import java.math.BigDecimal;
-import java.util.stream.Stream;
 
 public class UserTest extends BaseTest {
 
@@ -40,19 +37,18 @@ public class UserTest extends BaseTest {
         userAdapter.deleteUser(userId, TokenProvider.getAccessToken());
     }
 
-    static Stream<Arguments> sortingData2() {
-        return Stream.of(
-                Arguments.of("First name", "First Name"),
-                Arguments.of("Last name", "Last Name")
-        );
-    }
+//    static Stream<Arguments> sortingData2() {
+//        return Stream.of(
+//                Arguments.of("First name", "First Name"),
+//                Arguments.of("Last name", "Last Name")
+//        );
+//    }
 
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
-    @MethodSource("sortingData2")
+    @ValueSource(strings = {"First name", "Last name"})
     public void checkSortingByTextField(String field) {
         userSteps.checkSortUsersByTextField(field);
     }
-
 
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @ValueSource(strings = {"ID", "Age", "Money"})

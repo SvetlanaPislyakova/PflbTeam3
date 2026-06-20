@@ -15,11 +15,6 @@ public abstract class BasePage {
 
     public abstract BasePage isPageOpened();
 
-    public BasePage clickBtn(String btnName) {
-        new Button(btnName).clickBtn();
-        return this;
-    }
-
     private String normalizeText(String value) {
         if (value == null) {
             return null;
@@ -54,22 +49,24 @@ public abstract class BasePage {
                 .toList();
     }
 
-    public BasePage checkSortObjectNaturalOrder(Table table, String field, boolean isNumeric) {
-        List<String> startList = table.getListOfValues(field);
+    public BasePage checkSortObjectNaturalOrder(Table table, List<String> startList, String field, boolean isNumeric) {
         List<String> sortedNaturalOrder = new ArrayList<>(startList);
         sortedNaturalOrder = sortNaturalOrder(sortedNaturalOrder, isNumeric);
+        System.out.println(sortedNaturalOrder);
         new Button(field).clickBtn();
         List<String> sortedNatural = table.getListOfValues(field);
+        System.out.println(sortedNatural);
         assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
         return this;
     }
 
-    public BasePage checkSortObjectReverseOrder(Table table, String field, boolean isNumeric) {
-        List<String> startList = table.getListOfValues(field);
+    public BasePage checkSortObjectReverseOrder(Table table, List<String> startList, String field, boolean isNumeric) {
         List<String> sortedReverseOrder = new ArrayList<>(startList);
         sortedReverseOrder = sortReverseOrder(sortedReverseOrder, isNumeric);
+        System.out.println(sortedReverseOrder);
         new Button("↑ " + field).clickBtn();
         List<String> sortedReverse = table.getListOfValues(field);
+        System.out.println(sortedReverse);
         assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
         return this;
     }
@@ -92,16 +89,4 @@ public abstract class BasePage {
 //        softly.assertAll();
 //        return this;
 //    }
-
-
-
-    public BasePage checkSortTextField(Table table, String field) {
-
-        return this;
-    }
-
-    public BasePage checkSortTextFieldInDb(Table table, String field) {
-
-        return this;
-    }
 }

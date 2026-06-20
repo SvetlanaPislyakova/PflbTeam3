@@ -1,19 +1,19 @@
 package ui.pages;
 
-import ui.wrappers.Button;
+import ui.steps.DBSteps;
 import ui.wrappers.Table;
 
 import java.util.List;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.sleep;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class AllUsersPage extends BasePage {
 
     private final String tableName = "Read all users";
     Table table = new Table(tableName);
+    private final DBSteps dbSteps = new DBSteps();
+
 
     @Override
     public AllUsersPage openPage() {
@@ -27,13 +27,25 @@ public class AllUsersPage extends BasePage {
         return this;
     }
 
+    private List<String> getListFromDb(String field) {
+        if (field.equals("First name"))
+            return dbSteps.getListFromDB("person", "first_name");
+        else if(field.equals("Last name"))
+            return dbSteps.getListFromDB("person", "second_name");
+        return null;
+    }
+
     public AllUsersPage checkSortUsers(String field, boolean isNumeric) {
-        checkSortObjectNaturalOrder(table, field, isNumeric);
-        checkSortObjectReverseOrder(table, field, isNumeric);
+        List<String> startList = table.getListOfValues(field);
+        checkSortObjectNaturalOrder(table, startList, field, isNumeric);
+        checkSortObjectReverseOrder(table, startList, field, isNumeric);
         return this;
     }
 
-    public List<String> getListValues(String field) {
-        return table.getListOfValues(field);
+    public AllUsersPage checkSortUsersByText(String field, boolean isNumeric) {
+        List<String> startList = getListFromDb(field);
+        checkSortObjectNaturalOrder(table, startList, field, isNumeric);
+        checkSortObjectReverseOrder(table, startList, field, isNumeric);
+        return this;
     }
 }

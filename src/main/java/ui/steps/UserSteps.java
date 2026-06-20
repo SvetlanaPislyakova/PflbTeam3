@@ -9,10 +9,6 @@ import ui.pages.IssueLoanPage;
 import ui.pages.ReadUserWithCarsPage;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserSteps {
 
@@ -40,30 +36,22 @@ public class UserSteps {
         return userId;
     }
 
-    private List<String> getListFromDb(String field) {
-        if (field.equals("First name"))
-            return dbSteps.getListFromDB("person", "first_name");
-        else if(field.equals("Last name"))
-            return dbSteps.getListFromDB("person", "second_name");
-        return null;
-    }
-
-    private void checkSortUsersByTextFieldInDb(String field) {
-        SoftAssertions softly = new SoftAssertions();
-        List<String> temp = getListFromDb(field);
-        List<String> sortedNaturalOrder = new ArrayList<>(temp);
-        List<String> sortedReverseOrder = new ArrayList<>(temp);
-        allUsersPage.openPage()
-                .isPageOpened()
-                .getListValues(field);
-        allUsersPage.clickBtn(field);
-        sortedNaturalOrder = allUsersPage.sortNaturalOrder(sortedNaturalOrder, false);
-        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedNaturalOrder);
-        allUsersPage.clickBtn("↑ " + field);
-        sortedReverseOrder = allUsersPage.sortReverseOrder(sortedReverseOrder, false);
-        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedReverseOrder);
-        softly.assertAll();
-    }
+//    private void checkSortUsersByTextFieldInDb(String field) {
+//        SoftAssertions softly = new SoftAssertions();
+//        List<String> temp = getListFromDb(field);
+//        List<String> sortedNaturalOrder = new ArrayList<>(temp);
+//        List<String> sortedReverseOrder = new ArrayList<>(temp);
+//        allUsersPage.openPage()
+//                .isPageOpened()
+//                .getListValues(field);
+//        allUsersPage.clickBtn(field);
+//        sortedNaturalOrder = allUsersPage.sortNaturalOrder(sortedNaturalOrder, false);
+//        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedNaturalOrder);
+//        allUsersPage.clickBtn("↑ " + field);
+//        sortedReverseOrder = allUsersPage.sortReverseOrder(sortedReverseOrder, false);
+//        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedReverseOrder);
+//        softly.assertAll();
+//    }
 
     @Step("Проверка сортировки пользователей по полю {field}")
     public void checkSortUsersByNumericField(String field) {
@@ -82,8 +70,8 @@ public class UserSteps {
     @Step("Проверка сортировки пользователей по полю {field}")
     public void checkSortUsersByTextField(String field) {
         allUsersPage.openPage()
-                .isPageOpened();
-        checkSortUsersByTextFieldInDb(field);
+                .isPageOpened()
+                .checkSortUsersByText(field, false);
     }
 
     @Step("Получение кредита пользователем")
