@@ -77,11 +77,7 @@ public class Table {
         log.info("Заполнить поле '{}' значением '{}'", label, value);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
-        input.shouldBe(visible).shouldBe(enabled);
-        for (char ch : value.toCharArray()) {
-            input.sendKeys(String.valueOf(ch));
-        }
-        input.pressTab();
+        input.shouldBe(visible).shouldBe(enabled).setValue(value);
     }
 
     public void checkValueInInput(String label, String value) {

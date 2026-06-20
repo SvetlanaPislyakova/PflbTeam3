@@ -58,8 +58,9 @@ public class BaseTest {
 
         Configuration.timeout = 10000;
         Configuration.baseUrl = "http://82.142.167.37:4881/";
-//        Configuration.clickViaJs = true;
+        Configuration.clickViaJs = true;
         ChromeOptions options = new ChromeOptions();
+        Configuration.fastSetValue = true;
         options.addArguments("--headless=new");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-notifications");
