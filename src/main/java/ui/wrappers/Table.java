@@ -76,7 +76,8 @@ public class Table {
         log.info("Заполнить поле '{}' значением '{}'", label, value);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
-        input.shouldBe(visible).shouldBe(enabled).shouldBe(clickable).sendKeys(value);
+        input.shouldBe(visible).shouldBe(enabled).setValue(value);
+        input.pressTab();
         input.shouldHave(text((value)));
     }
 
