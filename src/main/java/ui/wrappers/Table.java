@@ -77,7 +77,13 @@ public class Table {
         log.info("Заполнить поле '{}' значением '{}'", label, value);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
-        input.shouldBe(visible).shouldBe(enabled).setValue(value);
+        input.shouldBe(visible).shouldBe(enabled);
+        executeJavaScript(
+                "arguments[0].value = arguments[1];" +
+                        "arguments[0].dispatchEvent(new Event('input', { bubbles: true }));" +
+                        "arguments[0].dispatchEvent(new Event('change', { bubbles: true }));",
+                input, value
+        );
     }
 
     public void checkValueInInput(String label, String value) {
