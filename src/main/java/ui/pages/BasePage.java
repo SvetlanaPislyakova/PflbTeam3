@@ -70,23 +70,4 @@ public abstract class BasePage {
         assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
         return this;
     }
-
-//    public BasePage checkSortObject(Table table, String field, boolean isNumeric) {
-//        SoftAssertions softly = new SoftAssertions();
-//        List<String> startList = table.getListOfValues(field);
-//        List<String> sortedNaturalOrder = new ArrayList<>(startList);
-//        List<String> sortedReverseOrder = new ArrayList<>(startList);
-//
-//        sortedNaturalOrder = sortNaturalOrder(sortedNaturalOrder, isNumeric);
-//        new Button(field).clickBtn();
-//        List<String> sortedNatural = table.getListOfValues(field);
-//        softly.assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
-//
-//        sortedReverseOrder = sortReverseOrder(sortedReverseOrder, isNumeric);
-//        new Button(field).clickBtn();
-//        List<String> sortedReverse = table.getListOfValues(field);
-//        softly.assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
-//        softly.assertAll();
-//        return this;
-//    }
 }

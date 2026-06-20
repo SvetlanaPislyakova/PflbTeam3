@@ -37,13 +37,6 @@ public class UserTest extends BaseTest {
         userAdapter.deleteUser(userId, TokenProvider.getAccessToken());
     }
 
-//    static Stream<Arguments> sortingData2() {
-//        return Stream.of(
-//                Arguments.of("First name", "First Name"),
-//                Arguments.of("Last name", "Last Name")
-//        );
-//    }
-
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @ValueSource(strings = {"First name", "Last name"})
     public void checkSortingByTextField(String field) {

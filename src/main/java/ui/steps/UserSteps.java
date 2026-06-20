@@ -36,23 +36,6 @@ public class UserSteps {
         return userId;
     }
 
-//    private void checkSortUsersByTextFieldInDb(String field) {
-//        SoftAssertions softly = new SoftAssertions();
-//        List<String> temp = getListFromDb(field);
-//        List<String> sortedNaturalOrder = new ArrayList<>(temp);
-//        List<String> sortedReverseOrder = new ArrayList<>(temp);
-//        allUsersPage.openPage()
-//                .isPageOpened()
-//                .getListValues(field);
-//        allUsersPage.clickBtn(field);
-//        sortedNaturalOrder = allUsersPage.sortNaturalOrder(sortedNaturalOrder, false);
-//        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedNaturalOrder);
-//        allUsersPage.clickBtn("↑ " + field);
-//        sortedReverseOrder = allUsersPage.sortReverseOrder(sortedReverseOrder, false);
-//        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedReverseOrder);
-//        softly.assertAll();
-//    }
-
     @Step("Проверка сортировки пользователей по полю {field}")
     public void checkSortUsersByNumericField(String field) {
         allUsersPage.openPage()
