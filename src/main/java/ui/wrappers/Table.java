@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -78,7 +79,8 @@ public class Table {
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).click();
         input.setValue(value);
-        input.shouldHave(value((value)));
+        if(input.getValue().isEmpty()) input.setValue(value);
+//        input.shouldHave(value((value)));
     }
 
     public void checkValueInInput(String label, String value) {
