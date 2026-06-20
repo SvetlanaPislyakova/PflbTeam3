@@ -79,7 +79,8 @@ public class Table {
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).click();
         input.setValue(value);
-        if(input.getValue().isEmpty()) input.setValue(value);
+        while(input.getValue().isEmpty()) input.setValue(value);
+//        if(input.getValue().isEmpty()) input.setValue(value);
 //        input.shouldHave(value((value)));
     }
 
