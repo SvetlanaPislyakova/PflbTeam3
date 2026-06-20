@@ -72,15 +72,13 @@ public class Table {
     }
 
     public void setValueToInput(String label, String value) {
-        sleep(1000);
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
         $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn)).shouldBe(visible).shouldBe(enabled).setValue(value);
+                firstColumn, secondColumn)).shouldBe(visible).shouldBe(clickable).setValue(value);
     }
 
     public void checkValueInInput(String label, String value) {
-        sleep(1000);
         int columnIndex = findColumnIndex(label) + 1;
         $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn)).shouldHave(value(value));
@@ -97,7 +95,6 @@ public class Table {
     }
 
     public void clickPushToApiBtn() {
-        sleep(1000);
         log.info("Нажать на кнопку 'Push to api'");
         $x(String.format(PATTERN + "/parent::div/div/button[contains(@class, 'tableButton')]",
                 firstColumn, secondColumn)).click();
@@ -116,7 +113,6 @@ public class Table {
     }
 
     public String getMessagePushToApi() {
-        sleep(1000);
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
         message.shouldNotHave(text("Status: not pushed"));
@@ -124,7 +120,6 @@ public class Table {
     }
 
     public Integer getStatus() {
-        sleep(1000);
         log.info("Получить статус выполнения операции");
         String message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn)).getText();
@@ -132,7 +127,6 @@ public class Table {
     }
 
     public Integer getResultInt() {
-        sleep(1000);
         log.info("Получить целочисленный результат");
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
@@ -142,7 +136,6 @@ public class Table {
     }
 
     public Double getResultDouble() {
-        sleep(1000);
         log.info("Получить результат с плавающей точкой");
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
