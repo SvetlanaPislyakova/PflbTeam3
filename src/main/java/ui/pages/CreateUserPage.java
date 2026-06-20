@@ -40,11 +40,11 @@ public class CreateUserPage extends BasePage {
         return table.getMessagePushToApi();
     }
 
-    public int getStatusCode() {
+    public Integer getStatusCode() {
         return table.getStatus();
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return table.getResultInt();
     }
 }

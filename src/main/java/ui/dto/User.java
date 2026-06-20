@@ -12,7 +12,7 @@ public class User {
 
     private static final Faker faker = new Faker();
 
-    private final Long id;
+    private final Integer id;
     @Builder.Default
     private final String firstName = faker.name().firstName();
     @Builder.Default

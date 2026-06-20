@@ -43,5 +43,4 @@ public class TestListener implements TestWatcher {
             log.error("Could not take screenshot", e);
         }
     }
-
 }
