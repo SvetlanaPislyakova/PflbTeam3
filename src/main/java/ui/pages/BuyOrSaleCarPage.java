@@ -24,11 +24,11 @@ public class BuyOrSaleCarPage extends BasePage {
         return this;
     }
 
-    public BuyOrSaleCarPage requestALoan() {
+    public BuyOrSaleCarPage setData() {
         table.setValueToInput("User ID", "13004");
         table.setValueToInput("Car Id", "8883");
-        table.clickPushToApiBtn();
         radio.click("BUY");
+        table.clickPushToApiBtn();
         return this;
     }
 

@@ -11,11 +11,8 @@ import java.math.BigDecimal;
 public class Car {
 
     private static final Faker faker = new Faker();
-    private String[] engineTypes = {"CNG", "Diesel", "Gasoline", "Hydrogenic","PHEV"};
-
     @Builder.Default
-    private final String engineType = faker.options().option(engineTypes);
-    //private final String engineType = faker.options().option("CNG", "Diesel", "Gasoline", "Hydrogenic","PHEV");
+    private final String engineType = faker.options().option("CNG", "Diesel", "Gasoline", "Hydrogenic","PHEV");
     @Builder.Default
     private final String mark = faker.company().name();
     @Builder.Default
