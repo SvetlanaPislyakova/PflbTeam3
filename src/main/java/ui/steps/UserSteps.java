@@ -28,7 +28,6 @@ public class UserSteps {
                 .createNewUser(user);
     }
 
-
     @Step("Проверить, что сообщение содержит текст - {}")
     public void checkMessageContainsText(String text) {
         assertThat(createUserPage.getStatusMessage()).contains(text);
@@ -89,5 +88,9 @@ public class UserSteps {
                 .findCarsByUserId(userId)
                 .checkUserInfo(userId)
                 .checkEmptyCarsInfo();
+    }
+
+    public void checkUserExistsInDb(Integer userId) {
+        assertThat(dbSteps.isUserExistsInDB(userId)).isTrue();
     }
 }

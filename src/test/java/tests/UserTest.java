@@ -111,6 +111,7 @@ public class UserTest extends BaseTest {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, token);
         userSteps.checkUserHaveNoCars(userId);
+        userSteps.checkUserExistsInDb(userId);
         userAdapter.deleteUser(userId, token);
     }
 

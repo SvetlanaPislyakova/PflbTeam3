@@ -83,7 +83,7 @@ public class UserApiTest extends  BaseApiTest {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         userAdapter.deleteUser(userId, accessToken);
-        assertThat(dbSteps.isUserNotExistsInDB(userId)).isTrue();
+        assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class UserApiTest extends  BaseApiTest {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         userAdapter.deleteUser(userId, accessToken);
-        assertThat(dbSteps.isUserNotExistsInDB(userId)).isTrue();
+        assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
         userAdapter.deleteNotExistingUser(userId, accessToken);
     }
 

@@ -41,7 +41,7 @@ public class DBSteps {
                 softly.assertThat(result.getInt("Age")).isEqualTo(user.getAge());
                 softly.assertThat(result.getString("first_name")).isEqualTo(user.getFirstName());
                 softly.assertThat(result.getString("second_name")).isEqualTo(user.getLastName());
-                softly.assertThat(result.getBigDecimal("money")).isEqualTo(user.getMoney());
+                softly.assertThat(result.getBigDecimal("money")).isEqualByComparingTo(user.getMoney());
                 softly.assertThat(result.getBoolean("sex")).isEqualTo(user.getSex().equals("MALE"));
             }
             softly.assertAll();
@@ -52,13 +52,13 @@ public class DBSteps {
         }
     }
 
-    @Step("Проверка отсутствия в БД пользователя с id = {}")
-    public boolean isUserNotExistsInDB(Integer userId) {
+    @Step("Проверка наличия в БД пользователя с id = {}")
+    public boolean isUserExistsInDB(Integer userId) {
         DBConnection connection = new DBConnection();
         try {
             connection.connect();
             ResultSet result = connection.selectById("person", userId);
-            return !result.next();
+            return result.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
