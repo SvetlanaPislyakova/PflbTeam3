@@ -83,40 +83,11 @@ public class Table {
         String locator = String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input", firstColumn, secondColumn);
 
         SelenideElement input = $x(locator);
-        log.info("Before: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
-                input.isDisplayed(),
-                input.isEnabled(),
-                input.getValue(),
-                input.getAttribute("value"),
-                input.getDomProperty("value"));
-
         input.scrollIntoView(true);
         input.click();
-
-        log.info("After click: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
-                input.isDisplayed(),
-                input.isEnabled(),
-                input.getValue(),
-                input.getAttribute("value"),
-                input.getDomProperty("value"));
-
         input.setValue(value);
-        log.info("After setValue: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
-                input.isDisplayed(),
-                input.isEnabled(),
-                input.getValue(),
-                input.getAttribute("value"),
-                input.getDomProperty("value"));
 
         SelenideElement reFound = $x(locator);
-
-        log.info("Refound: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
-                reFound.isDisplayed(),
-                reFound.isEnabled(),
-                reFound.getValue(),
-                reFound.getAttribute("value"),
-                reFound.getDomProperty("value"));
-
         reFound.shouldHave(value(value));
     }
 
