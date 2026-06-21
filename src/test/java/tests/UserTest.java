@@ -68,7 +68,7 @@ public class UserTest extends BaseTest {
         BigDecimal result = userRq.getMoney().add(money);
         softly.assertThat(addMoneyPage.getStatusMessage()).contains("Successfully pushed");
         softly.assertThat(addMoneyPage.getStatusCode()).isEqualTo(200);
-        softly.assertThat(addMoneyPage.getUserMoney()).isEqualTo(result);
+        softly.assertThat(addMoneyPage.getUserMoney()).isEqualByComparingTo(result);
         softly.assertAll();
         userAdapter.deleteUser(userId, token);
     }

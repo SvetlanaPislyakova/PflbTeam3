@@ -75,20 +75,10 @@ public class Table {
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
-//        sleep(500);
-//        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-//                firstColumn, secondColumn));
-//        input.shouldBe(visible).shouldBe(enabled).setValue(value);
-
-        String locator = String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input", firstColumn, secondColumn);
-
-        SelenideElement input = $x(locator);
-        input.scrollIntoView(true);
-        input.click();
-        input.setValue(value);
-
-        SelenideElement reFound = $x(locator);
-        reFound.shouldHave(value(value));
+        sleep(50);
+        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
+                firstColumn, secondColumn));
+        input.shouldBe(visible).shouldBe(enabled).setValue(value);
     }
 
     public void checkValueInInput(String label, String value) {

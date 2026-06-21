@@ -1,8 +1,14 @@
 package ui.pages;
 
+import com.codeborne.selenide.SelenideElement;
 import ui.wrappers.DropDown;
 
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+
 public class MainPage extends BasePage {
+
+    private final SelenideElement ALL_POST_BTN = $("[href='#/create/all']");
 
     @Override
     public BasePage openPage() {
@@ -12,22 +18,8 @@ public class MainPage extends BasePage {
     @Override
     public BasePage isPageOpened() { return null; }
 
-    public void openPageWithDropDown(String label, String option) {
-        new DropDown(label).selectOption(option);
-    }
-
-    public CreateUserPage openPageCreateUser() {
-        new DropDown("Users").selectOption("Create new");
-        return new CreateUserPage();
-    }
-
-    public AllUsersPage openPageAllUsers() {
-        new DropDown("Users").selectOption("Read all");
-        return new AllUsersPage();
-    }
-
-    public AddMoneyPage openPageAddMoney() {
-        new DropDown("Users").selectOption("Add money");
-        return new AddMoneyPage();
+    public MainPage openAllPostPage() {
+        ALL_POST_BTN.click();
+        return this;
     }
 }

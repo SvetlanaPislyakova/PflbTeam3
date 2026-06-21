@@ -39,8 +39,6 @@ public class BaseTest {
     protected CreateUserPage createUserPage;
     protected AllUsersPage allUsersPage;
     protected AddMoneyPage addMoneyPage;
-    protected MainPage mainPage;
-
 
     @BeforeAll
     public static void setupAllure() {
@@ -74,7 +72,6 @@ public class BaseTest {
         createUserPage = new CreateUserPage();
         allUsersPage = new AllUsersPage();
         addMoneyPage = new AddMoneyPage();
-        mainPage = new MainPage();
     }
 
     @AfterEach

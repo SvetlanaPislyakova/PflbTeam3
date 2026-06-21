@@ -1,6 +1,7 @@
 package tests;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import ui.pages.*;
@@ -15,6 +16,7 @@ public class MainPageTest extends BaseTest {
     private final ReadUserWithCarsPage readUserWithCarsPage = new ReadUserWithCarsPage();
     private final AddMoneyPage addMoneyPage = new AddMoneyPage();
     private final IssueLoanPage issueLoanPage = new IssueLoanPage();
+    private final MainPage mainPage = new MainPage();
 
     @BeforeEach
     public void login() {
@@ -41,5 +43,10 @@ public class MainPageTest extends BaseTest {
     public void checkOpeningPage(String dropDawn, String option, String pageName) {
         new DropDown(dropDawn).selectOption(option);
         pages.get(pageName).isPageOpened();
+    }
+
+    @Test
+    public void openAllPost() {
+        mainPage.openAllPostPage();
     }
 }
