@@ -10,18 +10,21 @@ import static com.codeborne.selenide.Selenide.*;
 @Log4j2
 public class CreateUserPage extends BasePage {
 
+    private final String RADIO_BTN = "//input[@value='%s']";
     private final String tableName = "Create new user";
     private final Table table = new Table(tableName);
 
 
     @Override
     public CreateUserPage openPage() {
+        log.info("Открыть страницу '{}'", tableName);
         open(baseUrl + "#/create/user");
         return this;
     }
 
     @Override
     public CreateUserPage isPageOpened() {
+        log.info("Проверить, что страница '{}' открыта", tableName);
         table.checkTableVisible();
         return this;
     }
@@ -31,7 +34,7 @@ public class CreateUserPage extends BasePage {
         table.setValueToInput("Last Name", user.getLastName());
         table.setValueToInput("Age", String.valueOf(user.getAge()));
         table.setValueToInput("Money", String.valueOf(user.getMoney()));
-        $x(String.format("//input[@value='%s']", user.getSex())).click();
+        $x(String.format(RADIO_BTN, user.getSex())).click();
         table.clickPushToApiBtn();
         return this;
     }

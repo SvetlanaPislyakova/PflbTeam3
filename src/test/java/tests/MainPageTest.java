@@ -1,9 +1,20 @@
 package tests;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import ui.pages.*;
+import ui.wrappers.DropDown;
+
+import java.util.Map;
 
 public class MainPageTest extends BaseTest {
+
+    private final AllUsersPage allUsersPage = new AllUsersPage();
+    private final CreateUserPage createUserPage = new CreateUserPage();
+    private final ReadUserWithCarsPage readUserWithCarsPage = new ReadUserWithCarsPage();
+    private final AddMoneyPage addMoneyPage = new AddMoneyPage();
+    private final IssueLoanPage issueLoanPage = new IssueLoanPage();
 
     @BeforeEach
     public void login() {
@@ -11,13 +22,24 @@ public class MainPageTest extends BaseTest {
                 .acceptAlert("Successful authorization");
     }
 
-    @Test
-    public void checkDropDownUsers() {
-        mainPage.openPageCreateUser()
-                .isPageOpened();
-        mainPage.openPageAddMoney()
-                .isPageOpened();
-        mainPage.openPageAllUsers()
-                .isPageOpened();
+    private final Map<String, BasePage> pages = Map.of(
+            "AllUsersPage", allUsersPage,
+            "CreateUserPage", createUserPage,
+            "ReadUserWithCarsPage", readUserWithCarsPage,
+            "AddMoneyPage", addMoneyPage,
+            "IssueLoanPage", issueLoanPage
+    );
+
+    @ParameterizedTest(name = "Проверка открытия страницы {2}")
+    @CsvSource({
+            "Users, Read all, AllUsersPage",
+            "Users, Create new, CreateUserPage",
+            "Users, Read user with cars, ReadUserWithCarsPage",
+            "Users, Add money, AddMoneyPage",
+            "Users, Issue a loan, IssueLoanPage"
+    })
+    public void checkOpeningPage(String dropDawn, String option, String pageName) {
+        new DropDown(dropDawn).selectOption(option);
+        pages.get(pageName).isPageOpened();
     }
 }

@@ -1,5 +1,6 @@
 package ui.pages;
 
+import lombok.extern.log4j.Log4j2;
 import ui.steps.DBSteps;
 import ui.wrappers.Table;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 
+@Log4j2
 public class AllUsersPage extends BasePage {
 
     private final String tableName = "Read all users";
@@ -17,12 +19,14 @@ public class AllUsersPage extends BasePage {
 
     @Override
     public AllUsersPage openPage() {
+        log.info("Открыть страницу '{}'", tableName);
         open(baseUrl + "#/read/users");
         return this;
     }
 
     @Override
     public AllUsersPage isPageOpened() {
+        log.info("Проверить, что страница '{}' открыта", tableName);
         table.checkTableVisible();
         return this;
     }
