@@ -4,7 +4,6 @@ import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import ui.pages.CreateUserPage;
 import ui.pages.LoginPage;
-import ui.pages.MainPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

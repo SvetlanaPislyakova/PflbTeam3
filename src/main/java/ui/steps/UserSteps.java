@@ -9,6 +9,9 @@ import ui.pages.IssueLoanPage;
 import ui.pages.ReadUserWithCarsPage;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserSteps {
 
@@ -23,6 +26,12 @@ public class UserSteps {
         createUserPage.openPage()
                 .isPageOpened()
                 .createNewUser(user);
+    }
+
+
+    @Step("Проверить, что сообщение содержит текст - {}")
+    public void checkMessageContainsText(String text) {
+        assertThat(createUserPage.getStatusMessage()).contains(text);
     }
 
     @Step("Проверка успешности создания пользователя и получение его id")
@@ -64,10 +73,21 @@ public class UserSteps {
                 .requestALoan(userId, money);
     }
 
-    @Step("")
-    public void readUserWithCar() {
+    @Step("Проверить, что у пользователя есть машины с id = {carsId}")
+    public void checkUserCars(Integer userId, List<Integer> carsId) {
         readUserPage.openPage()
                 .isPageOpened()
-                .findCarsByUserId(13304);
+                .findCarsByUserId(userId)
+                .checkUserInfo(userId)
+                .checkCarsInfo(carsId);
+    }
+
+    @Step("Проверить, что у пользователя нет машин")
+    public void checkUserHaveNoCars(Integer userId) {
+        readUserPage.openPage()
+                .isPageOpened()
+                .findCarsByUserId(userId)
+                .checkUserInfo(userId)
+                .checkEmptyCarsInfo();
     }
 }

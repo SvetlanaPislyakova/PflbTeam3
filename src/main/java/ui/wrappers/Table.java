@@ -6,9 +6,9 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -24,6 +24,7 @@ public class Table {
         switch (tableName) {
             case "Read all users":
             case "Create new user":
+            case "User info":
                 this.firstColumn = "Age";
                 this.secondColumn = "Sex";
                 break;
@@ -45,6 +46,7 @@ public class Table {
                 break;
             case "Read all cars":
             case "Create new car":
+            case "Car info":
                 this.firstColumn = "Engine\u00A0Type";
                 this.secondColumn = "Mark";
                 break;
@@ -75,16 +77,23 @@ public class Table {
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
-        sleep(50);
+        sleep(100);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
     }
 
-    public void checkValueInInput(String label, String value) {
+    public String getValueFromInput(String label) {
         int columnIndex = findColumnIndex(label) + 1;
-        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn)).shouldHave(value(value));
+        return $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
+                firstColumn, secondColumn)).getValue();
+    }
+
+    public String getValueFromCell(String label) {
+        int columnIndex = findColumnIndex(label) + 1;
+        log.info("Получить значение из столбца '{}'", label);
+        return $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
+                firstColumn, secondColumn)).getText();
     }
 
     public List<String> getListOfValues (String label) {
@@ -94,6 +103,14 @@ public class Table {
                 firstColumn, secondColumn));
         listOfValues.shouldHave(CollectionCondition.sizeGreaterThanOrEqual(1));
         return listOfValues.texts();
+    }
+
+    public boolean isListOfValuesEmpty (String label) {
+        log.info("Проверить, что в столбце '{}' нет значений", label);
+        int columnIndex = findColumnIndex(label) + 1;
+        ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
+                firstColumn, secondColumn));
+        return listOfValues.isEmpty();
     }
 
     public void clickPushToApiBtn() {
@@ -142,5 +159,25 @@ public class Table {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         return Double.parseDouble(messageResult.replaceAll("[^\\d.]", ""));
+    }
+
+    public List<Map<String, String>> readRowsAsMap() {
+        List<String> headers = $$x(String.format(PATTERN + "//th", firstColumn, secondColumn))
+                .stream()
+                .map(SelenideElement::text)
+                .map(String::trim)
+                .toList();
+        return $$x(PATTERN + "//tbody/tr").stream()
+                .map(row -> {
+                    List<String> cells = row.$$("td").stream()
+                            .map(SelenideElement::text)
+                            .map(String::trim)
+                            .toList();
+                    Map<String, String> map = new LinkedHashMap<>();
+                    for (int i = 0; i < headers.size(); ++i) {
+                        map.put(headers.get(i), cells.get(i));
+                    }
+                    return map;
+                }).toList();
     }
 }

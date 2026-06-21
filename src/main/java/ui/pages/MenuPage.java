@@ -1,12 +1,11 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
-import ui.wrappers.DropDown;
 
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class MainPage extends BasePage {
+public class MenuPage extends BasePage {
 
     private final SelenideElement ALL_POST_BTN = $("[href='#/create/all']");
 
@@ -18,7 +17,7 @@ public class MainPage extends BasePage {
     @Override
     public BasePage isPageOpened() { return null; }
 
-    public MainPage openAllPostPage() {
+    public MenuPage openAllPostPage() {
         ALL_POST_BTN.click();
         return this;
     }

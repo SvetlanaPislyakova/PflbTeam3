@@ -14,7 +14,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import ui.pages.AddMoneyPage;
 import ui.pages.AllUsersPage;
 import ui.pages.CreateUserPage;
-import ui.pages.MainPage;
 import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
 import ui.steps.UserSteps;

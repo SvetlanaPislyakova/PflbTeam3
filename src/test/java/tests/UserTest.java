@@ -5,6 +5,8 @@ import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ui.dto.User;
 import org.assertj.core.api.SoftAssertions;
@@ -12,9 +14,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import utils.TokenProvider;
+import ui.dto.UserFactory;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class UserTest extends BaseTest {
 
@@ -30,11 +34,28 @@ public class UserTest extends BaseTest {
     @Test
     @DisplayName("Создание нового пользователя")
     public void createUser() {
-        User user = User.builder().build();
+        User user = UserFactory.validUser();
         userSteps.createNewUser(user);
         Integer userId = userSteps.checkCreateUserAndGetId();
         dbSteps.checkUserInDB(user, userId);
         userAdapter.deleteUser(userId, token);
+    }
+
+    static Stream<Arguments> invalidUsers() {
+        return Stream.of(
+                Arguments.of(UserFactory.userWithNullFirstName()),
+                Arguments.of(UserFactory.userWithNullLastName()),
+                Arguments.of(UserFactory.userWithNullAge()),
+                Arguments.of(UserFactory.userWithNullMoney()),
+                Arguments.of(UserFactory.userWithNullSex())
+        );
+    }
+
+    @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
+    @MethodSource("invalidUsers")
+    public void createInvalidUser(User user) {
+        userSteps.createNewUser(user);
+        userSteps.checkMessageContainsText("Invalid request data");
     }
 
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
@@ -85,10 +106,20 @@ public class UserTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Получение списка автомобилей пользователя")
-    public void readUserWithCar() {
-        //добавить пользователя
-        //добавить пользователю машину
-        userSteps.readUserWithCar();
+    @DisplayName("Получение списка автомобилей пользователя (у пользователя нет машины)")
+    public void readUserWithNoCar() {
+        UserRq userRq = UserRqFactory.validUser();
+        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        userSteps.checkUserHaveNoCars(userId);
+        userAdapter.deleteUser(userId, token);
+    }
+
+    @Test
+    @DisplayName("Получение списка автомобилей пользователя (у пользователя 1 машина)")
+    public void readUserWithOneCar() {
+        UserRq userRq = UserRqFactory.validUser();
+        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        userSteps.checkUserCars(13304, List.of(54));
+        userAdapter.deleteUser(userId, token);
     }
 }

@@ -7,20 +7,15 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-@Builder
+@Builder(toBuilder = true)
 public class User {
 
     private static final Faker faker = new Faker();
 
     private final Integer id;
-    @Builder.Default
-    private final String firstName = faker.name().firstName();
-    @Builder.Default
-    private final String lastName = faker.name().lastName();
-    @Builder.Default
-    private final Integer age = faker.number().numberBetween(10, 80);
-    @Builder.Default
-    private final String Sex = faker.options().option("MALE", "FEMALE");
-    @Builder.Default
-    private final BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
+    private final String firstName;
+    private final String lastName;
+    private final Integer age;
+    private final String sex;
+    private final BigDecimal money;
 }

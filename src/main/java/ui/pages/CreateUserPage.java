@@ -34,7 +34,7 @@ public class CreateUserPage extends BasePage {
         table.setValueToInput("Last Name", user.getLastName());
         table.setValueToInput("Age", String.valueOf(user.getAge()));
         table.setValueToInput("Money", String.valueOf(user.getMoney()));
-        $x(String.format(RADIO_BTN, user.getSex())).click();
+        if(user.getSex() != null) $x(String.format(RADIO_BTN, user.getSex())).click();
         table.clickPushToApiBtn();
         return this;
     }

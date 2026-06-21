@@ -9,14 +9,14 @@ import ui.wrappers.DropDown;
 
 import java.util.Map;
 
-public class MainPageTest extends BaseTest {
+public class MenuTest extends BaseTest {
 
     private final AllUsersPage allUsersPage = new AllUsersPage();
     private final CreateUserPage createUserPage = new CreateUserPage();
     private final ReadUserWithCarsPage readUserWithCarsPage = new ReadUserWithCarsPage();
     private final AddMoneyPage addMoneyPage = new AddMoneyPage();
     private final IssueLoanPage issueLoanPage = new IssueLoanPage();
-    private final MainPage mainPage = new MainPage();
+    private final MenuPage menuPage = new MenuPage();
 
     @BeforeEach
     public void login() {
@@ -47,6 +47,6 @@ public class MainPageTest extends BaseTest {
 
     @Test
     public void openAllPost() {
-        mainPage.openAllPostPage();
+        menuPage.openAllPostPage();
     }
 }
