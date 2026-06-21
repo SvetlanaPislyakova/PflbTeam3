@@ -77,7 +77,7 @@ public class Table {
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
-        sleep(100);
+        sleep(200);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
@@ -105,12 +105,13 @@ public class Table {
         return listOfValues.texts();
     }
 
-    public boolean isListOfValuesEmpty (String label) {
-        log.info("Проверить, что в столбце '{}' нет значений", label);
-        int columnIndex = findColumnIndex(label) + 1;
-        ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
-                firstColumn, secondColumn));
-        return listOfValues.isEmpty();
+    public void rowsShouldBeEmpty () {
+        log.info("Проверить, что в таблице нет строк");
+//        int columnIndex = findColumnIndex(label) + 1;
+//        ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
+//                firstColumn, secondColumn)).shouldHave(CollectionCondition.size(0));
+        $$x(String.format(PATTERN + "//tbody/tr", firstColumn, secondColumn))
+                .shouldBe(CollectionCondition.empty);
     }
 
     public void clickPushToApiBtn() {

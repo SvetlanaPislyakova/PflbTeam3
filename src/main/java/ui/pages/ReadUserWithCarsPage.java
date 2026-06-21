@@ -8,6 +8,7 @@ import ui.wrappers.Table;
 
 import java.util.List;
 
+import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
@@ -36,7 +37,7 @@ public class ReadUserWithCarsPage extends BasePage {
     }
 
     public ReadUserWithCarsPage findCarsByUserId(Integer userId) {
-        ID_INPUT.setValue(String.valueOf(userId));
+        ID_INPUT.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(userId));
         new Button("Read").clickBtn();
         return this;
     }
@@ -57,7 +58,7 @@ public class ReadUserWithCarsPage extends BasePage {
     }
 
     public ReadUserWithCarsPage checkEmptyCarsInfo() {
-        assertThat(carInfoTable.isListOfValuesEmpty("ID")).isTrue();
+        carInfoTable.rowsShouldBeEmpty();
         return this;
     }
 }
