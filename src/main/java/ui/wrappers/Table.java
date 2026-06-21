@@ -76,11 +76,48 @@ public class Table {
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
 //        sleep(500);
-        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn));
-        input.shouldBe(visible);
+//        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
+//                firstColumn, secondColumn));
+//        input.shouldBe(visible).shouldBe(enabled).setValue(value);
+
+        String locator = String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input", firstColumn, secondColumn);
+
+        SelenideElement input = $x(locator);
+        log.info("Before: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
+                input.isDisplayed(),
+                input.isEnabled(),
+                input.getValue(),
+                input.getAttribute("value"),
+                input.getDomProperty("value"));
+
         input.scrollIntoView(true);
-        input.shouldBe(enabled).setValue(value);
+        input.click();
+
+        log.info("After click: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
+                input.isDisplayed(),
+                input.isEnabled(),
+                input.getValue(),
+                input.getAttribute("value"),
+                input.getDomProperty("value"));
+
+        input.setValue(value);
+        log.info("After setValue: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
+                input.isDisplayed(),
+                input.isEnabled(),
+                input.getValue(),
+                input.getAttribute("value"),
+                input.getDomProperty("value"));
+
+        SelenideElement reFound = $x(locator);
+
+        log.info("Refound: displayed={}, enabled={}, value='{}', attrValue='{}', domProp='{}'",
+                reFound.isDisplayed(),
+                reFound.isEnabled(),
+                reFound.getValue(),
+                reFound.getAttribute("value"),
+                reFound.getDomProperty("value"));
+
+        reFound.shouldHave(value(value));
     }
 
     public void checkValueInInput(String label, String value) {
