@@ -29,4 +29,46 @@ public class HouseAdapter extends BaseAdapter {
                 .extract()
                 .as(HouseRs.class);
     }
+
+    private ValidatableResponse settleUserRequest(Integer houseId, Integer userId, String token) {
+        return given()
+                .spec(spec)
+                .pathParam("houseId", houseId)
+                .pathParam("userId", userId)
+                .header("Authorization", "Bearer " + token)
+                .log().all()
+                .when()
+                .post("/house/{houseId}/settle/{userId}")
+                .then()
+                .log().all();
+    }
+
+    public HouseRs settleUser(Integer houseId, Integer userId, String token) {
+        log.info("POST - заселение пользователя в дом, 200");
+        return settleUserRequest(houseId, userId, token)
+                .spec(success200)
+                .extract()
+                .as(HouseRs.class);
+    }
+
+    private ValidatableResponse evictUserRequest(Integer houseId, Integer userId, String token) {
+        return given()
+                .spec(spec)
+                .pathParam("houseId", houseId)
+                .pathParam("userId", userId)
+                .header("Authorization", "Bearer " + token)
+                .log().all()
+                .when()
+                .post("/house/{houseId}/evict/{userId}")
+                .then()
+                .log().all();
+    }
+
+    public HouseRs evictUser(Integer houseId, Integer userId, String token) {
+        log.info("POST - выселение пользователя из дома, 200");
+        return evictUserRequest(houseId, userId, token)
+                .spec(success200)
+                .extract()
+                .as(HouseRs.class);
+    }
 }
