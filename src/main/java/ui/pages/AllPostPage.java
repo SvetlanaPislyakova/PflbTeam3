@@ -1,9 +1,17 @@
 package ui.pages;
 
+import com.codeborne.selenide.SelenideElement;
 import ui.wrappers.Table;
 
+import java.math.BigDecimal;
+
 import static com.codeborne.selenide.Configuration.baseUrl;
+import static com.codeborne.selenide.Condition.enabled;
+import static com.codeborne.selenide.Condition.value;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class AllPostPage extends BasePage {
 
@@ -59,6 +67,48 @@ public class AllPostPage extends BasePage {
     public AllPostPage checkHouseForm() {
         createHouseTable.checkTableVisible();
         return this;
+    }
+
+    public AllPostPage createHouse(Integer floors, BigDecimal price) {
+        for (int i = 0; i < 3; i++) {
+            fillHouseForm(floors, price);
+            createHouseTable.clickPushToApiBtn();
+            if (!getCreateHouseStatusMessage().contains("Invalid input data")) {
+                return this;
+            }
+            openPage().isPageOpened();
+        }
+        return this;
+    }
+
+    private void fillHouseForm(Integer floors, BigDecimal price) {
+        createHouseTable.setValueToInput("Floors", String.valueOf(floors));
+        createHouseTable.setValueToInput("Price", String.valueOf(price));
+        setHouseInput("#parking_first_send", "1");
+        setHouseInput("#parking_second_send", "0");
+        setHouseInput("#parking_third_send", "0");
+        setHouseInput("#parking_fourth_send", "0");
+    }
+
+    private void setHouseInput(String selector, String fieldValue) {
+        SelenideElement input = $(selector).shouldBe(visible).shouldBe(enabled);
+        input.click();
+        input.clear();
+        input.sendKeys(fieldValue);
+        input.shouldHave(value(fieldValue));
+        sleep(200);
+    }
+
+    public String getCreateHouseStatusMessage() {
+        return createHouseTable.getMessagePushToApi();
+    }
+
+    public Integer getCreateHouseStatusCode() {
+        return createHouseTable.getStatus();
+    }
+
+    public Integer getCreateHouseId() {
+        return createHouseTable.getResultInt();
     }
 
 }

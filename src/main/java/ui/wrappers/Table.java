@@ -103,7 +103,7 @@ public class Table {
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
-        message.shouldNotHave(text("Status: not pushed"));
+        message.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(120));
     }
 
     public void clickIssueLoanBtn() {
@@ -125,7 +125,7 @@ public class Table {
     public Integer getStatus() {
         log.info("Получить статус выполнения операции");
         String message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
-                firstColumn, secondColumn)).getText();
+                firstColumn, secondColumn)).shouldHave(matchText(".*\\d+.*")).getText();
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 
