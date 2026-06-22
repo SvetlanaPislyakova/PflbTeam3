@@ -3,10 +3,7 @@ package ui.steps;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import ui.dto.User;
-import ui.pages.AllUsersPage;
-import ui.pages.CreateUserPage;
-import ui.pages.IssueLoanPage;
-import ui.pages.ReadUserWithCarsPage;
+import ui.pages.*;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +16,7 @@ public class UserSteps {
     private final AllUsersPage allUsersPage = new AllUsersPage();
     private final IssueLoanPage issueLoanPage = new IssueLoanPage();
     private final ReadUserWithCarsPage readUserPage = new ReadUserWithCarsPage();
+    private final AddMoneyPage addMoneyPage = new AddMoneyPage();
     private final DBSteps dbSteps = new DBSteps();
 
     @Step("Создание нового пользователя")
@@ -28,7 +26,7 @@ public class UserSteps {
                 .createNewUser(user);
     }
 
-    @Step("Проверить, что сообщение содержит текст - {}")
+    @Step("Проверить, что сообщение содержит текст - {text}")
     public void checkMessageContainsText(String text) {
         assertThat(createUserPage.getStatusMessage()).contains(text);
     }
@@ -92,5 +90,17 @@ public class UserSteps {
 
     public void checkUserExistsInDb(Integer userId) {
         assertThat(dbSteps.isUserExistsInDB(userId)).isTrue();
+    }
+
+    @Step("Проверить добавление денег пользователю")
+    public void checkAddingMoneyToUser(Integer userId, BigDecimal money, BigDecimal result) {
+        SoftAssertions softly = new SoftAssertions();
+        addMoneyPage.openPage()
+                .isPageOpened()
+                .addMoneyToUser(userId, money);
+        softly.assertThat(addMoneyPage.getStatusMessage()).contains("Successfully pushed");
+        softly.assertThat(addMoneyPage.getStatusCode()).isEqualTo(200);
+        softly.assertThat(addMoneyPage.getUserMoney()).isEqualByComparingTo(result);
+        softly.assertAll();
     }
 }

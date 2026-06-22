@@ -2,7 +2,6 @@ package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j2;
-import ui.dto.User;
 import ui.wrappers.Button;
 import ui.wrappers.Table;
 
@@ -37,6 +36,7 @@ public class ReadUserWithCarsPage extends BasePage {
     }
 
     public ReadUserWithCarsPage findCarsByUserId(Integer userId) {
+        log.info("Заполнить инпут значением userId = {}", userId);
         ID_INPUT.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(userId));
         new Button("Read").clickBtn();
         return this;

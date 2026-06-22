@@ -1,6 +1,5 @@
 package ui.dto;
 
-import api.models.user.UserRq;
 import com.github.javafaker.Faker;
 
 import java.math.BigDecimal;

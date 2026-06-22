@@ -6,9 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Duration;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -91,7 +89,7 @@ public class Table {
 
     public String getValueFromCell(String label) {
         int columnIndex = findColumnIndex(label) + 1;
-        log.info("Получить значение из столбца '{}'", label);
+        log.info("Получить значение из ячейки '{}'", label);
         return $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
                 firstColumn, secondColumn)).getText();
     }
@@ -107,9 +105,6 @@ public class Table {
 
     public void rowsShouldBeEmpty () {
         log.info("Проверить, что в таблице нет строк");
-//        int columnIndex = findColumnIndex(label) + 1;
-//        ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
-//                firstColumn, secondColumn)).shouldHave(CollectionCondition.size(0));
         $$x(String.format(PATTERN + "//tbody/tr", firstColumn, secondColumn))
                 .shouldBe(CollectionCondition.empty);
     }
@@ -160,25 +155,5 @@ public class Table {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         return Double.parseDouble(messageResult.replaceAll("[^\\d.]", ""));
-    }
-
-    public List<Map<String, String>> readRowsAsMap() {
-        List<String> headers = $$x(String.format(PATTERN + "//th", firstColumn, secondColumn))
-                .stream()
-                .map(SelenideElement::text)
-                .map(String::trim)
-                .toList();
-        return $$x(PATTERN + "//tbody/tr").stream()
-                .map(row -> {
-                    List<String> cells = row.$$("td").stream()
-                            .map(SelenideElement::text)
-                            .map(String::trim)
-                            .toList();
-                    Map<String, String> map = new LinkedHashMap<>();
-                    for (int i = 0; i < headers.size(); ++i) {
-                        map.put(headers.get(i), cells.get(i));
-                    }
-                    return map;
-                }).toList();
     }
 }

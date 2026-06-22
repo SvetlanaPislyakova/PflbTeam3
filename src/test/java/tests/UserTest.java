@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ui.dto.User;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,16 +80,9 @@ public class UserTest extends BaseTest {
     public void addMoney() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, token);
-        SoftAssertions softly = new SoftAssertions();
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
-        addMoneyPage.openPage()
-                .isPageOpened()
-                .addMoneyToUser(userId, money);
         BigDecimal result = userRq.getMoney().add(money);
-        softly.assertThat(addMoneyPage.getStatusMessage()).contains("Successfully pushed");
-        softly.assertThat(addMoneyPage.getStatusCode()).isEqualTo(200);
-        softly.assertThat(addMoneyPage.getUserMoney()).isEqualByComparingTo(result);
-        softly.assertAll();
+        userSteps.checkAddingMoneyToUser(userId, money, result);
         userAdapter.deleteUser(userId, token);
     }
 
