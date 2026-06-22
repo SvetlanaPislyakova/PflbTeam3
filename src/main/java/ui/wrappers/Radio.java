@@ -1,18 +1,20 @@
-package wrappers;
+package ui.wrappers;
 
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$x;
 
 public class Radio {
     private final SelenideElement radio;
+    String name;
 
 
     public Radio(String name) {
-        this.radio = $x(String.format("//*[text()='%s']", name));
+        this.name = name;
+        this.radio = $x(String.format("//*[contains(text(),'%s')]", name));
     }
 
 
-    public void click() {
+    public void click(String name) {
         radio.click();
     }
 
