@@ -1,6 +1,7 @@
 package ui.steps;
 
 import io.qameta.allure.Step;
+import org.assertj.core.api.SoftAssertions;
 import ui.dto.Car;
 import ui.pages.BuyOrSaleCarPage;
 import ui.pages.CreateCarPage;
@@ -18,9 +19,19 @@ public class CarSteps {
     }
 
     @Step("Покупка нового пользователя")
-    public void buyNewCar() {
+    public void buyNewCar(Long userID,Long carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
-                .setData();
+                .setData(userID, carID);
+    }
+    @Step("Проверка успешности создания автомобиля и получение его id")
+    public Long checkCreateCarAndGetId() {
+        SoftAssertions softly = new SoftAssertions();
+        Long carId = createCarPage.getCarId();
+        softly.assertThat(createCarPage.getStatusMessage()).contains("Successfully pushed");
+        softly.assertThat(carId).isPositive();
+        softly.assertThat(createCarPage.getStatusCode()).isEqualTo(201);
+        softly.assertAll();
+        return carId;
     }
 }

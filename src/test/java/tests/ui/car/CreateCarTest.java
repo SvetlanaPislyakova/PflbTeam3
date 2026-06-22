@@ -9,6 +9,8 @@ import ui.dto.Car;
 import ui.dto.User;
 import ui.pages.BuyOrSaleCarPage;
 
+import java.math.BigDecimal;
+
 import static com.codeborne.selenide.Selenide.*;
 
 public class CreateCarTest extends BaseTest {
@@ -26,10 +28,6 @@ public class CreateCarTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         sleep(5000);
-        buyOrSaleCarPage.openPage();
-        sleep(5000);
-        buyOrSaleCarPage.setData();
-        sleep(5000);
     }
 
 
@@ -41,10 +39,11 @@ public class CreateCarTest extends BaseTest {
         Long userID = userSteps.checkCreateUserAndGetId();
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
+        Long carID = carSteps.checkCreateCarAndGetId();
         sleep(5000);
-        //addMoneyPage.openPage()
-                       // .addMoneyToUser(userID,20000000);
-        carSteps.buyNewCar();
+        addMoneyPage.openPage()
+                       .addMoneyToUser(userID, BigDecimal.valueOf(20000000));
+        carSteps.buyNewCar(userID,carID);
         sleep(5000);
     }
 }
