@@ -16,11 +16,13 @@ public class CarNegativeTestParam extends BaseApiTest  {
             ",X5,Diesel,10000",
             "BMW,,Diesel,10000",
             "BMW,X5,,10000",
-            "BMW,X5,Diesel,",
+            "BMW,X5,Petrol,10000",
             "BMW,X5,Diesel,-100",
             "BMW,X5,Diesel,0",
             "'',X5,Diesel,10000",
-            "BMW,'',Diesel,10000"
+            "BMW,X5,Diesel,1000000000000",
+            "123,X5,Diesel,10000",
+            "BMW,123,Diesel,10000"
     })
     void createInvalidCarTest(
             String mark,
