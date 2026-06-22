@@ -13,10 +13,6 @@ public class CarRq {
     @Expose
     private String engineType;
 
-    @SerializedName("id")
-    @Expose
-    private Integer id;
-
     @SerializedName("mark")
     @Expose
     private String mark;

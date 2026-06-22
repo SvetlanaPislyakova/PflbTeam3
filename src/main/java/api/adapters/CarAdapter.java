@@ -30,7 +30,7 @@ public class CarAdapter extends BaseAdapter {
                 .delete("/car/{id}")
                 .then()
                 .log().all()
-                .spec(success200);
+                .spec(noContent204);
     }
 
     public CarRs getCar(int id, String token) {
@@ -45,5 +45,14 @@ public class CarAdapter extends BaseAdapter {
                 .spec(success200)
                 .extract()
                 .as(CarRs.class);
+    }
+    public void createCarBadRequest(CarRq carRq, String token) {
+        given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .body(carRq)
+                .post("/car")
+                .then()
+                .spec(badRequest400);
     }
 }

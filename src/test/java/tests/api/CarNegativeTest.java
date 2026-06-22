@@ -18,8 +18,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(10000.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -30,8 +29,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(10000.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -42,8 +40,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(10000.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -54,8 +51,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .engineType("Diesel")
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -67,8 +63,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(-100.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -80,8 +75,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(0.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -105,8 +99,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(10000.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 
     @Test
@@ -118,7 +111,6 @@ public class CarNegativeTest extends BaseApiTest {
                 .price(10000.0)
                 .build();
 
-        assertThrows(Exception.class,
-                () -> carAdapter.createCar(car, accessToken));
+        carAdapter.createCarBadRequest(car, accessToken);
     }
 }

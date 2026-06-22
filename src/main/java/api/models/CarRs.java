@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class CarRs {
 
-    private Integer id;
+    private int id;
     private String mark;
     private String model;
     private String engineType;
