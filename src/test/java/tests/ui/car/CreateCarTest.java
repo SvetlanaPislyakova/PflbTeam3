@@ -36,14 +36,14 @@ public class CreateCarTest extends BaseTest {
     public void buyNewCar() {
         User user = User.builder().build();
         userSteps.createNewUser(user);
-        Long userID = userSteps.checkCreateUserAndGetId();
+        Integer userID = userSteps.checkCreateUserAndGetId();
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         Long carID = carSteps.checkCreateCarAndGetId();
         sleep(5000);
         addMoneyPage.openPage()
                        .addMoneyToUser(userID, BigDecimal.valueOf(20000000));
-        carSteps.buyNewCar(userID,carID);
+        carSteps.buyNewCar(userID.longValue(),carID);
         sleep(5000);
     }
 }

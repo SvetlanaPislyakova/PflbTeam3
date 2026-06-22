@@ -43,6 +43,6 @@ public class CreateCarPage extends BasePage {
     }
 
     public Long getCarId() {
-        return table.getResultInt();
+        return table.getResultInt().longValue();
     }
 }
