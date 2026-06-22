@@ -18,6 +18,7 @@ import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
 import utils.PropertyReader;
 import utils.TestListener;
+import utils.TokenProvider;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -27,6 +28,7 @@ public class BaseTest {
 
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    protected String token;
 
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
@@ -51,20 +53,18 @@ public class BaseTest {
     }
 
     @BeforeEach
-    void beforeEach(TestInfo testInfo) {
+    public void setUp(TestInfo testInfo) {
         log.info("======================================== STARTING TEST {} " +
                         "========================================",
                 testInfo.getDisplayName());
-    }
+        token = TokenProvider.getAccessToken();
 
-    @BeforeEach
-    public void setUp() {
         Configuration.timeout = 10000;
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
-        Configuration.headless = false;
-        Configuration.browserSize = "1920x1080";
         ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");

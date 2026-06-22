@@ -31,7 +31,7 @@ public class DBSteps {
     }
 
     @Step("Проверка наличия в БД пользователя с id = {}")
-    public void checkUserInDB(User user, Long userId) {
+    public void checkUserInDB(User user, Integer userId) {
         SoftAssertions softly = new SoftAssertions();
         DBConnection connection = new DBConnection();
         try {
@@ -45,6 +45,20 @@ public class DBSteps {
                 softly.assertThat(result.getBoolean("sex")).isEqualTo(user.getSex().equals("MALE"));
             }
             softly.assertAll();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Step("Проверка отсутствия в БД пользователя с id = {}")
+    public boolean isUserNotExistsInDB(Integer userId) {
+        DBConnection connection = new DBConnection();
+        try {
+            connection.connect();
+            ResultSet result = connection.selectById("person", userId);
+            return !result.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

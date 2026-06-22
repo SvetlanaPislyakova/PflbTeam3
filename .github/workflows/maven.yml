@@ -10,9 +10,9 @@ name: PflbTeam3
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ '**' ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ '**' ]
 
 jobs:
   build:
@@ -21,6 +21,8 @@ jobs:
     env:
       USER: ${{secrets.USER}}
       PASSWORD: ${{secrets.PASSWORD}}
+      DB_USER: ${{secrets.DBUSER}}
+      DB_PASSWORD: ${{secrets.DBPASSWORD}}
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -30,7 +32,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Tests Run
-      run: mvn clean -Demail=$USER -Dpassword=$PASSWORD test
+      run: mvn clean -Demail=$USER -Dpassword=$PASSWORD -DdbUser=$DB_USER -DdbPassword=$DB_PASSWORD test
 
     - name: Get Allure history
       uses: actions/checkout@v2

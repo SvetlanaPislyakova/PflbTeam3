@@ -6,7 +6,9 @@ import ui.dto.User;
 import ui.pages.AllUsersPage;
 import ui.pages.CreateUserPage;
 import ui.pages.IssueLoanPage;
+import ui.pages.ReadUserWithCarsPage;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class UserSteps {
     private final CreateUserPage createUserPage = new CreateUserPage();
     private final AllUsersPage allUsersPage = new AllUsersPage();
     private final IssueLoanPage issueLoanPage = new IssueLoanPage();
+    private final ReadUserWithCarsPage readUserPage = new ReadUserWithCarsPage();
     private final DBSteps dbSteps = new DBSteps();
 
     @Step("Создание нового пользователя")
@@ -27,9 +30,9 @@ public class UserSteps {
     }
 
     @Step("Проверка успешности создания пользователя и получение его id")
-    public Long checkCreateUserAndGetId() {
+    public Integer checkCreateUserAndGetId() {
         SoftAssertions softly = new SoftAssertions();
-        Long userId = createUserPage.getUserId();
+        Integer userId = createUserPage.getUserId();
         softly.assertThat(createUserPage.getStatusMessage()).contains("Successfully pushed");
         softly.assertThat(userId).isPositive();
         softly.assertThat(createUserPage.getStatusCode()).isEqualTo(201);
@@ -73,15 +76,16 @@ public class UserSteps {
     }
 
     @Step("Получение кредита пользователем")
-    public void checkGetCredit() {
+    public void checkGetCredit(Integer userId, BigDecimal money) {
         issueLoanPage.openPage()
                 .isPageOpened()
-                .requestALoan();
+                .requestALoan(userId, money);
     }
 
-    @Step("Проверка статуса получения кредита")
-    public void getCreditStatus() {
-        issueLoanPage.requestALoan();
-
+    @Step("")
+    public void readUserWithCar() {
+        readUserPage.openPage()
+                .isPageOpened()
+                .findCarsByUserId(13304);
     }
 }

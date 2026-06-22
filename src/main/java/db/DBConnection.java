@@ -26,7 +26,7 @@ public class DBConnection {
         }
     }
 
-    public ResultSet selectById(String tableName, Long id) {
+    public ResultSet selectById(String tableName, Integer id) {
         try {
             String sql = String.format("SELECT * FROM %s WHERE id = %s;", tableName, id);
             return statement.executeQuery(sql);

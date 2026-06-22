@@ -5,6 +5,7 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j2;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,8 +74,11 @@ public class Table {
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
-        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn)).setValue(value);
+        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input", firstColumn, secondColumn));
+        input.shouldBe(visible)
+                .shouldBe(clickable)
+                .click();
+        input.setValue(value);
     }
 
     public void checkValueInInput(String label, String value) {
@@ -108,7 +112,7 @@ public class Table {
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
-        message.shouldNotHave(text("Status: not pushed"));
+        message.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(120));
     }
 
     public String getMessagePushToApi() {
@@ -118,21 +122,26 @@ public class Table {
         return message.getText();
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
+        log.info("Получить статус выполнения операции");
         String message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn)).getText();
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 
-    public Long getResultInt() {
+    public Integer getResultInt() {
+        log.info("Получить целочисленный результат");
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
-                firstColumn, secondColumn)).getText();
-        return Long.parseLong(messageResult.replaceAll("\\D+", ""));
+                firstColumn, secondColumn)).shouldNotBe(empty).getText();
+        String result = messageResult.replaceAll("\\D+", "");
+        System.out.println(result);
+        return Integer.parseInt(result);
     }
 
-    public double getResultDouble() {
+    public Double getResultDouble() {
+        log.info("Получить результат с плавающей точкой");
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
-                firstColumn, secondColumn)).getText();
+                firstColumn, secondColumn)).shouldNotBe(empty).getText();
         return Double.parseDouble(messageResult.replaceAll("[^\\d.]", ""));
     }
 }
