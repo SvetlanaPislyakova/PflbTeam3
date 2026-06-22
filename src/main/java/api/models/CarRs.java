@@ -2,6 +2,8 @@ package api.models;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 public class CarRs {
 
@@ -9,5 +11,5 @@ public class CarRs {
     private String mark;
     private String model;
     private String engineType;
-    private Double price;
+    private BigDecimal price;
 }

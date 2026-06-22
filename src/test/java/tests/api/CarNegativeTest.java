@@ -4,6 +4,8 @@ import api.adapters.CarAdapter;
 import api.models.CarRq;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CarNegativeTest extends BaseApiTest {
@@ -15,7 +17,7 @@ public class CarNegativeTest extends BaseApiTest {
         CarRq car = CarRq.builder()
                 .model("X5")
                 .engineType("Diesel")
-                .price(10000.0)
+                .price(BigDecimal.valueOf(10000.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);
@@ -26,7 +28,7 @@ public class CarNegativeTest extends BaseApiTest {
         CarRq car = CarRq.builder()
                 .mark("BMW")
                 .engineType("Diesel")
-                .price(10000.0)
+                .price(BigDecimal.valueOf(10000.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);
@@ -37,7 +39,7 @@ public class CarNegativeTest extends BaseApiTest {
         CarRq car = CarRq.builder()
                 .mark("BMW")
                 .model("X5")
-                .price(10000.0)
+                .price(BigDecimal.valueOf(10000.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);
@@ -60,7 +62,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .mark("BMW")
                 .model("X5")
                 .engineType("Diesel")
-                .price(-100.0)
+                .price(BigDecimal.valueOf(-100.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);
@@ -72,7 +74,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .mark("BMW")
                 .model("X5")
                 .engineType("Diesel")
-                .price(0.0)
+                .price(BigDecimal.valueOf(0.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);
@@ -96,7 +98,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .mark("")
                 .model("X5")
                 .engineType("Diesel")
-                .price(10000.0)
+                .price(BigDecimal.valueOf(10000.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);
@@ -108,7 +110,7 @@ public class CarNegativeTest extends BaseApiTest {
                 .mark("BMW")
                 .model("")
                 .engineType("Diesel")
-                .price(10000.0)
+                .price(BigDecimal.valueOf(10000.0))
                 .build();
 
         carAdapter.createCarBadRequest(car, accessToken);

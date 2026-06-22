@@ -5,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 public class CarRq {
@@ -23,5 +25,5 @@ public class CarRq {
 
     @SerializedName("price")
     @Expose
-    private Double price;
+    private BigDecimal price;
 }
