@@ -13,7 +13,6 @@ public class BuyOrSaleCarPage extends BasePage {
     private static final String BUY_OPTION = "BUY";
 
     private final Table table = new Table(TABLE_NAME);
-    private final Radio radio = new Radio(BUY_OPTION);
 
     @Override
     public BuyOrSaleCarPage openPage() {
@@ -27,10 +26,10 @@ public class BuyOrSaleCarPage extends BasePage {
         return this;
     }
 
-    public BuyOrSaleCarPage setData(Long userID, Long carID) {
+    public BuyOrSaleCarPage setData(Long userID, Long carID,String action) {
         table.setValueToInput(USER_ID_FIELD, userID.toString());
         table.setValueToInput(CAR_ID_FIELD, carID.toString());
-        radio.select();
+        new Radio(action).click();
         table.clickPushToApiBtn();
         return this;
     }

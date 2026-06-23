@@ -22,7 +22,19 @@ public class CarSteps {
     public void buyNewCar(Long userID, Long carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
-                .setData(userID, carID);
+                .setData(userID, carID,"BUY");
+    }
+
+    @Step("Продажа автомобиля пользователем")
+    public void sellNewCar(Long userID, Long carID) {
+        buyOrSaleCarPage.openPage()
+                .isPageOpened()
+                .setData(userID, carID, "SELL");
+    }
+
+    @Step("Получение статус кода продажи")
+    public int checkSellStatusCode() {
+        return buyOrSaleCarPage.getStatusCode();
     }
 
     @Step("Проверка успешности создания автомобиля и получение его id")

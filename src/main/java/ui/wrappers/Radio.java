@@ -14,7 +14,7 @@ public class Radio {
     }
 
 
-    public void click(String name) {
+    public void click() {
         radio.click();
     }
 
