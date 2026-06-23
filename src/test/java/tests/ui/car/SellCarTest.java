@@ -30,15 +30,14 @@ public class SellCarTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
 
-        // чтобы продать, пользователь сначала покупает автомобиль
         addMoneyPage.openPage()
                 .addMoneyToUser(userID, SUFFICIENT_MONEY);
 
         carSteps.buyNewCar(userID.longValue(), carID);
         assertTrue(carSteps.isCarBought(userID.longValue(), carID), "Покупка не удалась");
 
-        // затем продаёт
         carSteps.sellNewCar(userID.longValue(), carID);
         assertEquals(200, carSteps.checkSellStatusCode(), "Статус продажи должен быть 200");
     }

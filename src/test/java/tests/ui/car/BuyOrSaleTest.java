@@ -33,6 +33,7 @@ public class BuyOrSaleTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
 
         addMoneyPage.openPage()
                 .addMoneyToUser(buyerID, SUFFICIENT_MONEY);
@@ -52,6 +53,7 @@ public class BuyOrSaleTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
 
         addMoneyPage.openPage()
                 .addMoneyToUser(buyerID, INSUFFICIENT_MONEY);
@@ -94,6 +96,7 @@ public class BuyOrSaleTest extends BaseTest {
             carSteps.createNewCar(car);
             Long carID = carSteps.checkCreateCarAndGetId();
             carSteps.buyNewCar(buyerID.longValue(), carID);
+            createdCarIds.add(carID);
         }
 
         assertTrue(true, "Множественные покупки должны быть успешными");
@@ -109,6 +112,7 @@ public class BuyOrSaleTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
 
         addMoneyPage.openPage()
                 .addMoneyToUser(sellerID, SUFFICIENT_MONEY);
@@ -128,6 +132,7 @@ public class BuyOrSaleTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
 
         addMoneyPage.openPage()
                 .addMoneyToUser(buyerID, SUFFICIENT_MONEY);

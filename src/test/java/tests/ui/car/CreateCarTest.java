@@ -27,6 +27,7 @@ public class CreateCarTest extends BaseTest {
         carSteps.createNewCar(car);
 
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
         assertNotNull(carID, "ID автомобиля должен быть создан");
         assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
@@ -51,6 +52,7 @@ public class CreateCarTest extends BaseTest {
         carSteps.createNewCar(car);
 
         Long carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
         assertNotNull(carID, "Автомобиль должен быть создан марки " + mark);
         assertTrue(carID > 0, "ID должен быть положительным для " + mark);
     }
