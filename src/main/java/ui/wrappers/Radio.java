@@ -5,7 +5,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class Radio {
     private final SelenideElement radio;
-    String name;
+    private final String name;
 
 
     public Radio(String name) {
@@ -20,7 +20,7 @@ public class Radio {
 
     public void select() {
         if (!radio.isSelected()) {
-            radio.click();
+            click(name);
         }
     }
 

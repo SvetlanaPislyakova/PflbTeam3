@@ -7,10 +7,13 @@ import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
 
 public class BuyOrSaleCarPage extends BasePage {
+    private static final String TABLE_NAME = "Buy or sell car";
+    private static final String USER_ID_FIELD = "User ID";
+    private static final String CAR_ID_FIELD = "Car Id";
+    private static final String BUY_OPTION = "BUY";
 
-    private final String tableName = "Buy or sell car";
-    Table table = new Table(tableName);
-    Radio radio = new Radio(tableName);
+    private final Table table = new Table(TABLE_NAME);
+    private final Radio radio = new Radio(BUY_OPTION);
 
     @Override
     public BuyOrSaleCarPage openPage() {
@@ -24,10 +27,10 @@ public class BuyOrSaleCarPage extends BasePage {
         return this;
     }
 
-        public BuyOrSaleCarPage setData(Long userID, Long carID) {
-        table.setValueToInput("User ID", String.valueOf(userID));
-        table.setValueToInput("Car Id", String.valueOf(carID));
-        radio.click("BUY");
+    public BuyOrSaleCarPage setData(Long userID, Long carID) {
+        table.setValueToInput(USER_ID_FIELD, userID.toString());
+        table.setValueToInput(CAR_ID_FIELD, carID.toString());
+        radio.select();
         table.clickPushToApiBtn();
         return this;
     }
@@ -39,5 +42,4 @@ public class BuyOrSaleCarPage extends BasePage {
     public int getStatusCode() {
         return table.getStatus();
     }
-
 }

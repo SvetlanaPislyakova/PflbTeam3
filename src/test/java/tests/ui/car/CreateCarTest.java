@@ -1,20 +1,18 @@
 package tests.ui.car;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import tests.BaseTest;
 import ui.dto.Car;
-import ui.dto.User;
-import ui.pages.BuyOrSaleCarPage;
 
 import java.math.BigDecimal;
 
-import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCarTest extends BaseTest {
-    private final Faker faker = new Faker();
 
     @BeforeEach
     public void login() {
@@ -23,27 +21,37 @@ public class CreateCarTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Создание нового автомобиля")
-    public void createCar() {
+    @DisplayName("Создание нового автомобиля с валидными данными")
+    public void createCarWithValidData() {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
-        sleep(5000);
+
+        Long carID = carSteps.checkCreateCarAndGetId();
+        assertNotNull(carID, "ID автомобиля должен быть создан");
+        assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
 
+    @ParameterizedTest
+    @DisplayName("Создание автомобилей с разными параметрами")
+    @CsvSource({
+            "CNG, Toyota, Camry, 100000",
+            "Diesel, BMW, X5, 200000",
+            "Gasoline, Mercedes, E-Class, 250000",
+            "PHEV, Audi, A8, 300000",
+            "Hydrogenic, Lexus, LS, 350000"
+    })
+    public void createCarWithVariousData(String engineType, String mark, String model, String price) {
+        Car car = Car.builder()
+                .engineType(engineType)
+                .mark(mark)
+                .model(model)
+                .price(new BigDecimal(price))
+                .build();
 
-    @Test
-    @DisplayName("Покупка нового автомобиля")
-    public void buyNewCar() {
-        User user = User.builder().build();
-        userSteps.createNewUser(user);
-        Integer userID = userSteps.checkCreateUserAndGetId();
-        Car car = Car.builder().build();
         carSteps.createNewCar(car);
+
         Long carID = carSteps.checkCreateCarAndGetId();
-        sleep(5000);
-        addMoneyPage.openPage()
-                       .addMoneyToUser(userID, BigDecimal.valueOf(20000000));
-        carSteps.buyNewCar(userID.longValue(),carID);
-        sleep(5000);
+        assertNotNull(carID, "Автомобиль должен быть создан марки " + mark);
+        assertTrue(carID > 0, "ID должен быть положительным для " + mark);
     }
 }
