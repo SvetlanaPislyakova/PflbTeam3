@@ -20,7 +20,7 @@ public class Radio {
 
     public void select() {
         if (!radio.isSelected()) {
-            click(name);
+            click();
         }
     }
 
