@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import ui.dto.Car;
 import ui.wrappers.Table;
 
 import java.math.BigDecimal;
@@ -69,6 +70,29 @@ public class AllPostPage extends BasePage {
         return this;
     }
 
+    public AllPostPage createCar(Car car) {
+        setInput("#car_mark_send", car.getMark());
+        setInput("#car_model_send", car.getModel());
+        setInput("#car_price_send", String.valueOf(car.getPrice()));
+        setInput("#car_engine_type_send", car.getEngineType());
+        // Форма All POST сбрасывает Mark после изменения Engine Type; повторно выставляем его перед submit.
+        setInput("#car_mark_send", car.getMark());
+        createCarTable.clickPushToApiBtn();
+        return this;
+    }
+
+    public String getCreateCarStatusMessage() {
+        return createCarTable.getMessagePushToApi();
+    }
+
+    public Integer getCreateCarStatusCode() {
+        return createCarTable.getStatus();
+    }
+
+    public Integer getCreateCarId() {
+        return createCarTable.getResultInt();
+    }
+
     public AllPostPage createHouse(Integer floors, BigDecimal price) {
         for (int i = 0; i < 3; i++) {
             fillHouseForm(floors, price);
@@ -88,6 +112,14 @@ public class AllPostPage extends BasePage {
         setHouseInput("#parking_second_send", "0");
         setHouseInput("#parking_third_send", "0");
         setHouseInput("#parking_fourth_send", "0");
+    }
+
+    private void setInput(String selector, String fieldValue) {
+        SelenideElement input = $(selector).shouldBe(visible).shouldBe(enabled);
+        input.click();
+        input.setValue(fieldValue);
+        input.shouldHave(value(fieldValue));
+        sleep(200);
     }
 
     private void setHouseInput(String selector, String fieldValue) {
