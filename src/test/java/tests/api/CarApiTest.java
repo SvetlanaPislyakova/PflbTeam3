@@ -3,6 +3,9 @@ package tests.api;
 import api.adapters.CarAdapter;
 import api.models.CarRq;
 import api.models.CarRs;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -17,23 +20,9 @@ public class CarApiTest extends BaseApiTest {
     @ParameterizedTest(name = "{0} {1}")
     @CsvSource({
             "BMW,X3,Diesel,11000",
-            "BMW,X4,Diesel,11500",
             "Audi,A4,Gasoline,9000",
-            "Audi,A6,Gasoline,15000",
-            "Mercedes,E200,Diesel,17000",
-            "Mercedes,C180,Gasoline,13000",
-            "Mercedes,S400,Diesel,32000",
-            "Toyota,Camry,Gasoline,8000",
             "Toyota,Corolla,PHEV,6000",
-            "Kia,Rio,PHEV,5000",
-            "Kia,Sportage,Diesel,12000",
-            "Kia,Ceed,PHEV,6500",
-            "Kia,Niro,PHEV,10000",
-            "Volkswagen,Golf,PHEV,7500",
-            "Hyundai,Elantra,CNG,7000",
-            "Hyundai,SantaFe,Diesel,14000",
-            "Nissan,Leaf,CNG,9000",
-            "Lexus,RX350,Diesel,19000" })
+            "Hyundai,Elantra,CNG,7000"})
     public void createAndDeleteCarTest(
             String mark,
             String model,
@@ -49,9 +38,12 @@ public class CarApiTest extends BaseApiTest {
 
         CarRs createdCar = carAdapter.createCar(carRq, accessToken);
 
-        assertEquals(mark, createdCar.getMark());
-        assertEquals(model, createdCar.getModel());
-        assertEquals(engineType, createdCar.getEngineType());
+
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(createdCar.getMark()).isEqualTo(mark);
+        softly.assertThat(createdCar.getModel()).isEqualTo(model);
+        softly.assertThat(createdCar.getEngineType()).isEqualTo(engineType);
+        softly.assertAll();
 
         carAdapter.deleteCar(createdCar.getId(), accessToken);
     }

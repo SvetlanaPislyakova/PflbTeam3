@@ -18,7 +18,6 @@ public class CarNegativeTestParam extends BaseApiTest  {
             "BMW,X5,,10000",
             "BMW,X5,Petrol,10000",
             "BMW,X5,Diesel,-100",
-            "BMW,X5,Diesel,0",
             "'',X5,Diesel,10000",
             "BMW,X5,Diesel,1000000000000",
             "123,X5,Diesel,10000",

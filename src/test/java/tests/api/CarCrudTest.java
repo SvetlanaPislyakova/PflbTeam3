@@ -14,20 +14,6 @@ public class CarCrudTest extends BaseApiTest {
     CarAdapter carAdapter = new CarAdapter();
 
     @Test
-    void createCarTest() {
-        CarRq carRq = CarRq.builder()
-                .mark("BMW")
-                .model("X5")
-                .engineType("Diesel")
-                .price(BigDecimal.valueOf(10000.0))
-                .build();
-
-        CarRs car = carAdapter.createCar(carRq, accessToken);
-        assertEquals("BMW", car.getMark());
-        carAdapter.deleteCar(car.getId(), accessToken);
-    }
-
-    @Test
     void getCarTest() {
         CarRq carRq = CarRq.builder()
                 .mark("Audi")
