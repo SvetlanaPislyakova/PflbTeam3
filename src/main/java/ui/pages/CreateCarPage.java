@@ -9,7 +9,7 @@ import static com.codeborne.selenide.Selenide.open;
 public class CreateCarPage extends BasePage {
     private static final String TABLE_NAME = "Create new car";
     private static final String ENGINE_TYPE_FIELD = "Engine Type";
-    private static final String MARK_FIELD = "Brand";
+    private static final String MARK_FIELD = "Mark";
     private static final String MODEL_FIELD = "Model";
     private static final String PRICE_FIELD = "Price";
 
