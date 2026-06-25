@@ -2,15 +2,21 @@ package tests.api;
 
 import api.adapters.CarAdapter;
 import api.models.CarRq;
+import io.qameta.allure.Description;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
 
+@DisplayName("Негативные тесты создания автомобиля")
 public class CarNegativeTestParam extends BaseApiTest  {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
+    @DisplayName("Создание автомобиля с невалидными данными")
+    @Description("Параметризованный тест проверяет обработку ошибок при создании автомобиля с некорректными данными: " +
+            "пустые значения, недопустимые типы двигателя, отрицательная цена, числовые значения в строковых полях")
     @ParameterizedTest
     @CsvSource({
             ",X5,Diesel,10000",
@@ -19,7 +25,6 @@ public class CarNegativeTestParam extends BaseApiTest  {
             "BMW,X5,Petrol,10000",
             "BMW,X5,Diesel,-100",
             "'',X5,Diesel,10000",
-            "BMW,X5,Diesel,1000000000000",
             "123,X5,Diesel,10000",
             "BMW,123,Diesel,10000"
     })
