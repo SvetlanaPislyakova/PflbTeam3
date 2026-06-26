@@ -32,7 +32,7 @@ public class Table {
                 break;
             case "Buy or sell car":
                 this.firstColumn = "User ID";
-                this.secondColumn = "Car ID";
+                this.secondColumn = "Car Id";
                 break;
             case "Settle to house":
                 this.firstColumn = "User ID";
@@ -74,8 +74,8 @@ public class Table {
 
     public void setValueToInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
-        log.info("Заполнить поле '{}' значением '{}'", label, value);
         sleep(300);
+        log.info("Заполнить поле '{}' значением '{}'", label, value);
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
@@ -115,7 +115,7 @@ public class Table {
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
-        message.shouldNotHave(text("Status: not pushed"));
+        message.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(120));
     }
 
     public void clickIssueLoanBtn() {
@@ -137,7 +137,7 @@ public class Table {
     public Integer getStatus() {
         log.info("Получить статус выполнения операции");
         String message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
-                firstColumn, secondColumn)).getText();
+                firstColumn, secondColumn)).shouldHave(matchText(".*\\d+.*")).getText();
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 

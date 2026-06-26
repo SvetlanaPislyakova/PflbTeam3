@@ -14,6 +14,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import ui.pages.AddMoneyPage;
 import ui.pages.AllUsersPage;
 import ui.pages.CreateUserPage;
+import ui.steps.CarSteps;
 import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
@@ -34,10 +35,17 @@ public class BaseTest {
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
     protected DBSteps dbSteps;
+    protected CarSteps carSteps;
 
     protected CreateUserPage createUserPage;
     protected AllUsersPage allUsersPage;
     protected AddMoneyPage addMoneyPage;
+    protected MainPage mainPage;
+    protected CreateCarPage createCarPage;
+    protected AllCarsPage allCarsPage;
+    protected BuyOrSaleCarPage buyOrSaleCarPage;
+
+
 
     @BeforeAll
     public static void setupAllure() {
@@ -67,10 +75,15 @@ public class BaseTest {
         loginSteps = new LoginSteps();
         userSteps = new UserSteps();
         dbSteps = new DBSteps();
+        carSteps = new CarSteps();
 
         createUserPage = new CreateUserPage();
         allUsersPage = new AllUsersPage();
         addMoneyPage = new AddMoneyPage();
+        mainPage = new MainPage();
+        createCarPage = new CreateCarPage();
+        allCarsPage = new AllCarsPage();
+        buyOrSaleCarPage = new BuyOrSaleCarPage();
     }
 
     @AfterEach
