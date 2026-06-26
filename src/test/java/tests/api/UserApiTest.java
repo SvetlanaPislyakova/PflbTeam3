@@ -83,7 +83,7 @@ public class UserApiTest extends  BaseApiTest {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         userAdapter.deleteUser(userId, accessToken);
-        assertThat(dbSteps.isUserNotExistsInDB(userId)).isTrue();
+        assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
     }
 
     @Test
@@ -92,7 +92,7 @@ public class UserApiTest extends  BaseApiTest {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         userAdapter.deleteUser(userId, accessToken);
-        assertThat(dbSteps.isUserNotExistsInDB(userId)).isTrue();
+        assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
         userAdapter.deleteNotExistingUser(userId, accessToken);
     }
 
@@ -146,7 +146,7 @@ public class UserApiTest extends  BaseApiTest {
         Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         UserRs userRs = userAdapter.addMoneyToUser(userId, money, accessToken);
-        assertThat(userRq.getMoney().add(money)).isEqualTo(userRs.getMoney());
+        assertThat(userRq.getMoney().add(money)).isEqualByComparingTo(userRs.getMoney());
         userAdapter.deleteUser(userId, accessToken);
     }
 

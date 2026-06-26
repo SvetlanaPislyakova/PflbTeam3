@@ -1,6 +1,5 @@
 package ui.pages;
 
-import org.assertj.core.api.SoftAssertions;
 import ui.wrappers.Button;
 import ui.wrappers.Table;
 
@@ -8,18 +7,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.$x;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public abstract class BasePage {
 
     public abstract BasePage openPage();
 
     public abstract BasePage isPageOpened();
-
-    public BasePage clickBtn(String btnName) {
-        new Button(btnName).clickBtn();
-        return this;
-    }
 
     private String normalizeText(String value) {
         if (value == null) {
@@ -55,51 +49,25 @@ public abstract class BasePage {
                 .toList();
     }
 
-    public BasePage checkSortObject(Table table, String field, boolean isNumeric) {
-        SoftAssertions softly = new SoftAssertions();
-        List<String> startList = table.getListOfValues(field);
+    public BasePage checkSortObjectNaturalOrder(Table table, List<String> startList, String field, boolean isNumeric) {
         List<String> sortedNaturalOrder = new ArrayList<>(startList);
-        List<String> sortedReverseOrder = new ArrayList<>(startList);
-
         sortedNaturalOrder = sortNaturalOrder(sortedNaturalOrder, isNumeric);
+        System.out.println(sortedNaturalOrder);
         new Button(field).clickBtn();
         List<String> sortedNatural = table.getListOfValues(field);
-        softly.assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
-
-        sortedReverseOrder = sortReverseOrder(sortedReverseOrder, isNumeric);
-        new Button(field).clickBtn();
-        List<String> sortedReverse = table.getListOfValues(field);
-        softly.assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
-        softly.assertAll();
+        System.out.println(sortedNatural);
+        assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
         return this;
     }
 
-    public BasePage checkSortNumericField(Table table, String field) {
-        SoftAssertions softly = new SoftAssertions();
-        List<String> startList = table.getListOfValues(field);
-        List<String> sortedNaturalOrder = new ArrayList<>(startList);
+    public BasePage checkSortObjectReverseOrder(Table table, List<String> startList, String field, boolean isNumeric) {
         List<String> sortedReverseOrder = new ArrayList<>(startList);
-
-        sortedNaturalOrder = sortNaturalOrder(sortedNaturalOrder, true);
-        new Button(field).clickBtn();
-        List<String> sortedNatural = table.getListOfValues(field);
-        softly.assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
-
-        sortedReverseOrder = sortReverseOrder(sortedReverseOrder, true);
-        new Button(field).clickBtn();
+        sortedReverseOrder = sortReverseOrder(sortedReverseOrder, isNumeric);
+        System.out.println(sortedReverseOrder);
+        new Button("↑ " + field).clickBtn();
         List<String> sortedReverse = table.getListOfValues(field);
-        softly.assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
-        softly.assertAll();
-        return this;
-    }
-
-    public BasePage checkSortTextField(Table table, String field) {
-
-        return this;
-    }
-
-    public BasePage checkSortTextFieldInDb(Table table, String field) {
-
+        System.out.println(sortedReverse);
+        assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
         return this;
     }
 }

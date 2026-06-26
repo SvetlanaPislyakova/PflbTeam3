@@ -1,7 +1,10 @@
 package ui.wrappers;
 
+import lombok.extern.log4j.Log4j2;
+
 import static com.codeborne.selenide.Selenide.$x;
 
+@Log4j2
 public class DropDown {
 
     private final String label;
@@ -12,6 +15,7 @@ public class DropDown {
     }
 
     public void selectOption(String option) {
+        log.info("Выбрать из выпадающего списка '{}' значение '{}'", label, option);
         $x(String.format(PATTERN, label)).click();
         $x(String.format(PATTERN + "/parent::div" + PATTERN, label, option)).click();
     }

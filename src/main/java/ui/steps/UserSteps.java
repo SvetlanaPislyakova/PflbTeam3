@@ -3,13 +3,9 @@ package ui.steps;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import ui.dto.User;
-import ui.pages.AllUsersPage;
-import ui.pages.CreateUserPage;
-import ui.pages.IssueLoanPage;
-import ui.pages.ReadUserWithCarsPage;
+import ui.pages.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -20,6 +16,7 @@ public class UserSteps {
     private final AllUsersPage allUsersPage = new AllUsersPage();
     private final IssueLoanPage issueLoanPage = new IssueLoanPage();
     private final ReadUserWithCarsPage readUserPage = new ReadUserWithCarsPage();
+    private final AddMoneyPage addMoneyPage = new AddMoneyPage();
     private final DBSteps dbSteps = new DBSteps();
 
     @Step("Создание нового пользователя")
@@ -27,6 +24,11 @@ public class UserSteps {
         createUserPage.openPage()
                 .isPageOpened()
                 .createNewUser(user);
+    }
+
+    @Step("Проверить, что сообщение содержит текст - {text}")
+    public void checkMessageContainsText(String text) {
+        assertThat(createUserPage.getStatusMessage()).contains(text);
     }
 
     @Step("Проверка успешности создания пользователя и получение его id")
@@ -41,38 +43,24 @@ public class UserSteps {
     }
 
     @Step("Проверка сортировки пользователей по полю {field}")
-    public void checkSortUsers(String field, boolean isNumeric) {
+    public void checkSortUsersByNumericField(String field) {
         allUsersPage.openPage()
                 .isPageOpened()
-                .checkSortUsers(field, isNumeric);
+                .checkSortUsers(field, true);
     }
 
-    private List<String> getListFromDb(String field) {
-        if (field.equals("First name"))
-            return dbSteps.getListFromDB("person", "first_name");
-        else if(field.equals("Last name"))
-            return dbSteps.getListFromDB("person", "second_name");
-        return null;
-    }
-
-    @Step("Проверка сортировки пользователей по полю 'First name'")
-    public void checkSortUsersInDb(String field, String btnName) {
-        SoftAssertions softly = new SoftAssertions();
-        List<String> temp = getListFromDb(field);
-        List<String> sortedNaturalOrder = new ArrayList<>(temp);
-        List<String> sortedReverseOrder = new ArrayList<>(temp);
+    @Step("Проверка сортировки пользователей по полю {field}")
+    public void checkSortUsersByFixedTextField(String field) {
         allUsersPage.openPage()
                 .isPageOpened()
-                .getListValues(field);
+                .checkSortUsers(field, false);
+    }
 
-        allUsersPage.clickBtn(btnName);
-        sortedNaturalOrder = allUsersPage.sortNaturalOrder(sortedNaturalOrder, false);
-        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedNaturalOrder);
-
-        allUsersPage.clickBtn(btnName);
-        sortedReverseOrder = allUsersPage.sortReverseOrder(sortedReverseOrder, false);
-        softly.assertThat(allUsersPage.getListValues(field)).isEqualTo(sortedReverseOrder);
-        softly.assertAll();
+    @Step("Проверка сортировки пользователей по полю {field}")
+    public void checkSortUsersByTextField(String field) {
+        allUsersPage.openPage()
+                .isPageOpened()
+                .checkSortUsersByText(field, false);
     }
 
     @Step("Получение кредита пользователем")
@@ -82,10 +70,37 @@ public class UserSteps {
                 .requestALoan(userId, money);
     }
 
-    @Step("")
-    public void readUserWithCar() {
+    @Step("Проверить, что у пользователя есть машины с id = {carsId}")
+    public void checkUserCars(Integer userId, List<Integer> carsId) {
         readUserPage.openPage()
                 .isPageOpened()
-                .findCarsByUserId(13304);
+                .findCarsByUserId(userId)
+                .checkUserInfo(userId)
+                .checkCarsInfo(carsId);
+    }
+
+    @Step("Проверить, что у пользователя нет машин")
+    public void checkUserHaveNoCars(Integer userId) {
+        readUserPage.openPage()
+                .isPageOpened()
+                .findCarsByUserId(userId)
+                .checkUserInfo(userId)
+                .checkEmptyCarsInfo();
+    }
+
+    public void checkUserExistsInDb(Integer userId) {
+        assertThat(dbSteps.isUserExistsInDB(userId)).isTrue();
+    }
+
+    @Step("Проверить добавление денег пользователю")
+    public void checkAddingMoneyToUser(Integer userId, BigDecimal money, BigDecimal result) {
+        SoftAssertions softly = new SoftAssertions();
+        addMoneyPage.openPage()
+                .isPageOpened()
+                .addMoneyToUser(userId, money);
+        softly.assertThat(addMoneyPage.getStatusMessage()).contains("Successfully pushed");
+        softly.assertThat(addMoneyPage.getStatusCode()).isEqualTo(200);
+        softly.assertThat(addMoneyPage.getUserMoney()).isEqualByComparingTo(result);
+        softly.assertAll();
     }
 }

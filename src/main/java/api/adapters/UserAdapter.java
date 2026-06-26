@@ -107,7 +107,6 @@ public class UserAdapter extends BaseAdapter {
                 .when()
                 .get("/users")
                 .then()
-                .log().all()
                 .spec(success200)
                 .extract()
                 .jsonPath()

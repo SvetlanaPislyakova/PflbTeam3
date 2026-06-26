@@ -2,8 +2,8 @@ package ui.steps;
 
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import ui.pages.CreateUserPage;
 import ui.pages.LoginPage;
-import ui.pages.MainPage;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LoginSteps {
 
     private final LoginPage loginPage = new LoginPage();
-    private final MainPage mainPage = new MainPage();
+    private final CreateUserPage createUserPage = new CreateUserPage();
 
     @Step("Авторизация с email '{email}' и password '{password}'")
     public LoginSteps login(String email, String password) {
@@ -42,15 +42,15 @@ public class LoginSteps {
     @Step("Проверить успешность авторизации")
     public LoginSteps checkSuccessLogin() {
         log.info("Проверить успешность авторизации");
-        mainPage.openPageCreateUser()
-                .isPageOpened();
+        createUserPage.openPage()
+                        .isPageOpened();
         return this;
     }
 
     @Step("Проверить неуспешность авторизации")
     public LoginSteps checkNegativeLogin() {
         log.info("Проверить неуспешность авторизации");
-        mainPage.openPageCreateUser();
+        createUserPage.openPage();
         loginPage.isPageOpened();
         return this;
     }
