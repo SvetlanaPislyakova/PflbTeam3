@@ -9,8 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
 
-@DisplayName("Негативные тесты создания автомобиля")
-public class CarNegativeTestParam extends BaseApiTest  {
+public class CarNegativeTest extends BaseApiTest  {
 
     private final CarAdapter carAdapter = new CarAdapter();
 

@@ -28,7 +28,6 @@ public class CarApiTest extends BaseApiTest {
             "Audi,A4,Gasoline,9000",
             "Toyota,Corolla,PHEV,6000",
             "Hyundai,Elantra,CNG,7000"})
-
     public void createAndDeleteCarTest(
             String mark,
             String model,
