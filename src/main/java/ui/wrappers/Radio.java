@@ -10,11 +10,11 @@ public class Radio {
 
     public Radio(String name) {
         this.name = name;
-        this.radio = $x(String.format("//*[contains(text(),'%s')]", name));
+        this.radio = $x(String.format("//*[contains(text(),'%s')]//input", name));
     }
 
 
-    public void click(String name) {
+    public void click() {
         radio.click();
     }
 

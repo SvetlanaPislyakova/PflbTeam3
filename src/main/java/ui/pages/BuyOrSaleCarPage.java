@@ -24,10 +24,11 @@ public class BuyOrSaleCarPage extends BasePage {
         return this;
     }
 
-        public BuyOrSaleCarPage setData(Long userID, Long carID) {
+    public BuyOrSaleCarPage setData(Long userID, Long carID) {
         table.setValueToInput("User ID", String.valueOf(userID));
         table.setValueToInput("Car Id", String.valueOf(carID));
-        radio.click("BUY");
+        new Radio("BUY").click();
+//        radio.click("BUY");
         table.clickPushToApiBtn();
         return this;
     }
