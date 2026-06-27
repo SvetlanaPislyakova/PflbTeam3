@@ -7,6 +7,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import tests.BaseTest;
 import ui.dto.Car;
+import ui.dto.User;
+import ui.dto.UserFactory;
+import ui.pages.BuyOrSaleCarPage;
 
 import java.math.BigDecimal;
 
@@ -49,6 +52,13 @@ public class CreateCarTest extends BaseTest {
                 .price(new BigDecimal(price))
                 .build();
 
+    @Test
+    @DisplayName("Покупка нового автомобиля")
+    public void buyNewCar() {
+        User user = UserFactory.validUser();
+        userSteps.createNewUser(user);
+        Integer userID = userSteps.checkCreateUserAndGetId();
+        Car car = Car.builder().build();
         carSteps.createNewCar(car);
 
         Long carID = carSteps.checkCreateCarAndGetId();

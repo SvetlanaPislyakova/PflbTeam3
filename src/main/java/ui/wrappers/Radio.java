@@ -8,9 +8,9 @@ public class Radio {
     private final String action;
 
 
-    public Radio(String action) {
-        this.action = action;
-        this.radio = $x(String.format("//*[contains(text(),'%s')]//input", action));
+    public Radio(String name) {
+        this.name = name;
+        this.radio = $x(String.format("//*[contains(text(),'%s')]//input", name));
     }
 
 

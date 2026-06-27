@@ -4,6 +4,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ui.dto.Car;
 import ui.pages.AllPostPage;
 
 import java.math.BigDecimal;
@@ -35,6 +36,25 @@ public class AllPostTest extends BaseTest {
             softly.assertThat(allPostPage.getCreateHouseStatusMessage()).contains("Successfully pushed");
             softly.assertThat(allPostPage.getCreateHouseStatusCode()).isEqualTo(201);
             softly.assertThat(allPostPage.getCreateHouseId()).isPositive();
+        });
+    }
+
+    @Test
+    @DisplayName("All POST - создание автомобиля")
+    public void createCarFromAllPostPage() {
+        Car car = Car.builder()
+                .engineType("Gasoline")
+                .mark("Toyota")
+                .model("Corolla")
+                .price(BigDecimal.valueOf(1_000))
+                .build();
+
+        allPostPage.createCar(car);
+
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(allPostPage.getCreateCarStatusMessage()).contains("Successfully pushed");
+            softly.assertThat(allPostPage.getCreateCarStatusCode()).isEqualTo(201);
+            softly.assertThat(allPostPage.getCreateCarId()).isPositive();
         });
     }
 }
