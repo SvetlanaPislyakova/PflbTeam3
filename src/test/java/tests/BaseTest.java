@@ -63,11 +63,18 @@ public class BaseTest {
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        if (System.getProperty("headless", "true").equals("true")) {
+            options.addArguments("--headless=new");
+        }
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
+
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
