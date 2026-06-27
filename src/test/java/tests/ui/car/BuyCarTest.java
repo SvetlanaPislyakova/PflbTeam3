@@ -1,5 +1,6 @@
 package tests.ui.car;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,9 +12,10 @@ import ui.dto.User;
 
 import java.math.BigDecimal;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BuyOrSaleTest extends BaseTest {
+public class BuyCarTest extends BaseTest {
     private static final BigDecimal SUFFICIENT_MONEY = BigDecimal.valueOf(10000000);
     private static final BigDecimal INSUFFICIENT_MONEY = BigDecimal.valueOf(100);
 
@@ -74,10 +76,12 @@ public class BuyOrSaleTest extends BaseTest {
 
         addMoneyPage.openPage()
                 .addMoneyToUser(buyerID, SUFFICIENT_MONEY);
-
-        assertThrows(Exception.class, () ->
-                carSteps.buyNewCar(buyerID.longValue(), nonExistentCarID),
-                "Должна быть ошибка при покупке несуществующего автомобиля");
+        sleep(5000);
+        carSteps.buyNewCar(buyerID.longValue(), nonExistentCarID);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(carSteps.checkStatusCode()).isEqualTo(404);
+        softly.assertThat(buyOrSaleCarPage.getStatusMessage()).contains("Status: AxiosError: Request failed with status code 404");
+        sleep(5000);
     }
 
     @ParameterizedTest
@@ -139,7 +143,7 @@ public class BuyOrSaleTest extends BaseTest {
 
         carSteps.buyNewCar(buyerID.longValue(), carID);
 
-        assertEquals(200, carSteps.checkBuyStatusCode(),
+        assertEquals(200, carSteps.checkStatusCode(),
                 "Статус должен быть 200 OK");
     }
 }

@@ -32,8 +32,8 @@ public class CarSteps {
                 .setData(userID, carID, "SELL");
     }
 
-    @Step("Получение статус кода продажи")
-    public int checkSellStatusCode() {
+    @Step("Получение статус кода")
+    public int checkStatusCode() {
         return buyOrSaleCarPage.getStatusCode();
     }
 
@@ -50,11 +50,7 @@ public class CarSteps {
 
     @Step("Проверка что автомобиль куплен пользователем")
     public boolean isCarBought(Long userID, Long carID) {
-        return checkBuyStatusCode() == 200;
+        return checkStatusCode() == 200;
     }
 
-    @Step("Получение статус кода покупки")
-    public int checkBuyStatusCode() {
-        return buyOrSaleCarPage.getStatusCode();
-    }
 }

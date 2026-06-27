@@ -9,6 +9,7 @@ import ui.dto.Car;
 
 import java.math.BigDecimal;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SellCarTest extends BaseTest {
@@ -36,9 +37,10 @@ public class SellCarTest extends BaseTest {
                 .addMoneyToUser(userID, SUFFICIENT_MONEY);
 
         carSteps.buyNewCar(userID.longValue(), carID);
+        sleep(5000);
         assertTrue(carSteps.isCarBought(userID.longValue(), carID), "Покупка не удалась");
 
         carSteps.sellNewCar(userID.longValue(), carID);
-        assertEquals(200, carSteps.checkSellStatusCode(), "Статус продажи должен быть 200");
+        assertEquals(200, carSteps.checkStatusCode(), "Статус продажи должен быть 200");
     }
 }

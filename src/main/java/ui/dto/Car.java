@@ -21,7 +21,8 @@ public class Car {
     private final String model = faker.harryPotter().character();
 
     @Builder.Default
-    private final BigDecimal price = BigDecimal.valueOf(faker.number().randomDouble(2, 1000, 999999999));
+    private final BigDecimal price = BigDecimal.valueOf(faker.number()
+            .randomDouble(2, 1000, 10000));
 
     private static String generateEngineType() {
         return new Faker().options().option("CNG", "Diesel", "Gasoline", "Hydrogenic", "PHEV");
