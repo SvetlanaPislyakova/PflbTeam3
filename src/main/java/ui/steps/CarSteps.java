@@ -11,19 +11,32 @@ public class CarSteps {
     private final CreateCarPage createCarPage = new CreateCarPage();
     private final BuyOrSaleCarPage buyOrSaleCarPage = new BuyOrSaleCarPage();
 
-    @Step("Создание нового пользователя")
+    @Step("Создание нового автомобиля")
     public void createNewCar(Car car) {
         createCarPage.openPage()
                 .isPageOpened()
                 .createNewCar(car);
     }
 
-    @Step("Покупка нового пользователя")
-    public void buyNewCar(Long userID,Long carID) {
+    @Step("Покупка автомобиля пользователем")
+    public void buyNewCar(Long userID, Long carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
-                .setData(userID, carID);
+                .setData(userID, carID,"BUY");
     }
+
+    @Step("Продажа автомобиля пользователем")
+    public void sellNewCar(Long userID, Long carID) {
+        buyOrSaleCarPage.openPage()
+                .isPageOpened()
+                .setData(userID, carID, "SELL");
+    }
+
+    @Step("Получение статус кода")
+    public int checkStatusCode() {
+        return buyOrSaleCarPage.getStatusCode();
+    }
+
     @Step("Проверка успешности создания автомобиля и получение его id")
     public Long checkCreateCarAndGetId() {
         SoftAssertions softly = new SoftAssertions();
@@ -34,4 +47,10 @@ public class CarSteps {
         softly.assertAll();
         return carId;
     }
+
+    @Step("Проверка что автомобиль куплен пользователем")
+    public boolean isCarBought(Long userID, Long carID) {
+        return checkStatusCode() == 200;
+    }
+
 }

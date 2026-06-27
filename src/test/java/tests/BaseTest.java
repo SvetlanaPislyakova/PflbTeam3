@@ -1,5 +1,7 @@
 package tests;
 
+import api.adapters.CarAdapter;
+import api.adapters.UserAdapter;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -26,6 +28,9 @@ import utils.PropertyReader;
 import utils.TestListener;
 import utils.TokenProvider;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2
@@ -48,6 +53,11 @@ public class BaseTest {
     protected CreateCarPage createCarPage;
     protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
+
+    protected List<Long> createdUserIds = new ArrayList<>();
+    protected List<Long> createdCarIds = new ArrayList<>();
+    protected final UserAdapter userAdapter = new UserAdapter();
+    protected final CarAdapter carAdapter = new CarAdapter();
 
 
 
@@ -97,4 +107,16 @@ public class BaseTest {
             driver.quit();
         }
     }
+//    public void cleanupTestData() { // для кайфа не хватает CarAdapter
+//        if (!createdUserIds.isEmpty()) {  и сохранять в каждом тесте айди созданных сущностей createdUserIds.add(userID);
+//            createdUserIds.forEach(userId ->
+//                    userAdapter.deleteUser(userId, token)
+//            );
+//        }
+//        if (!createdCarIds.isEmpty()) {
+//            createdCarIds.forEach(carId ->
+//                    carAdapter.deleteCar(carId, token)
+//            );
+//        }
+//    }
 }
