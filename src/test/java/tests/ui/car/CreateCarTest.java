@@ -51,6 +51,7 @@ public class CreateCarTest extends BaseTest {
                 .model(model)
                 .price(new BigDecimal(price))
                 .build();
+    }
 
     @Test
     @DisplayName("Покупка нового автомобиля")
@@ -63,7 +64,7 @@ public class CreateCarTest extends BaseTest {
 
         Long carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-        assertNotNull(carID, "Автомобиль должен быть создан марки " + mark);
-        assertTrue(carID > 0, "ID должен быть положительным для " + mark);
+        assertNotNull(carID, "Автомобиль должен быть создан марки " + car.getMark());
+        assertTrue(carID > 0, "ID должен быть положительным для " + car.getMark());
     }
 }
