@@ -54,8 +54,8 @@ public class BaseTest {
     protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
 
-    protected List<Long> createdUserIds = new ArrayList<>();
-    protected List<Long> createdCarIds = new ArrayList<>();
+    protected List<Integer> createdUserIds = new ArrayList<>();
+    protected List<Integer> createdCarIds = new ArrayList<>();
     protected final UserAdapter userAdapter = new UserAdapter();
     protected final CarAdapter carAdapter = new CarAdapter();
 
@@ -79,7 +79,7 @@ public class BaseTest {
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        //options.addArguments("--headless=new");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");

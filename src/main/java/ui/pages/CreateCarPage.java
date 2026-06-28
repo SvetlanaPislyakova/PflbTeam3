@@ -47,7 +47,7 @@ public class CreateCarPage extends BasePage {
         return table.getStatus();
     }
 
-    public Long getCarId() {
-        return table.getResultInt().longValue();
+    public int getCarId() {
+        return table.getResultInt();
     }
 }

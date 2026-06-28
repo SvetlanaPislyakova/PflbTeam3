@@ -5,7 +5,7 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class Radio {
     private final SelenideElement radio;
-    private final String action;
+    private final String name;
 
 
     public Radio(String name) {
