@@ -1,3 +1,6 @@
+
+Копировать
+Скачать
 pipeline {
     agent any
 
@@ -8,6 +11,10 @@ pipeline {
 
     parameters{
         choice(choices: ['chrome', 'firefox'], name: 'BROWSER')
+        string(name: 'USER', defaultValue: '', description: 'Username for authentication')
+        string(name: 'PASSWORD', defaultValue: '', description: 'Password for authentication')
+        string(name: 'DB_USER', defaultValue: '', description: 'Database username')
+        string(name: 'DB_PASSWORD', defaultValue: '', description: 'Database password')
     }
 
     stages {
@@ -17,8 +24,12 @@ pipeline {
                 git 'https://github.com/SvetlanaPislyakova/PflbTeam3.git'
 
                 // Run Maven on a Unix agent.
-                sh "mvn clean test -Dbrowser=${params.BROWSER}"
-
+    sh """  mvn clean test \
+            -Dbrowser=${params.BROWSER} \
+            -Demail=${params.USER} \
+            -Dpassword=${params.PASSWORD} \
+            -DdbUser=${params.DB_USER} \
+            -DdbPassword=${params.DB_PASSWORD} """
                 // To run Maven on a Windows agent, use
                 // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
