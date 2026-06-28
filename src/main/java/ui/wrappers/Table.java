@@ -39,8 +39,8 @@ public class Table {
                 this.secondColumn = "House ID";
                 break;
             case "Issue a loan":
-                this.firstColumn = "User ID";
-                this.secondColumn = "Размер кредита";
+                this.firstColumn = "User ID:";
+                this.secondColumn = "Размер кредита:";
                 break;
             case "Read all cars":
             case "Create new car":
@@ -51,6 +51,18 @@ public class Table {
             case "Create new house":
                 this.firstColumn = "Floors";
                 this.secondColumn = "Price";
+                break;
+            case "-- DELETE USER --":
+                this.firstColumn = "User ID";
+                this.secondColumn = "User ID";
+                break;
+            case "-- DELETE CAR --":
+                this.firstColumn = "Car ID";
+                this.secondColumn = "Car ID";
+                break;
+            case "-- DELETE HOUSE --":
+                this.firstColumn = "House ID";
+                this.secondColumn = "House ID";
                 break;
             default:
                 throw new IllegalArgumentException("Неизвестная таблица");
@@ -107,6 +119,12 @@ public class Table {
         log.info("Проверить, что в таблице нет строк");
         $$x(String.format(PATTERN + "//tbody/tr", firstColumn, secondColumn))
                 .shouldBe(CollectionCondition.empty);
+    }
+
+    public void waitUntilButtonEnabled() {
+        SelenideElement button = $x(String.format(PATTERN + "/parent::div/div/button[contains(@class, 'tableButton')]",
+                firstColumn, secondColumn));
+        button.shouldBe(visible).shouldBe(enabled);
     }
 
     public void clickPushToApiBtn() {

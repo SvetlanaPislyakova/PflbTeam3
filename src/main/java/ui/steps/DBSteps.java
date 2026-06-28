@@ -5,6 +5,7 @@ import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import ui.dto.User;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,6 +59,51 @@ public class DBSteps {
         try {
             connection.connect();
             ResultSet result = connection.selectById("person", userId);
+            return result.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Step("Получение баланса пользователя из БД")
+    public BigDecimal getUserBalance(int userId) {
+        DBConnection connection = new DBConnection();
+        try {
+            connection.connect();
+            ResultSet result = connection.selectById("person", userId);
+            if (result.next()) {
+                return result.getBigDecimal("money");
+            }
+            return BigDecimal.ZERO;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Step("Проверка наличия автомобиля в БД с id = {carId}")
+    public boolean isCarExistsInDB(Integer carId) {
+        DBConnection connection = new DBConnection();
+        try {
+            connection.connect();
+            ResultSet result = connection.selectById("car", carId);
+            return result.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            connection.close();
+        }
+    }
+
+    @Step("Проверка наличия дома в БД с id = {houseId}")
+    public boolean isHouseExistsInDB(Integer houseId) {
+        DBConnection connection = new DBConnection();
+        try {
+            connection.connect();
+            ResultSet result = connection.selectById("house", houseId);
             return result.next();
         } catch (SQLException e) {
             throw new RuntimeException(e);

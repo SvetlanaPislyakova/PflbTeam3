@@ -1,6 +1,10 @@
 package tests.api;
 
+import api.adapters.CarAdapter;
 import api.adapters.UserAdapter;
+import api.models.CarRq;
+import api.models.CarRqFactory;
+import api.models.CarRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import api.models.user.UserRs;
@@ -170,8 +174,29 @@ public class UserApiTest extends  BaseApiTest {
     }
 
     @Test
+    @DisplayName("API - Получение списка автомобилей пользователя")
     public void getUserCars() {
-        userAdapter.getUserCars(13304);
+        UserRq userRq = UserRqFactory.validUser();
+        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+
+        CarAdapter carAdapter = new CarAdapter();
+        CarRq carRq = CarRqFactory.validCar();
+        CarRs carRs = carAdapter.createCar(carRq, accessToken);
+        Integer carId = carRs.getId();
+
+        userAdapter.buyCar(userId, carId, accessToken);
+
+        List<CarRs> cars = userAdapter.getUserCars(userId);
+
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(cars).isNotEmpty();
+        softly.assertThat(cars.get(0).getId()).isEqualTo(carId);
+        softly.assertThat(cars.get(0).getMark()).isEqualTo(carRs.getMark());
+        softly.assertAll();
+
+        userAdapter.sellCar(userId, carId, accessToken);
+        carAdapter.deleteCar(carId, accessToken);
+        userAdapter.deleteUser(userId, accessToken);
     }
 
     @Test
