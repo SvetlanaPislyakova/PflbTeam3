@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
 
-public class CarApiTest extends BaseApiTest {
+public class CarApiTest {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
@@ -37,7 +37,7 @@ public class CarApiTest extends BaseApiTest {
                 .price(price)
                 .build();
 
-        CarRs createdCar = carAdapter.createCar(carRq, accessToken);
+        CarRs createdCar = carAdapter.createCar(carRq);
 
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(createdCar.getMark()).isEqualTo(mark);
@@ -45,6 +45,6 @@ public class CarApiTest extends BaseApiTest {
         softly.assertThat(createdCar.getEngineType()).isEqualTo(engineType);
         softly.assertAll();
 
-        carAdapter.deleteCar(createdCar.getId(), accessToken);
+        carAdapter.deleteCar(createdCar.getId());
     }
 }

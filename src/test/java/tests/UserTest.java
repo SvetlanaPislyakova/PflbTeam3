@@ -45,7 +45,7 @@ public class UserTest extends BaseTest {
         userSteps.createNewUser(user);
         Integer userId = userSteps.checkCreateUserAndGetId();
         dbSteps.checkUserInDB(user, userId);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     static Stream<Arguments> invalidUsers() {
@@ -97,7 +97,7 @@ public class UserTest extends BaseTest {
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         BigDecimal result = userRq.getMoney().add(money);
         userSteps.checkAddingMoneyToUser(userId, money, result);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class UserTest extends BaseTest {
         Integer userId = userAdapter.createUserAndGetId(userRq);
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         userSteps.checkGetCredit(userId, money);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @Test
@@ -120,7 +120,7 @@ public class UserTest extends BaseTest {
         Integer userId = userAdapter.createUserAndGetId(userRq);
         userSteps.checkUserHaveNoCars(userId);
         userSteps.checkUserExistsInDb(userId);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @ParameterizedTest(name = "Получение списка автомобилей пользователя - машин у пользователя: {0}")
@@ -141,15 +141,15 @@ public class UserTest extends BaseTest {
                     .toBuilder()
                     .price(BigDecimal.valueOf(10000))
                     .build();
-            CarRs car = carAdapter.createCar(carRq, token);
-            userAdapter.buyCar(userId, car.getId(), token);
+            CarRs car = carAdapter.createCar(carRq);
+            userAdapter.buyCar(userId, car.getId());
             carIds.add(car.getId());
         }
         userSteps.checkUserCars(userId, carIds);
         for (Integer carId : carIds) {
-            userAdapter.sellCar(userId, carId, token);
-            carAdapter.deleteCar(carId, token);
+            userAdapter.sellCar(userId, carId);
+            carAdapter.deleteCar(carId);
         }
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 }

@@ -1,7 +1,6 @@
 package api.adapters;
 
 import api.models.user.UserInfoRs;
-import api.models.user.UserInfoRsDraft;
 import api.models.user.UserRq;
 import api.models.user.UserRs;
 import io.restassured.response.ValidatableResponse;
@@ -48,11 +47,10 @@ public class UserAdapter extends BaseAdapter {
                 .path("id");
     }
 
-    private ValidatableResponse changeUserRequest(Integer userId, UserRq userRq, String token) {
+    private ValidatableResponse changeUserRequest(Integer userId, UserRq userRq) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("userId", userId)
-                .header("Authorization", "Bearer " + token)
                 .body(gson.toJson(userRq))
                 .log().all()
                 .when()
@@ -61,23 +59,23 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public UserRs changeUser(Integer userId, UserRq userRq, String token) {
+    public UserRs changeUser(Integer userId, UserRq userRq) {
         log.info("PUT - Изменение пользователя, 202");
-        return changeUserRequest(userId, userRq, token)
+        return changeUserRequest(userId, userRq)
                 .spec(accepted202)
                 .extract()
                 .as(UserRs.class);
     }
 
-    public void changeNotExistingUser(Integer userId, UserRq userRq, String token) {
+    public void changeNotExistingUser(Integer userId, UserRq userRq) {
         log.info("PUT - Попытка изменения несуществующего пользователя, 404");
-        changeUserRequest(userId, userRq, token)
+        changeUserRequest(userId, userRq)
                 .spec(notFound404);
     }
 
     private ValidatableResponse getUserRequest(Integer userId) {
         return given()
-                .spec(spec)
+                .spec(baseSpec)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -103,7 +101,7 @@ public class UserAdapter extends BaseAdapter {
     public List<UserRs> getUsers() {
         log.info("GET - получение списка пользователей, 200");
         return given()
-                .spec(spec)
+                .spec(baseSpec)
                 .log().all()
                 .when()
                 .get("/users")
@@ -117,7 +115,7 @@ public class UserAdapter extends BaseAdapter {
     public void getUserCars(Integer userId) {
         log.info("GET - получение автомобилей пользователя, 200");
         given()
-                .spec(spec)
+                .spec(baseSpec)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -129,7 +127,7 @@ public class UserAdapter extends BaseAdapter {
 
     private ValidatableResponse getUserInfoRequest(Integer userId) {
         return given()
-                .spec(spec)
+                .spec(baseSpec)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -152,10 +150,9 @@ public class UserAdapter extends BaseAdapter {
                 .spec(noContent204);
     }
 
-    private ValidatableResponse deleteUserRequest(Integer userId, String token) {
+    private ValidatableResponse deleteUserRequest(Integer userId) {
         return given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -164,30 +161,29 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void deleteUser(Integer userId, String token) {
+    public void deleteUser(Integer userId) {
         log.info("DELETE - удаление пользователя, 204");
-        deleteUserRequest(userId, token)
+        deleteUserRequest(userId)
                 .spec(noContent204);
     }
 
-    public void deleteNotExistingUser(Integer userId, String token) {
+    public void deleteNotExistingUser(Integer userId) {
         log.info("DELETE - попытка удаления несуществующего пользователя, 404");
-        deleteUserRequest(userId, token)
+        deleteUserRequest(userId)
                 .spec(notFound404);
     }
 
-    public void deleteUserNegative(Integer userId, String token) {
+    public void deleteUserNegative(Integer userId) {
         log.info("DELETE - попытка удаления пользователя с имуществом, 409");
-        deleteUserRequest(userId, token)
+        deleteUserRequest(userId)
                 .spec(conflict409);
     }
 
-    private ValidatableResponse addMoneyRequest(Integer userId, BigDecimal amount, String token) {
+    private ValidatableResponse addMoneyRequest(Integer userId, BigDecimal amount) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("userId", userId)
                 .pathParam("amount", amount)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/user/{userId}/money/{amount}")
@@ -195,32 +191,31 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public UserRs addMoneyToUser(Integer userId, BigDecimal amount, String token) {
+    public UserRs addMoneyToUser(Integer userId, BigDecimal amount) {
         log.info("POST - Начисление денег пользователю, 200");
-        return addMoneyRequest(userId, amount, token)
+        return addMoneyRequest(userId, amount)
                 .spec(success200)
                 .extract()
                 .as(UserRs.class);
     }
 
-    public void addMoneyToNotExistingUser(Integer userId, BigDecimal amount, String token) {
+    public void addMoneyToNotExistingUser(Integer userId, BigDecimal amount) {
         log.info("POST - Попытка начисления денег несуществующему пользователю, 404");
-        addMoneyRequest(userId, amount, token)
+        addMoneyRequest(userId, amount)
                 .spec(notFound404);
     }
 
-    public void addInvalidMoneyToUser(Integer userId, BigDecimal amount, String token) {
+    public void addInvalidMoneyToUser(Integer userId, BigDecimal amount) {
         log.info("POST - Начисление денег пользователю, отрицательная сумма, 400");
-        addMoneyRequest(userId, amount, token)
+        addMoneyRequest(userId, amount)
                 .spec(badRequest400);
     }
 
-    public UserRs buyCar(Integer userId, Integer carId, String token) {
+    public UserRs buyCar(Integer userId, Integer carId) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("userId", userId)
                 .pathParam("carId", carId)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/user/{userId}/buyCar/{carId}")
@@ -231,12 +226,11 @@ public class UserAdapter extends BaseAdapter {
                 .as(UserRs.class);
     }
 
-    public UserRs sellCar(Integer userId, Integer carId, String token) {
+    public UserRs sellCar(Integer userId, Integer carId) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("userId", userId)
                 .pathParam("carId", carId)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/user/{userId}/sellCar/{carId}")

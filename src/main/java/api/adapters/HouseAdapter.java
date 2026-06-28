@@ -10,10 +10,9 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class HouseAdapter extends BaseAdapter {
 
-    private ValidatableResponse createHouseRequest(HouseRq houseRq, String token) {
+    private ValidatableResponse createHouseRequest(HouseRq houseRq) {
         return given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .body(gson.toJson(houseRq))
                 .log().all()
                 .when()
@@ -22,20 +21,19 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs createHouse(HouseRq houseRq, String token) {
+    public HouseRs createHouse(HouseRq houseRq) {
         log.info("POST - создание дома, 201");
-        return createHouseRequest(houseRq, token)
+        return createHouseRequest(houseRq)
                 .spec(created201)
                 .extract()
                 .as(HouseRs.class);
     }
 
-    private ValidatableResponse settleUserRequest(Integer houseId, Integer userId, String token) {
+    private ValidatableResponse settleUserRequest(Integer houseId, Integer userId) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("houseId", houseId)
                 .pathParam("userId", userId)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/house/{houseId}/settle/{userId}")
@@ -43,20 +41,19 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs settleUser(Integer houseId, Integer userId, String token) {
+    public HouseRs settleUser(Integer houseId, Integer userId) {
         log.info("POST - заселение пользователя в дом, 200");
-        return settleUserRequest(houseId, userId, token)
+        return settleUserRequest(houseId, userId)
                 .spec(success200)
                 .extract()
                 .as(HouseRs.class);
     }
 
-    private ValidatableResponse evictUserRequest(Integer houseId, Integer userId, String token) {
+    private ValidatableResponse evictUserRequest(Integer houseId, Integer userId) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("houseId", houseId)
                 .pathParam("userId", userId)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/house/{houseId}/evict/{userId}")
@@ -64,9 +61,9 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs evictUser(Integer houseId, Integer userId, String token) {
+    public HouseRs evictUser(Integer houseId, Integer userId) {
         log.info("POST - выселение пользователя из дома, 200");
-        return evictUserRequest(houseId, userId, token)
+        return evictUserRequest(houseId, userId)
                 .spec(success200)
                 .extract()
                 .as(HouseRs.class);

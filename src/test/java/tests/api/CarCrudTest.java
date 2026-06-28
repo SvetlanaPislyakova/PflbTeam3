@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CarCrudTest extends BaseApiTest {
+public class CarCrudTest {
 
     CarAdapter carAdapter = new CarAdapter();
 
@@ -26,10 +26,10 @@ public class CarCrudTest extends BaseApiTest {
                 .price(BigDecimal.valueOf(15000.0))
                 .build();
 
-        CarRs created = carAdapter.createCar(carRq, accessToken);
-        CarRs received = carAdapter.getCar(created.getId(), accessToken);
+        CarRs created = carAdapter.createCar(carRq);
+        CarRs received = carAdapter.getCar(created.getId());
         assertEquals(created.getId(), received.getId());
-        carAdapter.deleteCar(created.getId(), accessToken);
+        carAdapter.deleteCar(created.getId());
     }
 
     @Test
@@ -43,8 +43,8 @@ public class CarCrudTest extends BaseApiTest {
                 .price(BigDecimal.valueOf(5000.0))
                 .build();
 
-        CarRs car = carAdapter.createCar(carRq, accessToken);
-        carAdapter.deleteCar(car.getId(), accessToken);
+        CarRs car = carAdapter.createCar(carRq);
+        carAdapter.deleteCar(car.getId());
     }
 
     @Test
@@ -108,10 +108,10 @@ public class CarCrudTest extends BaseApiTest {
                 .price(price)
                 .build();
 
-        CarRs car = carAdapter.createCar(carRq, accessToken);
+        CarRs car = carAdapter.createCar(carRq);
 
         assertEquals(mark, car.getMark());
 
-        carAdapter.deleteCar(car.getId(), accessToken);
+        carAdapter.deleteCar(car.getId());
     }
 }

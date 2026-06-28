@@ -9,26 +9,33 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import utils.PropertyReader;
 
+import static io.restassured.RestAssured.given;
+
 public class BaseAdapter {
 
-    protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
-    protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    private static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
+    private static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
 
     static Gson gson = new Gson();
+    private static String accessToken;
 
-    protected static String getAccessToken() {
-        LoginRq rq = LoginRq.builder()
-                .username(email)
-                .password(password)
-                .build();
-        return LoginAdapter.getAccessToken(rq);
-    }
-
-    protected static RequestSpecification getAuthSpec() {
-        return new RequestSpecBuilder()
-                .addRequestSpecification(baseSpec)
-                .addHeader("Authorization", "Bearer " + getAccessToken())
-                .build();
+    private static String getAccessToken() {
+        if (accessToken == null) {
+            LoginRq rq = LoginRq.builder()
+                    .username(email)
+                    .password(password)
+                    .build();
+            accessToken = given()
+                    .spec(baseSpec)
+                    .body(gson.toJson(rq))
+                    .when()
+                    .post("/login")
+                    .then()
+                    .spec(accepted202)
+                    .extract()
+                    .path("access_token");
+        }
+        return accessToken;
     }
 
     public static RequestSpecification baseSpec = new RequestSpecBuilder()
@@ -36,10 +43,12 @@ public class BaseAdapter {
             .setContentType(ContentType.JSON)
             .build();
 
-    public static RequestSpecification spec = new RequestSpecBuilder()
-            .setBaseUri("http://82.142.167.37:4879")
-            .setContentType(ContentType.JSON)
-            .build();
+    protected static RequestSpecification getAuthSpec() {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(baseSpec)
+                .addHeader("Authorization", "Bearer " + getAccessToken())
+                .build();
+    }
 
     public static ResponseSpecification success200 = new ResponseSpecBuilder()
             .expectStatusCode(200)

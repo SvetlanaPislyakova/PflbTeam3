@@ -7,10 +7,9 @@ import static io.restassured.RestAssured.given;
 
 public class CarAdapter extends BaseAdapter {
 
-    public CarRs createCar(CarRq carRq, String token) {
+    public CarRs createCar(CarRq carRq) {
         return given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .body(carRq)
                 .log().all()
                 .post("/car")
@@ -21,10 +20,9 @@ public class CarAdapter extends BaseAdapter {
                 .as(CarRs.class);
     }
 
-    public void deleteCar(int id, String token) {
+    public void deleteCar(int id) {
         given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .pathParam("id", id)
                 .log().all()
                 .delete("/car/{id}")
@@ -33,10 +31,9 @@ public class CarAdapter extends BaseAdapter {
                 .spec(noContent204);
     }
 
-    public CarRs getCar(int id, String token) {
+    public CarRs getCar(int id) {
         return given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(baseSpec)
                 .pathParam("id", id)
                 .log().all()
                 .get("/car/{id}")
@@ -46,10 +43,9 @@ public class CarAdapter extends BaseAdapter {
                 .extract()
                 .as(CarRs.class);
     }
-    public void createCarBadRequest(CarRq carRq, String token) {
+    public void createCarBadRequest(CarRq carRq) {
         given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .body(carRq)
                 .post("/car")
                 .then()

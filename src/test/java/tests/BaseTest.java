@@ -24,7 +24,6 @@ import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
 import utils.PropertyReader;
 import utils.TestListener;
-import utils.TokenProvider;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -49,8 +48,6 @@ public class BaseTest {
     protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
 
-
-
     @BeforeAll
     public static void setupAllure() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide()
@@ -63,7 +60,6 @@ public class BaseTest {
         log.info("======================================== STARTING TEST {} " +
                         "========================================",
                 testInfo.getDisplayName());
-        token = TokenProvider.getAccessToken();
 
         Configuration.timeout = 10000;
         Configuration.baseUrl = "http://82.142.167.37:4881/";

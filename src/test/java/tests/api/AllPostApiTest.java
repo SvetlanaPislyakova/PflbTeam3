@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-public class AllPostApiTest extends BaseApiTest {
+public class AllPostApiTest {
 
     private final HouseAdapter houseAdapter = new HouseAdapter();
     private final UserAdapter userAdapter = new UserAdapter();
@@ -28,7 +28,7 @@ public class AllPostApiTest extends BaseApiTest {
                 .lodgers(List.of())
                 .build();
 
-        HouseRs houseRs = houseAdapter.createHouse(houseRq, accessToken);
+        HouseRs houseRs = houseAdapter.createHouse(houseRq);
 
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(houseRs).isNotNull();
@@ -50,10 +50,10 @@ public class AllPostApiTest extends BaseApiTest {
                 .parkingPlaces(List.of())
                 .lodgers(List.of())
                 .build();
-        HouseRs houseRs = houseAdapter.createHouse(houseRq, accessToken);
+        HouseRs houseRs = houseAdapter.createHouse(houseRq);
 
-        HouseRs settledHouseRs = houseAdapter.settleUser(houseRs.getId(), userId, accessToken);
-        HouseRs evictedHouseRs = houseAdapter.evictUser(houseRs.getId(), userId, accessToken);
+        HouseRs settledHouseRs = houseAdapter.settleUser(houseRs.getId(), userId);
+        HouseRs evictedHouseRs = houseAdapter.evictUser(houseRs.getId(), userId);
 
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(settledHouseRs).isNotNull();

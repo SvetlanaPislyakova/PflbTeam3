@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
 
-public class CarNegativeTest extends BaseApiTest  {
+public class CarNegativeTest {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
@@ -40,6 +40,6 @@ public class CarNegativeTest extends BaseApiTest  {
                 .price(price)
                 .build();
 
-        carAdapter.createCarBadRequest(car, accessToken);
+        carAdapter.createCarBadRequest(car);
     }
 }
