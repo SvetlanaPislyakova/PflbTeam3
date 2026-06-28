@@ -1,10 +1,19 @@
 package tests.api;
 
+import api.adapters.CarAdapter;
+import api.adapters.HouseAdapter;
 import api.adapters.UserAdapter;
+import api.models.HouseRq;
+import api.models.HouseRs;
+import api.models.car.CarRq;
+import api.models.car.CarRqFactory;
+import api.models.car.CarRs;
+import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import api.models.user.UserRs;
 import com.github.javafaker.Faker;
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +32,8 @@ public class UserApiTest extends  BaseApiTest {
 
     private final UserAdapter userAdapter = new UserAdapter();
     private final DBSteps dbSteps = new DBSteps();
+    private final CarAdapter carAdapter = new CarAdapter();
+    private final HouseAdapter houseAdapter = new HouseAdapter();
     private final Faker faker = new Faker();
 
     private void assertUserEquals(UserRs userRs, UserRq userRq) {
@@ -37,9 +48,10 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Создание нового пользователя")
+    @Description("Проверка создания нового пользователя")
     public void createUser() {
         UserRq userRq = UserRqFactory.validUser();
-        UserRs userRs = userAdapter.createUser(userRq, accessToken);
+        UserRs userRs = userAdapter.createUser(userRq);
         assertUserEquals(userRs, userRq);
         userAdapter.deleteUser(userRs.getId(), accessToken);
     }
@@ -53,14 +65,17 @@ public class UserApiTest extends  BaseApiTest {
         );
     }
 
+    @DisplayName("API - Создание пользователя с невалидными данными")
     @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
     @MethodSource("invalidUsers")
+    @Description("Проверка создания пользователя с невалидными данными")
     void createUserWithNullFields(UserRq userRq) {
-        userAdapter.createUserWithNullFields(userRq, accessToken);
+        userAdapter.createUserWithNullFields(userRq);
     }
 
     @Test
     @DisplayName("API - Получение списка пользователей")
+    @Description("Проверка получения списка пользователей")
     public void getUsers() {
         List<UserRs> users = userAdapter.getUsers();
         SoftAssertions.assertSoftly(softly -> {
@@ -79,18 +94,20 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Удаление пользователя по id")
+    @Description("Проверка удаления пользователя по id")
     public void deleteUser() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         userAdapter.deleteUser(userId, accessToken);
         assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
     }
 
     @Test
     @DisplayName("API - Попытка удаления несуществующего пользователя")
+    @Description("Проверка удаления несуществующего пользователя")
     public void deleteNotExistingUser() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         userAdapter.deleteUser(userId, accessToken);
         assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
         userAdapter.deleteNotExistingUser(userId, accessToken);
@@ -98,9 +115,10 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Получение пользователя по id")
+    @Description("Проверка получения пользователя по id")
     public void getUserById() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         UserRs userRs = userAdapter.getUserById(userId);
         assertUserEquals(userRs, userRq);
         userAdapter.deleteUser(userId, accessToken);
@@ -108,18 +126,20 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Попытка получения несуществующего пользователя по id")
+    @Description("Проверка получения несуществующего пользователя")
     public void getNotExistingUserById() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         userAdapter.deleteUser(userId, accessToken);
         userAdapter.getNotExistingUserById(userId);
     }
 
     @Test
     @DisplayName("API - Изменение пользователя")
+    @Description("Проверка изменения пользователя")
     public void changeUser() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         UserRq newUserRq = UserRqFactory.validUserWithId(userId);
         UserRs userRs = userAdapter.changeUser(userId, newUserRq, accessToken);
         assertUserEquals(userRs, newUserRq);
@@ -131,9 +151,10 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Попытка изменения несуществующего пользователя")
+    @Description("Проверка изменения несуществующего пользователя")
     public void changeNotExistingUserById() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         UserRq newUserRq = UserRqFactory.validUserWithId(userId);
         userAdapter.deleteUser(userId, accessToken);
         userAdapter.changeNotExistingUser(userId, newUserRq, accessToken);
@@ -141,9 +162,10 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Начисление денег пользователю")
+    @Description("Проверка начисления денег пользователю")
     public void addMoneyToUser() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         UserRs userRs = userAdapter.addMoneyToUser(userId, money, accessToken);
         assertThat(userRq.getMoney().add(money)).isEqualByComparingTo(userRs.getMoney());
@@ -152,9 +174,10 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Попытка начисления денег несуществующему пользователю")
+    @Description("Проверка начисления денег несуществующему пользователю")
     public void addMoneyToNotExistingUser() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         userAdapter.deleteUser(userId, accessToken);
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         userAdapter.addMoneyToNotExistingUser(userId, money, accessToken);
@@ -162,23 +185,107 @@ public class UserApiTest extends  BaseApiTest {
 
     @Test
     @DisplayName("API - Попытка начисления денег пользователю, отрицательная сумма")
+    @Description("Проверка начисления отрицательной суммы")
     public void addInvalidMoneyToUser() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         userAdapter.addInvalidMoneyToUser(userId, BigDecimal.valueOf(-125.0236), accessToken);
         userAdapter.deleteUser(userId, accessToken);
     }
 
     @Test
-    public void getUserCars() {
-        userAdapter.getUserCars(13304);
+    @DisplayName("Попытка получения имущества несуществующего пользователя")
+    @Description("Проверка получения имущества несуществующего пользователя")
+    public void getNotExistingUserInfo() {
+        UserRq userRq = UserRqFactory.validUser();
+        Integer userId = userAdapter.createUserAndGetId(userRq);
+        userAdapter.deleteUser(userId, accessToken);
+        userAdapter.getNotExistingUserInfo(userId);
     }
 
     @Test
-    public void getNotExistingUserInfo() {
-        UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, accessToken);
+    @DisplayName("Получение имущества пользователя")
+    @Description("Проверка получения имущества пользователя")
+    public void getUserInfo() {
+        UserRq userRq = UserRqFactory
+                .validUser()
+                .toBuilder()
+                .money(BigDecimal.valueOf(1000000))
+                .build();
+        Integer userId = userAdapter.createUserAndGetId(userRq);
+        CarRq carRq = CarRqFactory
+                .validCar()
+                .toBuilder()
+                .price(BigDecimal.valueOf(10000))
+                .build();
+        CarRs carRs = carAdapter.createCar(carRq, accessToken);
+        userAdapter.buyCar(userId, carRs.getId(), accessToken);
+        UserInfoRs userInfoRs = userAdapter.getUserInfo(userId);
+
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(userInfoRs.getFirstName()).isEqualTo(userRq.getFirstName());
+            softly.assertThat(userInfoRs.getSecondName()).isEqualTo(userRq.getSecondName());
+            softly.assertThat(userInfoRs.getAge()).isEqualTo(userRq.getAge());
+            softly.assertThat(userInfoRs.getSex()).isEqualTo(userRq.getSex());
+            softly.assertThat(userInfoRs.getMoney()).isEqualByComparingTo(userRq.getMoney().subtract(carRq.getPrice()));
+        });
+
+        for (CarRs car : userInfoRs.getCars()) {
+            SoftAssertions.assertSoftly(softly -> {
+                softly.assertThat(carRs.getId()).isEqualTo(car.getId());
+                softly.assertThat(carRs.getMark()).isEqualTo(car.getMark());
+                softly.assertThat(carRs.getModel()).isEqualTo(car.getModel());
+                softly.assertThat(carRs.getEngineType()).isEqualTo(car.getEngineType());
+                softly.assertThat(carRs.getPrice()).isEqualByComparingTo(car.getPrice());
+            });
+        }
+        userAdapter.sellCar(userId, carRs.getId(), accessToken);
         userAdapter.deleteUser(userId, accessToken);
-        userAdapter.getNotExistingUserInfo(userId);
+    }
+
+    @Test
+    @DisplayName("Попытка удаления пользователя, у которого есть машина")
+    @Description("Проверка удаления пользователя, у которого есть машина")
+    public void deleteUserHavingCar() {
+        UserRq userRq = UserRqFactory
+                .validUser()
+                .toBuilder()
+                .money(BigDecimal.valueOf(1000000))
+                .build();
+        Integer userId = userAdapter.createUserAndGetId(userRq);
+        CarRq carRq = CarRqFactory
+                .validCar()
+                .toBuilder()
+                .price(BigDecimal.valueOf(10000))
+                .build();
+        CarRs car = carAdapter.createCar(carRq, accessToken);
+        userAdapter.buyCar(userId, car.getId(), accessToken);
+        userAdapter.deleteUserNegative(userId, accessToken);
+        userAdapter.sellCar(userId, car.getId(), accessToken);
+        carAdapter.deleteCar(car.getId(), accessToken);
+        userAdapter.deleteUser(userId, accessToken);
+    }
+
+    @Test
+    @DisplayName("Попытка удаления пользователя, проживающего в доме")
+    @Description("Проверка удаления пользователя, проживающего в доме")
+    public void deleteUserLiveInHouse() {
+        UserRq userRq = UserRqFactory
+                .validUser()
+                .toBuilder()
+                .money(BigDecimal.valueOf(1000000))
+                .build();
+        Integer userId = userAdapter.createUserAndGetId(userRq);
+        HouseRq houseRq = HouseRq.builder()
+                .floorCount(5)
+                .price(BigDecimal.valueOf(10000))
+                .parkingPlaces(List.of())
+                .lodgers(List.of())
+                .build();
+        HouseRs houseRs = houseAdapter.createHouse(houseRq, accessToken);
+        houseAdapter.settleUser(houseRs.getId(), userId, accessToken);
+        userAdapter.deleteUserNegative(userId, accessToken);
+        houseAdapter.evictUser(houseRs.getId(), userId, accessToken);
+        userAdapter.deleteUser(userId, accessToken);
     }
 }

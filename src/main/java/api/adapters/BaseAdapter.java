@@ -1,15 +1,40 @@
 package api.adapters;
 
+import api.models.LoginRq;
 import com.google.gson.Gson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import utils.PropertyReader;
 
 public class BaseAdapter {
 
+    protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
+    protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
+
     static Gson gson = new Gson();
+
+    protected static String getAccessToken() {
+        LoginRq rq = LoginRq.builder()
+                .username(email)
+                .password(password)
+                .build();
+        return LoginAdapter.getAccessToken(rq);
+    }
+
+    protected static RequestSpecification getAuthSpec() {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(baseSpec)
+                .addHeader("Authorization", "Bearer " + getAccessToken())
+                .build();
+    }
+
+    public static RequestSpecification baseSpec = new RequestSpecBuilder()
+            .setBaseUri("http://82.142.167.37:4879")
+            .setContentType(ContentType.JSON)
+            .build();
 
     public static RequestSpecification spec = new RequestSpecBuilder()
             .setBaseUri("http://82.142.167.37:4879")
