@@ -43,7 +43,7 @@ public class AllPostApiTest extends BaseApiTest {
     public void settleAndEvictUserInHouse() {
         Integer userId = userAdapter.createUserAndGetId(UserRqFactory.validUser().toBuilder()
                 .money(BigDecimal.valueOf(1_000_000))
-                .build(), accessToken);
+                .build());
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(3)
                 .price(BigDecimal.valueOf(100))

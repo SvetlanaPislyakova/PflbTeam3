@@ -6,15 +6,15 @@ import java.math.BigDecimal;
 
 public class UserRqFactory {
 
-    private static final Faker FAKER = new Faker();
+    private static final Faker faker = new Faker();
 
     public static UserRq validUser() {
         return UserRq.builder()
-                .age(FAKER.number().numberBetween(10, 100))
-                .firstName(FAKER.name().firstName())
-                .secondName(FAKER.name().lastName())
-                .money(BigDecimal.valueOf(FAKER.number().randomDouble(2, 0, 1000000)))
-                .sex(FAKER.options().option("MALE", "FEMALE"))
+                .age(faker.number().numberBetween(10, 100))
+                .firstName(faker.name().firstName())
+                .secondName(faker.name().lastName())
+                .money(BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000)))
+                .sex(faker.options().option("MALE", "FEMALE"))
                 .build();
     }
 

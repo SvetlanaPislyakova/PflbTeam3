@@ -1,35 +1,21 @@
 package api.models.user;
 
+import api.models.car.CarRs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-public class UserInfoRs {
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class UserInfoRs extends UserRs {
 
-    @SerializedName("id")
-    @Expose
-    private Integer id;
-    @SerializedName("age")
-    @Expose
-    private Integer age;
     @SerializedName("cars")
     @Expose
-    private List<Car> cars;
-    @SerializedName("firstName")
-    @Expose
-    private String firstName;
+    private List<CarRs> cars;
     @SerializedName("house")
     @Expose
     private Integer house;
-    @SerializedName("money")
-    @Expose
-    private BigDecimal money;
-    @SerializedName("secondName")
-    @Expose
-    private String secondName;
-    @SerializedName("sex")
-    @Expose
-    private String sex;
 }

@@ -1,7 +1,7 @@
 package api.adapters;
 
-import api.models.CarRq;
-import api.models.CarRs;
+import api.models.car.CarRq;
+import api.models.car.CarRs;
 
 import static io.restassured.RestAssured.given;
 

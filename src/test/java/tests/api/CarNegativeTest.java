@@ -1,7 +1,7 @@
 package tests.api;
 
 import api.adapters.CarAdapter;
-import api.models.CarRq;
+import api.models.car.CarRq;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

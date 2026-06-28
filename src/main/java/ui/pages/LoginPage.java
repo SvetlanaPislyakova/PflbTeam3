@@ -17,7 +17,8 @@ public class LoginPage extends BasePage {
     private final SelenideElement ERROR_EMAIL_MSG = $x("//*[@name='email']/preceding-sibling::div[1]");
     private final SelenideElement PASSWORD_INPUT = $("[name='password']");
     private final SelenideElement ERROR_PASSWORD_MSG = $x("//*[@name='password']/preceding-sibling::div[1]");
-    private final SelenideElement GO_BTN = $x("//button[text()=' GO']");
+    private final SelenideElement GO_BTN = $x("//button[contains(@class, 'primary')]");
+    private final SelenideElement LOGOUT_BTN = $x("//button[contains(@class, 'danger')]");
 
     @Override
     public LoginPage openPage() {

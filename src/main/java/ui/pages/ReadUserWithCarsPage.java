@@ -16,8 +16,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Log4j2
 public class ReadUserWithCarsPage extends BasePage {
 
-    private final Table carInfoTable = new Table("Car info");
-    private final Table userInfoTable = new Table("User info");
+    private final Table carInfoTable = new Table("Read all cars");
+    private final Table userInfoTable = new Table("Read all users");
     private final SelenideElement ID_INPUT = $("#user_input");
 
     @Override
@@ -30,6 +30,7 @@ public class ReadUserWithCarsPage extends BasePage {
     @Override
     public ReadUserWithCarsPage isPageOpened() {
         log.info("Проверить, что страница 'ReadUserWithCarsPage' открыта");
+        ID_INPUT.shouldBe(visible);
         carInfoTable.checkTableVisible();
         userInfoTable.checkTableVisible();
         return this;
@@ -37,7 +38,6 @@ public class ReadUserWithCarsPage extends BasePage {
 
     public ReadUserWithCarsPage findCarsByUserId(Integer userId) {
         log.info("Заполнить инпут значением userId = {}", userId);
-        sleep(300);
         ID_INPUT.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(userId));
         new Button("Read").clickBtn();
         return this;
@@ -53,8 +53,9 @@ public class ReadUserWithCarsPage extends BasePage {
         List<Integer> actualIds = carInfoTable.getListOfValues("ID")
                 .stream()
                 .map(Integer::valueOf)
+                .sorted()
                 .toList();
-        assertThat(actualIds).isEqualTo(carsId);
+        assertThat(actualIds).isEqualTo(carsId.stream().sorted().toList());
         return this;
     }
 

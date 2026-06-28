@@ -7,5 +7,5 @@ public class LoginRs {
 
     @SerializedName("access_token")
     @Expose
-    public String accessToken;
+    private String accessToken;
 }

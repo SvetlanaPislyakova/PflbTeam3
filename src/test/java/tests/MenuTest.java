@@ -1,21 +1,16 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 import ui.pages.*;
 import ui.wrappers.DropDown;
 
-import java.util.Map;
-
 public class MenuTest extends BaseTest {
 
-    private final AllUsersPage allUsersPage = new AllUsersPage();
-    private final CreateUserPage createUserPage = new CreateUserPage();
-    private final ReadUserWithCarsPage readUserWithCarsPage = new ReadUserWithCarsPage();
-    private final AddMoneyPage addMoneyPage = new AddMoneyPage();
-    private final IssueLoanPage issueLoanPage = new IssueLoanPage();
     private final MenuPage menuPage = new MenuPage();
 
     @BeforeEach
@@ -24,28 +19,17 @@ public class MenuTest extends BaseTest {
                 .acceptAlert("Successful authorization");
     }
 
-    private final Map<String, BasePage> pages = Map.of(
-            "AllUsersPage", allUsersPage,
-            "CreateUserPage", createUserPage,
-            "ReadUserWithCarsPage", readUserWithCarsPage,
-            "AddMoneyPage", addMoneyPage,
-            "IssueLoanPage", issueLoanPage
-    );
-
-    @ParameterizedTest(name = "Проверка открытия страницы {2}")
-    @CsvSource({
-            "Users, Read all, AllUsersPage",
-            "Users, Create new, CreateUserPage",
-            "Users, Read user with cars, ReadUserWithCarsPage",
-            "Users, Add money, AddMoneyPage",
-            "Users, Issue a loan, IssueLoanPage"
-    })
-    public void checkOpeningPage(String dropDawn, String option, String pageName) {
-        new DropDown(dropDawn).selectOption(option);
-        pages.get(pageName).isPageOpened();
+    @ParameterizedTest(name = "Проверка открытия страницы {0}")
+    @EnumSource(MenuPage.MenuOption.class)
+    @Description("Проверка переходов по основным разделам сайта")
+    public void checkOpeningPage(MenuPage.MenuOption menuOption) {
+        new DropDown(menuOption.getDropdown()).selectOption(menuOption.getOption());
+        menuOption.getPage().isPageOpened();
     }
 
     @Test
+    @DisplayName("Проверка открытия страницы ALL_POST")
+    @Description("Проверка открытия страницы ALL_POST")
     public void openAllPost() {
         menuPage.openAllPostPage();
     }

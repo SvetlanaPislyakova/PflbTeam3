@@ -1,19 +1,15 @@
 package tests.api;
 
 import api.adapters.CarAdapter;
-import api.models.CarRq;
-import api.models.CarRs;
+import api.models.car.CarRq;
+import api.models.car.CarRs;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.math.BigDecimal;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarApiTest extends BaseApiTest {
 
@@ -42,7 +38,6 @@ public class CarApiTest extends BaseApiTest {
                 .build();
 
         CarRs createdCar = carAdapter.createCar(carRq, accessToken);
-
 
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(createdCar.getMark()).isEqualTo(mark);

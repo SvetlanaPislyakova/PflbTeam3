@@ -22,7 +22,6 @@ public class Table {
         switch (tableName) {
             case "Read all users":
             case "Create new user":
-            case "User info":
                 this.firstColumn = "Age";
                 this.secondColumn = "Sex";
                 break;
@@ -44,7 +43,6 @@ public class Table {
                 break;
             case "Read all cars":
             case "Create new car":
-            case "Car info":
                 this.firstColumn = "Engine\u00A0Type";
                 this.secondColumn = "Mark";
                 break;
