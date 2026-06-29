@@ -2,12 +2,29 @@ package api.adapters;
 
 import api.models.CarRq;
 import api.models.CarRs;
+import api.models.user.UserRq;
+import api.models.user.UserRs;
+import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
 @Log4j2
 public class CarAdapter extends BaseAdapter {
+
+    private ValidatableResponse createCarRequest(CarRq carRq, String token) {
+        return given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .body(gson.toJson(carRq))
+                .log().all()
+                .when()
+                .post("/car")
+                .then()
+                .log().all();
+    }
 
     public CarRs createCar(CarRq carRq, String token) {
         log.info("POST - создание автомобиля, 201");
@@ -60,5 +77,45 @@ public class CarAdapter extends BaseAdapter {
                 .post("/car")
                 .then()
                 .spec(badRequest400);
+    }
+
+    public Integer createCarAndGetId(CarRq carRq, String token) {
+        log.info("POST - создание нового автомобиля и получение его id, 201");
+        return createCarRequest(carRq, token)
+                .spec(created201)
+                .extract()
+                .path("id");
+    }
+
+    public CarRs updateCar(int id, CarRq carRq, String token) {
+        log.info("PUT - изменение автомобиля, 200");
+        return given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .pathParam("id", id)
+                .body(gson.toJson(carRq))
+                .log().all()
+                .when()
+                .put("/car/{id}")
+                .then()
+                .log().all()
+                .spec(accepted202) // если API возвращает 202, замените на accepted202
+                .extract()
+                .as(CarRs.class);
+    }
+
+    public List<CarRs> getCars(String token) {
+        log.info("GET - получение списка автомобилей, 200");
+        return given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .log().all()
+                .get("/cars")
+                .then()
+                .log().all()
+                .spec(success200)
+                .extract()
+                .jsonPath()
+                .getList("", CarRs.class);
     }
 }
