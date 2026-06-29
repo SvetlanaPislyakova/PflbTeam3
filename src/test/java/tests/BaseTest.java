@@ -54,8 +54,8 @@ public class BaseTest {
     protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
 
-    protected List<Long> createdUserIds = new ArrayList<>();
-    protected List<Long> createdCarIds = new ArrayList<>();
+    protected List<Integer> createdUserIds = new ArrayList<>();
+    protected List<Integer> createdCarIds = new ArrayList<>();
     protected final UserAdapter userAdapter = new UserAdapter();
     protected final CarAdapter carAdapter = new CarAdapter();
 

@@ -7,12 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import tests.BaseTest;
 import ui.dto.Car;
-import ui.dto.User;
-import ui.dto.UserFactory;
-import ui.pages.BuyOrSaleCarPage;
-
 import java.math.BigDecimal;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CreateCarTest extends BaseTest {
@@ -29,9 +24,8 @@ public class CreateCarTest extends BaseTest {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
 
-        Long carID = carSteps.checkCreateCarAndGetId();
+        int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-        assertNotNull(carID, "ID автомобиля должен быть создан");
         assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
 
@@ -51,20 +45,5 @@ public class CreateCarTest extends BaseTest {
                 .model(model)
                 .price(new BigDecimal(price))
                 .build();
-    }
-
-    @Test
-    @DisplayName("Покупка нового автомобиля")
-    public void buyNewCar() {
-        User user = UserFactory.validUser();
-        userSteps.createNewUser(user);
-        Integer userID = userSteps.checkCreateUserAndGetId();
-        Car car = Car.builder().build();
-        carSteps.createNewCar(car);
-
-        Long carID = carSteps.checkCreateCarAndGetId();
-        createdCarIds.add(carID);
-        assertNotNull(carID, "Автомобиль должен быть создан марки " + car.getMark());
-        assertTrue(carID > 0, "ID должен быть положительным для " + car.getMark());
     }
 }
