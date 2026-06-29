@@ -20,8 +20,11 @@ public class HouseRq {
     private BigDecimal price;
     @SerializedName("parkingPlaces")
     @Expose
-    private List<Object> parkingPlaces;
+    private List<ParkingPlaceRs> parkingPlaces;
     @SerializedName("lodgers")
     @Expose
     private List<Object> lodgers;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
 }
