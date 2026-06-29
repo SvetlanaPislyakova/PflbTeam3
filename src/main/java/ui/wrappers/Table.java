@@ -55,7 +55,7 @@ public class Table {
                 this.firstColumn = "Floor\u00A0Count:";
                 this.secondColumn = "Price:";
                 break;
-            case "Create new house:":
+            case "Create new house":
                 this.firstColumn = "Floors";
                 this.secondColumn = "Price";
                 break;
