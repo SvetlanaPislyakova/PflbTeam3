@@ -72,6 +72,7 @@ public class Table {
 
     public void setValueToInput(String label, String value) {
         log.info("Заполнить поле '{}' значением '{}'", label, value);
+        sleep(300);
         int columnIndex = findColumnIndex(label) + 1;
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
