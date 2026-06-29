@@ -46,6 +46,11 @@ public class Table {
                 this.firstColumn = "Engine\u00A0Type";
                 this.secondColumn = "Mark";
                 break;
+            case "Read all houses:":
+            case "Parkings:":
+                this.firstColumn = "isWarm:";
+                this.secondColumn = "isCovered:";
+                break;
             case "House info:":
                 this.firstColumn = "Floor\u00A0Count:";
                 this.secondColumn = "Price:";
@@ -57,10 +62,6 @@ public class Table {
             case "Lodgers:":
                 this.firstColumn = "ID:";
                 this.secondColumn = "First\u00A0name:";
-                break;
-            case "Parkings:":
-                this.firstColumn = "isWarm:";
-                this.secondColumn = "isCovered:";
                 break;
             default:
                 throw new IllegalArgumentException("Неизвестная таблица");
