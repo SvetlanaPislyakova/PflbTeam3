@@ -39,7 +39,7 @@ public class AllDeletePage extends BasePage {
         userInput.setValue(String.valueOf(userId));
         carPushBtn.shouldBe(visible).shouldBe(enabled);
         userPushBtn.click();
-        userStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
+        userStatus.shouldHave(text("204"), Duration.ofSeconds(30));
         return this;
     }
 
@@ -55,7 +55,7 @@ public class AllDeletePage extends BasePage {
         houseInput.setValue(String.valueOf(houseId));
         carPushBtn.shouldBe(visible).shouldBe(enabled);
         housePushBtn.click();
-        houseStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
+        houseStatus.shouldHave(text("204"), Duration.ofSeconds(30));
         return this;
     }
 
@@ -71,7 +71,7 @@ public class AllDeletePage extends BasePage {
         carInput.setValue(String.valueOf(carId));
         carPushBtn.shouldBe(visible).shouldBe(enabled);
         carPushBtn.click();
-        carStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
+        carStatus.shouldHave(text("204"), Duration.ofSeconds(30));
         return this;
     }
 
