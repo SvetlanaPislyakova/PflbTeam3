@@ -21,7 +21,7 @@ public class Table {
     public Table(String tableName) {
         switch (tableName) {
             case "Read all users":
-            case "Create new user"
+            case "Create new user":
                 this.firstColumn = "Age";
                 this.secondColumn = "Sex";
                 break;
