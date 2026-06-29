@@ -3,20 +3,20 @@ package tests;
 import api.adapters.CarAdapter;
 import api.adapters.UserAdapter;
 import api.models.CarRq;
-import api.models.CarRqFactory;
 import api.models.CarRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ui.dto.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import ui.dto.UserFactory;
 
 import java.math.BigDecimal;
@@ -155,8 +155,9 @@ public class UserTest extends BaseTest {
                 .isPageOpened()
                 .deleteUser(userId);
 
-        assertThat(allDeletePage.getUserStatusCode()).isEqualTo(204);
-
-        assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(allDeletePage.getUserStatusCode()).isEqualTo(204);
+        softly.assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
+        softly.assertAll();
     }
 }

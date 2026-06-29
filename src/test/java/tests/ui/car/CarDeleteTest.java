@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tests.BaseTest;
+import io.qameta.allure.Description;
 
 import java.math.BigDecimal;
 
@@ -24,8 +25,8 @@ public class CarDeleteTest extends BaseTest {
 
     @Test
     @DisplayName("UI - Удаление автомобиля через страницу All DELETE")
+    @Description("Удаление авто через страницу All DELETE с проверкой в БД")
     public void deleteCarThroughUI() {
-        // 1. Создаем машину через API
         CarRq carRq = CarRq.builder()
                 .mark("Toyota")
                 .model("Camry")
@@ -35,15 +36,11 @@ public class CarDeleteTest extends BaseTest {
         CarRs carRs = carAdapter.createCar(carRq, token);
         Integer carId = carRs.getId();
 
-        // 2. Удаляем машину через UI
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteCar(carId);
 
-        // 3. Проверяем статус
         assertThat(allDeletePage.getCarStatusCode()).isEqualTo(204);
-
-        // 4. Проверяем в БД
         assertThat(dbSteps.isCarExistsInDB(carId)).isFalse();
     }
 }

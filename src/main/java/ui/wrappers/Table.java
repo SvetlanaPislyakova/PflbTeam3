@@ -121,12 +121,6 @@ public class Table {
                 .shouldBe(CollectionCondition.empty);
     }
 
-    public void waitUntilButtonEnabled() {
-        SelenideElement button = $x(String.format(PATTERN + "/parent::div/div/button[contains(@class, 'tableButton')]",
-                firstColumn, secondColumn));
-        button.shouldBe(visible).shouldBe(enabled);
-    }
-
     public void clickPushToApiBtn() {
         log.info("Нажать на кнопку 'Push to api'");
         $x(String.format(PATTERN + "/parent::div/div/button[contains(@class, 'tableButton')]",

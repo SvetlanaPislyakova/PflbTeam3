@@ -11,17 +11,14 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class AllDeletePage extends BasePage {
 
-    // === DELETE USER ===
     private final SelenideElement userInput = $x("//button[contains(text(), 'DELETE') and contains(text(), 'USER')]/following-sibling::button//input");
     private final SelenideElement userPushBtn = $x("//button[contains(text(), 'DELETE') and contains(text(), 'USER')]");
     private final SelenideElement userStatus = $x("//button[contains(text(), 'DELETE') and contains(text(), 'USER')]/following-sibling::button[contains(@class, 'status')]");
 
-    // === DELETE HOUSE ===
     private final SelenideElement houseInput = $x("//button[contains(text(), 'DELETE') and contains(text(), 'HOUSE')]/following-sibling::button//input");
     private final SelenideElement housePushBtn = $x("//button[contains(text(), 'DELETE') and contains(text(), 'HOUSE')]");
     private final SelenideElement houseStatus = $x("//button[contains(text(), 'DELETE') and contains(text(), 'HOUSE')]/following-sibling::button[contains(@class, 'status')]");
 
-    // === DELETE CAR ===
     private final SelenideElement carInput = $x("//button[contains(text(), 'DELETE') and contains(text(), 'CAR')]/following-sibling::button//input");
     private final SelenideElement carPushBtn = $x("//button[contains(text(), 'DELETE') and contains(text(), 'CAR')]");
     private final SelenideElement carStatus = $x("//button[contains(text(), 'DELETE') and contains(text(), 'CAR')]/following-sibling::button[contains(@class, 'status')]");
@@ -38,7 +35,6 @@ public class AllDeletePage extends BasePage {
         return this;
     }
 
-    // === DELETE USER ===
     public AllDeletePage deleteUser(Integer userId) {
         userInput.setValue(String.valueOf(userId));
         userPushBtn.click();
@@ -54,7 +50,6 @@ public class AllDeletePage extends BasePage {
         return Integer.parseInt(statusText.replaceAll("\\D+", ""));
     }
 
-    // === DELETE HOUSE ===
     public AllDeletePage deleteHouse(Integer houseId) {
         houseInput.setValue(String.valueOf(houseId));
         housePushBtn.click();
@@ -70,7 +65,6 @@ public class AllDeletePage extends BasePage {
         return Integer.parseInt(statusText.replaceAll("\\D+", ""));
     }
 
-    // === DELETE CAR ===
     public AllDeletePage deleteCar(Integer carId) {
         carInput.setValue(String.valueOf(carId));
         carPushBtn.click();

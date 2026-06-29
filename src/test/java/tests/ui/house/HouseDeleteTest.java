@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tests.BaseTest;
+import io.qameta.allure.Description;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -25,8 +26,8 @@ public class HouseDeleteTest extends BaseTest {
 
     @Test
     @DisplayName("UI - Удаление дома через страницу All DELETE")
+    @Description("Удаление дома через страницу All DELETE с проверкой в БД")
     public void deleteHouseThroughUI() {
-        // 1. Создаем дом через API
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(5)
                 .price(BigDecimal.valueOf(1_000_000))
@@ -36,15 +37,11 @@ public class HouseDeleteTest extends BaseTest {
         HouseRs houseRs = houseAdapter.createHouse(houseRq, token);
         Integer houseId = houseRs.getId();
 
-        // 2. Удаляем дом через UI
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteHouse(houseId);
 
-        // 3. Проверяем статус
         assertThat(allDeletePage.getHouseStatusCode()).isEqualTo(204);
-
-        // 4. Проверяем в БД
         assertThat(dbSteps.isHouseExistsInDB(houseId)).isFalse();
     }
 }
