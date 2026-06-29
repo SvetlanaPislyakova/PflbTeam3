@@ -7,8 +7,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import tests.BaseTest;
 import ui.dto.Car;
-import ui.dto.User;
-import ui.dto.UserFactory;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,7 +26,6 @@ public class CreateCarTest extends BaseTest {
 
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-        assertNotNull(carID, "ID автомобиля должен быть создан");
         assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
 

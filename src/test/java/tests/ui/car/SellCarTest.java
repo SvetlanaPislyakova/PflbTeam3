@@ -2,6 +2,7 @@ package tests.ui.car;
 
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,9 +31,10 @@ public class SellCarTest extends BaseTest {
         createdCarIds.add(carID);
 
         carSteps.buyNewCar(sellerID, carID);
-        assertTrue(carSteps.isCarBought(sellerID, carID), "Покупка не удалась");
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(carSteps.isCarBought(sellerID, carID)).isTrue();
 
         carSteps.sellNewCar(sellerID, carID);
-        assertEquals(200, carSteps.checkStatusCode(), "Статус продажи должен быть 200");
+        softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
     }
 }
