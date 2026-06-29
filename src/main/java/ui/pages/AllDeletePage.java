@@ -1,13 +1,17 @@
 package ui.pages;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static com.codeborne.selenide.Configuration.baseUrl;
 
 @Log4j2
@@ -36,11 +40,19 @@ public class AllDeletePage extends BasePage {
     @Step("Удаление пользователя с ID: {userId}")
     public AllDeletePage deleteUser(Integer userId) {
         log.info("Deleting user with ID: {}", userId);
-        $x(String.format(DELETE_INPUT, "user")).setValue(String.valueOf(userId));
+        SelenideElement input = $x(String.format(DELETE_INPUT, "user"));
+        Actions actions = new Actions(getWebDriver());
+
+        actions.moveToElement(input).click().perform();
+        actions.sendKeys(String.valueOf(userId)).perform();
+        actions.sendKeys(Keys.TAB).perform();
         log.info("User ID entered: {}", userId);
-        $x(String.format(DELETE_BUTTON, "user")).shouldBe(Condition.enabled, Duration.ofSeconds(10));
-        $x(String.format(DELETE_BUTTON, "user")).click();
+
+        SelenideElement button = $x(String.format(DELETE_BUTTON, "user"));
+        button.shouldBe(Condition.enabled, Duration.ofSeconds(10));
+        button.click();
         log.info("DELETE USER button clicked");
+
         $x(String.format(DELETE_STATUS, "user")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
         log.info("User {} deleted successfully, status 204 received", userId);
         return this;
@@ -49,11 +61,19 @@ public class AllDeletePage extends BasePage {
     @Step("Удаление автомобиля с ID: {carId}")
     public AllDeletePage deleteCar(Integer carId) {
         log.info("Deleting car with ID: {}", carId);
-        $x(String.format(DELETE_INPUT, "car")).setValue(String.valueOf(carId));
+        SelenideElement input = $x(String.format(DELETE_INPUT, "car"));
+        Actions actions = new Actions(getWebDriver());
+
+        actions.moveToElement(input).click().perform();
+        actions.sendKeys(String.valueOf(carId)).perform();
+        actions.sendKeys(Keys.TAB).perform();
         log.info("Car ID entered: {}", carId);
-        $x(String.format(DELETE_BUTTON, "car")).shouldBe(Condition.enabled, Duration.ofSeconds(10));
-        $x(String.format(DELETE_BUTTON, "car")).click();
+
+        SelenideElement button = $x(String.format(DELETE_BUTTON, "car"));
+        button.shouldBe(Condition.enabled, Duration.ofSeconds(10));
+        button.click();
         log.info("DELETE CAR button clicked");
+
         $x(String.format(DELETE_STATUS, "car")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
         log.info("Car {} deleted successfully, status 204 received", carId);
         return this;
@@ -62,11 +82,19 @@ public class AllDeletePage extends BasePage {
     @Step("Удаление дома с ID: {houseId}")
     public AllDeletePage deleteHouse(Integer houseId) {
         log.info("Deleting house with ID: {}", houseId);
-        $x(String.format(DELETE_INPUT, "house")).setValue(String.valueOf(houseId));
+        SelenideElement input = $x(String.format(DELETE_INPUT, "house"));
+        Actions actions = new Actions(getWebDriver());
+
+        actions.moveToElement(input).click().perform();
+        actions.sendKeys(String.valueOf(houseId)).perform();
+        actions.sendKeys(Keys.TAB).perform();
         log.info("House ID entered: {}", houseId);
-        $x(String.format(DELETE_BUTTON, "house")).shouldBe(Condition.enabled, Duration.ofSeconds(10));
-        $x(String.format(DELETE_BUTTON, "house")).click();
+
+        SelenideElement button = $x(String.format(DELETE_BUTTON, "house"));
+        button.shouldBe(Condition.enabled, Duration.ofSeconds(10));
+        button.click();
         log.info("DELETE HOUSE button clicked");
+
         $x(String.format(DELETE_STATUS, "house")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
         log.info("House {} deleted successfully, status 204 received", houseId);
         return this;
