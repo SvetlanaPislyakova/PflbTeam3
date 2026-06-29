@@ -1,7 +1,5 @@
 package tests;
 
-import api.adapters.CarAdapter;
-import api.adapters.UserAdapter;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -14,22 +12,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import ui.pages.AddMoneyPage;
-import ui.pages.AllCarsPage;
 import ui.pages.AllUsersPage;
-import ui.pages.BuyOrSaleCarPage;
-import ui.pages.CreateCarPage;
 import ui.pages.CreateUserPage;
-import ui.pages.MenuPage;
-import ui.steps.CarSteps;
+import ui.pages.MainPage;
 import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
 import utils.PropertyReader;
 import utils.TestListener;
 import utils.TokenProvider;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
@@ -44,21 +35,11 @@ public class BaseTest {
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
     protected DBSteps dbSteps;
-    protected CarSteps carSteps;
 
     protected CreateUserPage createUserPage;
     protected AllUsersPage allUsersPage;
     protected AddMoneyPage addMoneyPage;
-    protected MenuPage menuPage;
-    protected CreateCarPage createCarPage;
-    protected AllCarsPage allCarsPage;
-    protected BuyOrSaleCarPage buyOrSaleCarPage;
-
-    protected List<Integer> createdUserIds = new ArrayList<>();
-    protected List<Integer> createdCarIds = new ArrayList<>();
-    protected final UserAdapter userAdapter = new UserAdapter();
-    protected final CarAdapter carAdapter = new CarAdapter();
-
+    protected MainPage mainPage;
 
 
     @BeforeAll
@@ -79,32 +60,21 @@ public class BaseTest {
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
         ChromeOptions options = new ChromeOptions();
-        if (System.getProperty("headless", "true").equals("true")) {
-            options.addArguments("--headless=new");
-        }
+        options.addArguments("--headless=new");
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
-
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--disable-gpu");
-
         Configuration.browserCapabilities = options;
 
         loginSteps = new LoginSteps();
         userSteps = new UserSteps();
         dbSteps = new DBSteps();
-        carSteps = new CarSteps();
 
         createUserPage = new CreateUserPage();
         allUsersPage = new AllUsersPage();
         addMoneyPage = new AddMoneyPage();
-        menuPage = new MenuPage();
-        createCarPage = new CreateCarPage();
-        allCarsPage = new AllCarsPage();
-        buyOrSaleCarPage = new BuyOrSaleCarPage();
+        mainPage = new MainPage();
     }
 
     @AfterEach
@@ -114,16 +84,4 @@ public class BaseTest {
             driver.quit();
         }
     }
-//    public void cleanupTestData() { // для кайфа не хватает CarAdapter
-//        if (!createdUserIds.isEmpty()) {  и сохранять в каждом тесте айди созданных сущностей createdUserIds.add(userID);
-//            createdUserIds.forEach(userId ->
-//                    userAdapter.deleteUser(userId, token)
-//            );
-//        }
-//        if (!createdCarIds.isEmpty()) {
-//            createdCarIds.forEach(carId ->
-//                    carAdapter.deleteCar(carId, token)
-//            );
-//        }
-//    }
 }

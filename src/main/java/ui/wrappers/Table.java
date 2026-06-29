@@ -6,6 +6,7 @@ import com.codeborne.selenide.SelenideElement;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
@@ -31,7 +32,7 @@ public class Table {
                 break;
             case "Buy or sell car":
                 this.firstColumn = "User ID";
-                this.secondColumn = "Car Id";
+                this.secondColumn = "Car ID";
                 break;
             case "Settle to house":
                 this.firstColumn = "User ID";
@@ -71,40 +72,26 @@ public class Table {
     }
 
     public void setValueToInput(String label, String value) {
+        int columnIndex = findColumnIndex(label) + 1;
         log.info("Заполнить поле '{}' значением '{}'", label, value);
-        sleep(300);
-        int columnIndex = findColumnIndex(label) + 1;
-        SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn));
-        input.shouldBe(visible).shouldBe(enabled).setValue(value);
+        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
+                firstColumn, secondColumn)).shouldBe(visible).shouldBe(enabled).setValue(value);
     }
 
-    public String getValueFromInput(String label) {
+    public void checkValueInInput(String label, String value) {
         int columnIndex = findColumnIndex(label) + 1;
-        return $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn)).getValue();
-    }
-
-    public String getValueFromCell(String label) {
-        int columnIndex = findColumnIndex(label) + 1;
-        log.info("Получить значение из ячейки '{}'", label);
-        return $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
-                firstColumn, secondColumn)).getText();
+        $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
+                firstColumn, secondColumn)).shouldHave(value(value));
     }
 
     public List<String> getListOfValues (String label) {
         log.info("Получить список значений из столбца '{}'", label);
         int columnIndex = findColumnIndex(label) + 1;
+        List<String> values = new ArrayList<>();
         ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
                 firstColumn, secondColumn));
         listOfValues.shouldHave(CollectionCondition.sizeGreaterThanOrEqual(1));
         return listOfValues.texts();
-    }
-
-    public void rowsShouldBeEmpty () {
-        log.info("Проверить, что в таблице нет строк");
-        $$x(String.format(PATTERN + "//tbody/tr", firstColumn, secondColumn))
-                .shouldBe(CollectionCondition.empty);
     }
 
     public void clickPushToApiBtn() {
@@ -135,7 +122,7 @@ public class Table {
     public Integer getStatus() {
         log.info("Получить статус выполнения операции");
         String message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
-                firstColumn, secondColumn)).shouldHave(matchText(".*\\d+.*")).getText();
+                firstColumn, secondColumn)).getText();
         return Integer.parseInt(message.replaceAll("\\D+", ""));
     }
 
@@ -144,6 +131,7 @@ public class Table {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         String result = messageResult.replaceAll("\\D+", "");
+        System.out.println(result);
         return Integer.parseInt(result);
     }
 
