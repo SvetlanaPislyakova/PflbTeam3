@@ -13,13 +13,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import ui.pages.AddMoneyPage;
-import ui.pages.AllCarsPage;
-import ui.pages.AllUsersPage;
-import ui.pages.BuyOrSaleCarPage;
-import ui.pages.CreateCarPage;
-import ui.pages.CreateUserPage;
-import ui.pages.MenuPage;
+import ui.pages.*;
 import ui.steps.CarSteps;
 import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
@@ -54,10 +48,12 @@ public class BaseTest {
     protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
 
-    protected List<Long> createdUserIds = new ArrayList<>();
-    protected List<Long> createdCarIds = new ArrayList<>();
+    protected List<Integer> createdUserIds = new ArrayList<>();
+    protected List<Integer> createdCarIds = new ArrayList<>();
     protected final UserAdapter userAdapter = new UserAdapter();
     protected final CarAdapter carAdapter = new CarAdapter();
+
+    protected AllDeletePage allDeletePage = new AllDeletePage();
 
 
 

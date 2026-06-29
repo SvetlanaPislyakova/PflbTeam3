@@ -22,7 +22,6 @@ public class Table {
         switch (tableName) {
             case "Read all users":
             case "Create new user":
-            case "User info":
                 this.firstColumn = "Age";
                 this.secondColumn = "Sex";
                 break;
@@ -39,12 +38,11 @@ public class Table {
                 this.secondColumn = "House ID";
                 break;
             case "Issue a loan":
-                this.firstColumn = "User ID";
-                this.secondColumn = "Размер кредита";
+                this.firstColumn = "User ID:";
+                this.secondColumn = "Размер кредита:";
                 break;
             case "Read all cars":
             case "Create new car":
-            case "Car info":
                 this.firstColumn = "Engine\u00A0Type";
                 this.secondColumn = "Mark";
                 break;
@@ -73,9 +71,9 @@ public class Table {
     }
 
     public void setValueToInput(String label, String value) {
-        int columnIndex = findColumnIndex(label) + 1;
-        sleep(300);
         log.info("Заполнить поле '{}' значением '{}'", label, value);
+        sleep(300);
+        int columnIndex = findColumnIndex(label) + 1;
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
@@ -115,7 +113,7 @@ public class Table {
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
-        message.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(120));
+        message.shouldNotHave(text("Status: not pushed"));
     }
 
     public void clickIssueLoanBtn() {
@@ -146,7 +144,6 @@ public class Table {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         String result = messageResult.replaceAll("\\D+", "");
-        System.out.println(result);
         return Integer.parseInt(result);
     }
 

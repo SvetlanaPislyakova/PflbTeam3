@@ -64,6 +64,24 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
+    private ValidatableResponse deleteHouseRequest(Integer houseId, String token) {
+        return given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .pathParam("houseId", houseId)
+                .log().all()
+                .when()
+                .delete("/house/{houseId}")
+                .then()
+                .log().all();
+    }
+
+    public void deleteHouse(Integer houseId, String token) {
+        log.info("DELETE - удаление дома, 204");
+        deleteHouseRequest(houseId, token)
+                .spec(noContent204);
+    }
+
     public HouseRs evictUser(Integer houseId, Integer userId, String token) {
         log.info("POST - выселение пользователя из дома, 200");
         return evictUserRequest(houseId, userId, token)

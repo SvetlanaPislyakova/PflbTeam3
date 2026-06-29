@@ -3,6 +3,7 @@ package ui.steps;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import ui.dto.Car;
+import ui.pages.AllCarsPage;
 import ui.pages.BuyOrSaleCarPage;
 import ui.pages.CreateCarPage;
 
@@ -10,6 +11,7 @@ public class CarSteps {
 
     private final CreateCarPage createCarPage = new CreateCarPage();
     private final BuyOrSaleCarPage buyOrSaleCarPage = new BuyOrSaleCarPage();
+    private final AllCarsPage allCarsPage = new AllCarsPage();
 
     @Step("Создание нового автомобиля")
     public void createNewCar(Car car) {
@@ -19,17 +21,17 @@ public class CarSteps {
     }
 
     @Step("Покупка автомобиля пользователем")
-    public void buyNewCar(Long userID, Long carID) {
+    public void buyNewCar(int userID, int carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
                 .setData(userID, carID,"BUY");
     }
 
     @Step("Продажа автомобиля пользователем")
-    public void sellNewCar(Long userID, Long carID) {
+    public void sellNewCar(int userID, int carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
-                .setData(userID, carID, "SELL");
+                .setData(userID, carID,"SELL");
     }
 
     @Step("Получение статус кода")
@@ -38,9 +40,9 @@ public class CarSteps {
     }
 
     @Step("Проверка успешности создания автомобиля и получение его id")
-    public Long checkCreateCarAndGetId() {
+    public int checkCreateCarAndGetId() {
         SoftAssertions softly = new SoftAssertions();
-        Long carId = createCarPage.getCarId();
+        int carId = createCarPage.getCarId();
         softly.assertThat(createCarPage.getStatusMessage()).contains("Successfully pushed");
         softly.assertThat(carId).isPositive();
         softly.assertThat(createCarPage.getStatusCode()).isEqualTo(201);
@@ -49,8 +51,29 @@ public class CarSteps {
     }
 
     @Step("Проверка что автомобиль куплен пользователем")
-    public boolean isCarBought(Long userID, Long carID) {
+    public boolean isCarBought(int userID, int carID) {
         return checkStatusCode() == 200;
+    }
+
+    @Step("Проверка сортировки автомобилей по полю {field}")
+    public void checkSortCarsByNumericField(String field) {
+        allCarsPage.openPage()
+                .isPageOpened()
+                .checkSortCars(field, true);
+    }
+
+    @Step("Проверка сортировки автомобилей по полю {field}")
+    public void checkSortCarsByFixedTextField(String field) {
+        allCarsPage.openPage()
+                .isPageOpened()
+                .checkSortCars(field, false);
+    }
+
+    @Step("Проверка сортировки автомобилей по полю {field}")
+    public void checkSortCarsByTextField(String field) {
+        allCarsPage.openPage()
+                .isPageOpened()
+                .checkSortCarsByText(field, false);
     }
 
 }

@@ -1,19 +1,18 @@
 package tests.ui.car;
 
+import api.models.user.UserRq;
+import api.models.user.UserRqFactory;
+import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tests.BaseTest;
-import ui.dto.User;
 import ui.dto.Car;
-
 import java.math.BigDecimal;
-
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class SellCarTest extends BaseTest {
-    private static final BigDecimal SUFFICIENT_MONEY = BigDecimal.valueOf(20000000);
 
     @BeforeEach
     public void login() {
@@ -23,24 +22,21 @@ public class SellCarTest extends BaseTest {
 
     @Test
     @DisplayName("Продажа автомобиля пользователем")
+    @Description("Тест проверяет продажу автомобиля")
     public void sellCarSuccess() {
-        User user = User.builder().build();
-        userSteps.createNewUser(user);
-        Integer userID = userSteps.checkCreateUserAndGetId();
+        UserRq seller = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
+        Integer sellerID = userAdapter.createUserAndGetId(seller,token);
 
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
-        Long carID = carSteps.checkCreateCarAndGetId();
+        int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
 
-        addMoneyPage.openPage()
-                .addMoneyToUser(userID, SUFFICIENT_MONEY);
+        carSteps.buyNewCar(sellerID, carID);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(carSteps.isCarBought(sellerID, carID)).isTrue();
 
-        carSteps.buyNewCar(userID.longValue(), carID);
-        sleep(5000);
-        assertTrue(carSteps.isCarBought(userID.longValue(), carID), "Покупка не удалась");
-
-        carSteps.sellNewCar(userID.longValue(), carID);
-        assertEquals(200, carSteps.checkStatusCode(), "Статус продажи должен быть 200");
+        carSteps.sellNewCar(sellerID, carID);
+        softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
     }
 }

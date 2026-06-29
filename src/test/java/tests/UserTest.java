@@ -1,23 +1,29 @@
 package tests;
 
+import api.adapters.CarAdapter;
 import api.adapters.UserAdapter;
+import api.models.CarRq;
+import api.models.CarRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ui.dto.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import ui.dto.UserFactory;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserTest extends BaseTest {
 
@@ -87,13 +93,22 @@ public class UserTest extends BaseTest {
     }
 
     @Test
-    @Disabled("Не работает")
-    @DisplayName("Запросить кредит")
+    @Disabled("Временно отключен, чиним")
+    @DisplayName("Выдача кредита пользователю")
     public void issueALoan() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, token);
-        BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
-        userSteps.checkGetCredit(userId, money);
+        BigDecimal initialBalance = userRq.getMoney();
+
+        BigDecimal loanAmount = BigDecimal.valueOf(faker.number().randomDouble(2, 100, 10000));
+
+        userSteps.checkGetCredit(userId, loanAmount);
+
+        BigDecimal expectedBalance = initialBalance.add(loanAmount);
+        BigDecimal actualBalance = dbSteps.getUserBalance(userId);
+
+        assertThat(actualBalance).isEqualByComparingTo(expectedBalance);
+
         userAdapter.deleteUser(userId, token);
     }
 
@@ -112,7 +127,37 @@ public class UserTest extends BaseTest {
     public void readUserWithOneCar() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, token);
-        userSteps.checkUserCars(13304, List.of(54));
+
+        CarAdapter carAdapter = new CarAdapter();
+        CarRq carRq = CarRq.builder()
+                .mark("Toyota")
+                .model("Camry")
+                .engineType("Diesel")
+                .price(BigDecimal.valueOf(25000.00))
+                .build();
+        CarRs carRs = carAdapter.createCar(carRq, token);
+        Integer carId = carRs.getId();
+
+        userAdapter.buyCar(userId, carId, token);
+        userSteps.checkUserCars(userId, List.of(carId));
+        userAdapter.sellCar(userId, carId, token);
+        carAdapter.deleteCar(carId, token);
         userAdapter.deleteUser(userId, token);
+    }
+
+    @Test
+    @DisplayName("UI - Удаление пользователя через страницу All DELETE")
+    public void deleteUserThroughUI() {
+        UserRq userRq = UserRqFactory.validUser();
+        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+
+        allDeletePage.openPage()
+                .isPageOpened()
+                .deleteUser(userId);
+
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(allDeletePage.getUserStatusCode()).isEqualTo(204);
+        softly.assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();
+        softly.assertAll();
     }
 }
