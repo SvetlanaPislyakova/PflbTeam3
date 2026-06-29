@@ -1,5 +1,6 @@
 package ui.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import java.time.Duration;
@@ -37,9 +38,9 @@ public class AllDeletePage extends BasePage {
 
     public AllDeletePage deleteUser(Integer userId) {
         userInput.setValue(String.valueOf(userId));
-        carPushBtn.shouldBe(visible).shouldBe(enabled);
+        userPushBtn.shouldBe(Condition.interactable, Duration.ofSeconds(10));
         userPushBtn.click();
-        userStatus.shouldHave(text("204"), Duration.ofSeconds(30));
+        userStatus.shouldHave(Condition.text("204"), Duration.ofSeconds(30));
         return this;
     }
 
@@ -53,9 +54,9 @@ public class AllDeletePage extends BasePage {
 
     public AllDeletePage deleteHouse(Integer houseId) {
         houseInput.setValue(String.valueOf(houseId));
-        carPushBtn.shouldBe(visible).shouldBe(enabled);
+        housePushBtn.shouldBe(Condition.interactable, Duration.ofSeconds(10));
         housePushBtn.click();
-        houseStatus.shouldHave(text("204"), Duration.ofSeconds(30));
+        houseStatus.shouldHave(Condition.text("204"), Duration.ofSeconds(30));
         return this;
     }
 
@@ -69,9 +70,9 @@ public class AllDeletePage extends BasePage {
 
     public AllDeletePage deleteCar(Integer carId) {
         carInput.setValue(String.valueOf(carId));
-        carPushBtn.shouldBe(visible).shouldBe(enabled);
+        carPushBtn.shouldBe(Condition.interactable, Duration.ofSeconds(10));
         carPushBtn.click();
-        carStatus.shouldHave(text("204"), Duration.ofSeconds(30));
+        carStatus.shouldHave(Condition.text("204"), Duration.ofSeconds(30));
         return this;
     }
 
