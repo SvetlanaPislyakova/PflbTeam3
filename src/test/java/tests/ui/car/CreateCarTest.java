@@ -1,5 +1,6 @@
 package tests.ui.car;
 
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ public class CreateCarTest extends BaseTest {
 
     @Test
     @DisplayName("Создание нового автомобиля с валидными данными")
+    @Description("Тест проверяет создание нового автомобиля с валидными данными")
     public void createCarWithValidData() {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
@@ -31,6 +33,7 @@ public class CreateCarTest extends BaseTest {
 
     @ParameterizedTest
     @DisplayName("Создание автомобилей с разными параметрами")
+    @Description("Тест параметризованный тест на создание автомобиля")
     @CsvSource({
             "CNG, Toyota, Camry, 100000",
             "Diesel, BMW, X5, 200000",

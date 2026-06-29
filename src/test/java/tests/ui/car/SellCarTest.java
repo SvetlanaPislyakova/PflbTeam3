@@ -2,6 +2,7 @@ package tests.ui.car;
 
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +22,7 @@ public class SellCarTest extends BaseTest {
 
     @Test
     @DisplayName("Продажа автомобиля пользователем")
+    @Description("Тест проверяет продажу автомобиля")
     public void sellCarSuccess() {
         UserRq seller = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer sellerID = userAdapter.createUserAndGetId(seller,token);

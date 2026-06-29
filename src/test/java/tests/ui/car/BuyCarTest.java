@@ -2,6 +2,7 @@ package tests.ui.car;
 
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,7 @@ public class BuyCarTest extends BaseTest {
 
     @Test
     @DisplayName("Успешная покупка автомобиля с достаточными средствами")
+    @Description("Тест проверяет покупку автомобиля с достаточными средствами")
     public void buyCarWithSufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
@@ -41,6 +43,7 @@ public class BuyCarTest extends BaseTest {
 
     @Test
     @DisplayName("Ошибка при покупке с недостаточными средствами")
+    @Description("Тест проверяет покупку автомобиля с недостаточными средствами")
     public void buyCarWithInsufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(100)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
@@ -58,6 +61,7 @@ public class BuyCarTest extends BaseTest {
 
     @Test
     @DisplayName("Ошибка при попытке купить несуществующий автомобиль")
+    @Description("Тест проверяет возможность покупки несуществующего автомобиля")
     public void buyNonExistentCar() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
@@ -91,6 +95,7 @@ public class BuyCarTest extends BaseTest {
 
     @Test
     @DisplayName("Проверка статуса после покупки")
+    @Description("Тест проверяет множественную покупку автомобиля и сверяет статус код в каждой итерацииёё")
     public void checkStatusAfterPurchase() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
