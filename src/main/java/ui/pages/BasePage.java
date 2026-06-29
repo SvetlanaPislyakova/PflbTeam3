@@ -28,7 +28,9 @@ public abstract class BasePage {
     public List<String> sortNaturalOrder(List<String> objectList, boolean isNumeric) {
         List<String> sorted = new ArrayList<>(objectList);
         if (isNumeric) {
-            sorted.sort(Comparator.comparingDouble(Double::parseDouble));
+            sorted.sort(Comparator.comparingDouble(s ->
+                    ("null".equalsIgnoreCase(s)) ? 0.0 : Double.parseDouble(s)
+            ));
         } else {
             sorted.sort(Comparator.naturalOrder());
         }
@@ -40,7 +42,9 @@ public abstract class BasePage {
     public List<String> sortReverseOrder(List<String> objectList, boolean isNumeric) {
         List<String> sorted = new ArrayList<>(objectList);
         if (isNumeric) {
-            sorted.sort(Comparator.comparingDouble(Double::parseDouble).reversed());
+            sorted.sort(Comparator.comparingDouble(s ->
+                    ("null".equalsIgnoreCase((String) s)) ? 0.0 : Double.parseDouble((String) s)
+            ).reversed());
         } else {
             sorted.sort(Comparator.reverseOrder());
         }
