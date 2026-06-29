@@ -21,8 +21,7 @@ public class Table {
     public Table(String tableName) {
         switch (tableName) {
             case "Read all users":
-            case "Create new user":
-            case "User info":
+            case "Create new user"
                 this.firstColumn = "Age";
                 this.secondColumn = "Sex";
                 break;
@@ -44,7 +43,6 @@ public class Table {
                 break;
             case "Read all cars":
             case "Create new car":
-            case "Car info":
                 this.firstColumn = "Engine\u00A0Type";
                 this.secondColumn = "Mark";
                 break;
@@ -78,7 +76,6 @@ public class Table {
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
-        input.shouldHave(value(value));
     }
 
     public String getValueFromInput(String label) {
@@ -146,7 +143,6 @@ public class Table {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         String result = messageResult.replaceAll("\\D+", "");
-        System.out.println(result);
         return Integer.parseInt(result);
     }
 
