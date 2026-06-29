@@ -37,6 +37,8 @@ public class CarDeleteTest extends BaseTest {
         CarRs carRs = carAdapter.createCar(carRq, token);
         Integer carId = carRs.getId();
 
+        assertThat(dbSteps.isCarExistsInDB(carId)).isTrue();
+
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteCar(carId);
