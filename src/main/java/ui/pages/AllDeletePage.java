@@ -1,83 +1,93 @@
 package ui.pages;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
+import lombok.extern.log4j.Log4j2;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Configuration.baseUrl;
 
+@Log4j2
 public class AllDeletePage extends BasePage {
 
-    private final SelenideElement userInput = $x("//button[contains(text(), 'DELETE') and contains(text(), 'USER')]/following-sibling::button//input");
-    private final SelenideElement userPushBtn = $x("//button[contains(text(), 'DELETE') and contains(text(), 'USER')]");
-    private final SelenideElement userStatus = $x("//button[contains(text(), 'DELETE') and contains(text(), 'USER')]/following-sibling::button[contains(@class, 'status')]");
-
-    private final SelenideElement houseInput = $x("//button[contains(text(), 'DELETE') and contains(text(), 'HOUSE')]/following-sibling::button//input");
-    private final SelenideElement housePushBtn = $x("//button[contains(text(), 'DELETE') and contains(text(), 'HOUSE')]");
-    private final SelenideElement houseStatus = $x("//button[contains(text(), 'DELETE') and contains(text(), 'HOUSE')]/following-sibling::button[contains(@class, 'status')]");
-
-    private final SelenideElement carInput = $x("//button[contains(text(), 'DELETE') and contains(text(), 'CAR')]/following-sibling::button//input");
-    private final SelenideElement carPushBtn = $x("//button[contains(text(), 'DELETE') and contains(text(), 'CAR')]");
-    private final SelenideElement carStatus = $x("//button[contains(text(), 'DELETE') and contains(text(), 'CAR')]/following-sibling::button[contains(@class, 'status')]");
+    private final String DELETE_BUTTON = "//button[@value = '%s']";
+    private final String DELETE_INPUT = "//button[@value = '%s']/ancestor::div[@role='group']//input";
+    private final String DELETE_STATUS = "//button[@value = '%s']/ancestor::div[@role='group']//button[@class='status btn btn-secondary']";
 
     @Override
+    @Step("Открытие страницы All DELETE")
     public AllDeletePage openPage() {
+        log.info("Opening All DELETE page");
         open(baseUrl + "#/delete/all");
         return this;
     }
 
     @Override
+    @Step("Проверка открытия страницы All DELETE")
     public AllDeletePage isPageOpened() {
-        userInput.shouldBe(visible);
+        log.info("Checking All DELETE page is loaded");
+        $x(String.format(DELETE_BUTTON, "user")).shouldBe(Condition.visible, Duration.ofSeconds(10));
         return this;
     }
 
+    @Step("Удаление пользователя с ID: {userId}")
     public AllDeletePage deleteUser(Integer userId) {
-        userInput.setValue(String.valueOf(userId));
-        userPushBtn.shouldBe(Condition.interactable, Duration.ofSeconds(10));
-        userPushBtn.click();
-        userStatus.shouldHave(Condition.text("204"), Duration.ofSeconds(30));
+        log.info("Deleting user with ID: {}", userId);
+        $x(String.format(DELETE_INPUT, "user")).sendKeys(String.valueOf(userId));
+        log.info("User ID entered: {}", userId);
+        $x(String.format(DELETE_BUTTON, "user")).click();
+        log.info("DELETE USER button clicked");
+        $x(String.format(DELETE_STATUS, "user")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
+        log.info("User {} deleted successfully, status 204 received", userId);
         return this;
     }
 
-    public int getUserStatusCode() {
-        String statusText = userStatus.getText();
-        if (statusText == null || statusText.isEmpty() || statusText.equals("Status: not pushed")) {
-            return -1;
-        }
-        return Integer.parseInt(statusText.replaceAll("\\D+", ""));
-    }
-
-    public AllDeletePage deleteHouse(Integer houseId) {
-        houseInput.setValue(String.valueOf(houseId));
-        housePushBtn.shouldBe(Condition.interactable, Duration.ofSeconds(10));
-        housePushBtn.click();
-        houseStatus.shouldHave(Condition.text("204"), Duration.ofSeconds(30));
-        return this;
-    }
-
-    public int getHouseStatusCode() {
-        String statusText = houseStatus.getText();
-        if (statusText == null || statusText.isEmpty() || statusText.equals("Status: not pushed")) {
-            return -1;
-        }
-        return Integer.parseInt(statusText.replaceAll("\\D+", ""));
-    }
-
+    @Step("Удаление автомобиля с ID: {carId}")
     public AllDeletePage deleteCar(Integer carId) {
-        carInput.setValue(String.valueOf(carId));
-        carPushBtn.shouldBe(Condition.interactable, Duration.ofSeconds(10));
-        carPushBtn.click();
-        carStatus.shouldHave(Condition.text("204"), Duration.ofSeconds(30));
+        log.info("Deleting car with ID: {}", carId);
+        $x(String.format(DELETE_INPUT, "car")).sendKeys(String.valueOf(carId));
+        log.info("Car ID entered: {}", carId);
+        $x(String.format(DELETE_BUTTON, "car")).click();
+        log.info("DELETE CAR button clicked");
+        $x(String.format(DELETE_STATUS, "car")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
+        log.info("Car {} deleted successfully, status 204 received", carId);
         return this;
     }
 
+    @Step("Удаление дома с ID: {houseId}")
+    public AllDeletePage deleteHouse(Integer houseId) {
+        log.info("Deleting house with ID: {}", houseId);
+        $x(String.format(DELETE_INPUT, "house")).sendKeys(String.valueOf(houseId));
+        log.info("House ID entered: {}", houseId);
+        $x(String.format(DELETE_BUTTON, "house")).click();
+        log.info("DELETE HOUSE button clicked");
+        $x(String.format(DELETE_STATUS, "house")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
+        log.info("House {} deleted successfully, status 204 received", houseId);
+        return this;
+    }
+
+    @Step("Получение статуса удаления пользователя")
+    public int getUserStatusCode() {
+        String statusText = $x(String.format(DELETE_STATUS, "user")).getText();
+        return parseStatusCode(statusText);
+    }
+
+    @Step("Получение статуса удаления автомобиля")
     public int getCarStatusCode() {
-        String statusText = carStatus.getText();
+        String statusText = $x(String.format(DELETE_STATUS, "car")).getText();
+        return parseStatusCode(statusText);
+    }
+
+    @Step("Получение статуса удаления дома")
+    public int getHouseStatusCode() {
+        String statusText = $x(String.format(DELETE_STATUS, "house")).getText();
+        return parseStatusCode(statusText);
+    }
+
+    private int parseStatusCode(String statusText) {
         if (statusText == null || statusText.isEmpty() || statusText.equals("Status: not pushed")) {
             return -1;
         }
