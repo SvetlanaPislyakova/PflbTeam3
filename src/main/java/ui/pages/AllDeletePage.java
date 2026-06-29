@@ -36,8 +36,9 @@ public class AllDeletePage extends BasePage {
     @Step("Удаление пользователя с ID: {userId}")
     public AllDeletePage deleteUser(Integer userId) {
         log.info("Deleting user with ID: {}", userId);
-        $x(String.format(DELETE_INPUT, "user")).sendKeys(String.valueOf(userId));
+        $x(String.format(DELETE_INPUT, "user")).setValue(String.valueOf(userId));
         log.info("User ID entered: {}", userId);
+        $x(String.format(DELETE_BUTTON, "user")).shouldBe(Condition.enabled, Duration.ofSeconds(10));
         $x(String.format(DELETE_BUTTON, "user")).click();
         log.info("DELETE USER button clicked");
         $x(String.format(DELETE_STATUS, "user")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
@@ -48,8 +49,9 @@ public class AllDeletePage extends BasePage {
     @Step("Удаление автомобиля с ID: {carId}")
     public AllDeletePage deleteCar(Integer carId) {
         log.info("Deleting car with ID: {}", carId);
-        $x(String.format(DELETE_INPUT, "car")).sendKeys(String.valueOf(carId));
+        $x(String.format(DELETE_INPUT, "car")).setValue(String.valueOf(carId));
         log.info("Car ID entered: {}", carId);
+        $x(String.format(DELETE_BUTTON, "car")).shouldBe(Condition.enabled, Duration.ofSeconds(10));
         $x(String.format(DELETE_BUTTON, "car")).click();
         log.info("DELETE CAR button clicked");
         $x(String.format(DELETE_STATUS, "car")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
@@ -60,8 +62,9 @@ public class AllDeletePage extends BasePage {
     @Step("Удаление дома с ID: {houseId}")
     public AllDeletePage deleteHouse(Integer houseId) {
         log.info("Deleting house with ID: {}", houseId);
-        $x(String.format(DELETE_INPUT, "house")).sendKeys(String.valueOf(houseId));
+        $x(String.format(DELETE_INPUT, "house")).setValue(String.valueOf(houseId));
         log.info("House ID entered: {}", houseId);
+        $x(String.format(DELETE_BUTTON, "house")).shouldBe(Condition.enabled, Duration.ofSeconds(10));
         $x(String.format(DELETE_BUTTON, "house")).click();
         log.info("DELETE HOUSE button clicked");
         $x(String.format(DELETE_STATUS, "house")).shouldHave(Condition.text("204"), Duration.ofSeconds(30));
