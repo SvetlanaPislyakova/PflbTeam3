@@ -112,7 +112,7 @@ public class Table {
                 firstColumn, secondColumn)).click();
         SelenideElement message = $x(String.format(PATTERN + "/parent::div//button[contains(@class, 'status')]",
                 firstColumn, secondColumn));
-        message.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(120));
+        message.shouldNotHave(text("Status: not pushed"));
     }
 
     public void clickIssueLoanBtn() {
