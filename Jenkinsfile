@@ -1,6 +1,3 @@
-
-Копировать
-Скачать
 pipeline {
     agent any
 
