@@ -52,18 +52,6 @@ public class Table {
                 this.firstColumn = "Floors";
                 this.secondColumn = "Price";
                 break;
-            case "-- DELETE USER --":
-                this.firstColumn = "User ID";
-                this.secondColumn = "User ID";
-                break;
-            case "-- DELETE CAR --":
-                this.firstColumn = "Car ID";
-                this.secondColumn = "Car ID";
-                break;
-            case "-- DELETE HOUSE --":
-                this.firstColumn = "House ID";
-                this.secondColumn = "House ID";
-                break;
             default:
                 throw new IllegalArgumentException("Неизвестная таблица");
         }

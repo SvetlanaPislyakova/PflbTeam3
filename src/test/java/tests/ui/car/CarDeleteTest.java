@@ -3,6 +3,7 @@ package tests.ui.car;
 import api.adapters.CarAdapter;
 import api.models.CarRq;
 import api.models.CarRs;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -40,7 +41,9 @@ public class CarDeleteTest extends BaseTest {
                 .isPageOpened()
                 .deleteCar(carId);
 
-        assertThat(allDeletePage.getCarStatusCode()).isEqualTo(204);
-        assertThat(dbSteps.isCarExistsInDB(carId)).isFalse();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(allDeletePage.getCarStatusCode()).isEqualTo(204);
+        softly.assertThat(dbSteps.isCarExistsInDB(carId)).isFalse();
+        softly.assertAll();
     }
 }

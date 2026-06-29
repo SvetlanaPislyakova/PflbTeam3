@@ -3,6 +3,7 @@ package tests.ui.house;
 import api.adapters.HouseAdapter;
 import api.models.HouseRq;
 import api.models.HouseRs;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,9 @@ public class HouseDeleteTest extends BaseTest {
                 .isPageOpened()
                 .deleteHouse(houseId);
 
-        assertThat(allDeletePage.getHouseStatusCode()).isEqualTo(204);
-        assertThat(dbSteps.isHouseExistsInDB(houseId)).isFalse();
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(allDeletePage.getHouseStatusCode()).isEqualTo(204);
+        softly.assertThat(dbSteps.isHouseExistsInDB(houseId)).isFalse();
+        softly.assertAll();
     }
 }
