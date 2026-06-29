@@ -150,17 +150,11 @@ public class UserTest extends BaseTest {
     public void deleteUserThroughUI() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq, token);
-        List<CarRs> cars = userAdapter.getUserCars(userId);
-        if (!cars.isEmpty()) {
-            // Если есть — удаляем их
-            for (CarRs car : cars) {
-                userAdapter.sellCar(userId, car.getId(), token);
-                carAdapter.deleteCar(car.getId(), token);
-            }
-        }
+
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteUser(userId);
+
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(allDeletePage.getUserStatusCode()).isEqualTo(204);
         softly.assertThat(dbSteps.isUserExistsInDB(userId)).isFalse();

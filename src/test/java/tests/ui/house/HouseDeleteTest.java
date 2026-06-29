@@ -38,6 +38,8 @@ public class HouseDeleteTest extends BaseTest {
         HouseRs houseRs = houseAdapter.createHouse(houseRq, token);
         Integer houseId = houseRs.getId();
 
+        assertThat(dbSteps.isHouseExistsInDB(houseId)).isTrue();
+
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteHouse(houseId);
