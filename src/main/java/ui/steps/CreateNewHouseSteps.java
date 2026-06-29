@@ -46,7 +46,7 @@ public class CreateNewHouseSteps {
     }
 
     @Step("Получение ID созданного дома")
-    public String getCreatedHouseId() {  // <-- Возвращаем Integer
+    public String getCreatedHouseId() {
         return createNewHousePage.getHouseId();
     }
 
