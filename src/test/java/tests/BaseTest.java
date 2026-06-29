@@ -50,12 +50,9 @@ public class BaseTest {
 
     protected List<Integer> createdUserIds = new ArrayList<>();
     protected List<Integer> createdCarIds = new ArrayList<>();
-    protected final UserAdapter userAdapter = new UserAdapter();
-    protected final CarAdapter carAdapter = new CarAdapter();
-
+    protected UserAdapter userAdapter;
+    protected CarAdapter carAdapter;
     protected AllDeletePage allDeletePage = new AllDeletePage();
-
-
 
     @BeforeAll
     public static void setupAllure() {
@@ -75,9 +72,9 @@ public class BaseTest {
         Configuration.baseUrl = "http://82.142.167.37:4881/";
         Configuration.clickViaJs = true;
         ChromeOptions options = new ChromeOptions();
-        if (System.getProperty("headless", "true").equals("true")) {
-            options.addArguments("--headless=new");
-        }
+//        if (System.getProperty("headless", "true").equals("true")) {
+//            options.addArguments("--headless=new");
+//        }
         options.addArguments("--window-size=1920,1080");
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
@@ -101,6 +98,8 @@ public class BaseTest {
         createCarPage = new CreateCarPage();
         allCarsPage = new AllCarsPage();
         buyOrSaleCarPage = new BuyOrSaleCarPage();
+        carAdapter = new CarAdapter();
+        userAdapter = new UserAdapter();
     }
 
     @AfterEach

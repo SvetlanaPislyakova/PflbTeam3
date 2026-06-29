@@ -8,6 +8,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class AllDeletePage extends BasePage {
 
@@ -36,9 +37,10 @@ public class AllDeletePage extends BasePage {
     }
 
     public AllDeletePage deleteUser(Integer userId) {
+        sleep(300);
         userInput.setValue(String.valueOf(userId));
         userPushBtn.click();
-        userStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
+        userStatus.shouldNotHave(text("Status: not pushed"));
         return this;
     }
 
@@ -51,9 +53,10 @@ public class AllDeletePage extends BasePage {
     }
 
     public AllDeletePage deleteHouse(Integer houseId) {
+        sleep(300);
         houseInput.setValue(String.valueOf(houseId));
         housePushBtn.click();
-        houseStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
+        houseStatus.shouldNotHave(text("Status: not pushed"));
         return this;
     }
 
@@ -66,9 +69,10 @@ public class AllDeletePage extends BasePage {
     }
 
     public AllDeletePage deleteCar(Integer carId) {
+        sleep(300);
         carInput.setValue(String.valueOf(carId));
         carPushBtn.click();
-        carStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
+        carStatus.shouldNotHave(text("Status: not pushed"));
         return this;
     }
 

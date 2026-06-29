@@ -1,6 +1,7 @@
 package api.adapters;
 
 import api.models.CarRs;
+import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRs;
 import io.restassured.response.ValidatableResponse;
@@ -141,10 +142,12 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void getUserInfo(Integer userId) {
+    public UserInfoRs getUserInfo(Integer userId) {
         log.info("GET - получение информации о пользователе, 200");
-        getUserInfoRequest(userId)
-                .spec(success200);
+        return getUserInfoRequest(userId)
+                .spec(success200)
+                .extract()
+                .as(UserInfoRs.class);
     }
 
     public void getNotExistingUserInfo(Integer userId) {
@@ -175,6 +178,12 @@ public class UserAdapter extends BaseAdapter {
         log.info("DELETE - попытка удаления несуществующего пользователя, 404");
         deleteUserRequest(userId, token)
                 .spec(notFound404);
+    }
+
+    public void deleteUserNegative(Integer userId, String token) {
+        log.info("DELETE - попытка удаления пользователя с имуществом, 409");
+        deleteUserRequest(userId, token)
+                .spec(conflict409);
     }
 
     private ValidatableResponse addMoneyRequest(Integer userId, BigDecimal amount, String token) {
