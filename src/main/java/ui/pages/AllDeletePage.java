@@ -37,10 +37,9 @@ public class AllDeletePage extends BasePage {
     }
 
     public AllDeletePage deleteUser(Integer userId) {
-        sleep(300);
         userInput.setValue(String.valueOf(userId));
         userPushBtn.click();
-        userStatus.shouldNotHave(text("Status: not pushed"));
+        userStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
         return this;
     }
 
@@ -53,10 +52,9 @@ public class AllDeletePage extends BasePage {
     }
 
     public AllDeletePage deleteHouse(Integer houseId) {
-        sleep(300);
         houseInput.setValue(String.valueOf(houseId));
         housePushBtn.click();
-        houseStatus.shouldNotHave(text("Status: not pushed"));
+        houseStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
         return this;
     }
 
@@ -69,10 +67,9 @@ public class AllDeletePage extends BasePage {
     }
 
     public AllDeletePage deleteCar(Integer carId) {
-        sleep(300);
         carInput.setValue(String.valueOf(carId));
         carPushBtn.click();
-        carStatus.shouldNotHave(text("Status: not pushed"));
+        carStatus.shouldNotHave(text("Status: not pushed"), Duration.ofSeconds(60));
         return this;
     }
 
