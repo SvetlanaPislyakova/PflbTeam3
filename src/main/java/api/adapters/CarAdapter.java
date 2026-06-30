@@ -2,8 +2,6 @@ package api.adapters;
 
 import api.models.CarRq;
 import api.models.CarRs;
-import api.models.user.UserRq;
-import api.models.user.UserRs;
 import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
 
@@ -88,7 +86,7 @@ public class CarAdapter extends BaseAdapter {
     }
 
     public CarRs updateCar(int id, CarRq carRq, String token) {
-        log.info("PUT - изменение автомобиля, 200");
+        log.info("PUT - изменение автомобиля, 202");
         return given()
                 .spec(spec)
                 .header("Authorization", "Bearer " + token)
@@ -99,7 +97,7 @@ public class CarAdapter extends BaseAdapter {
                 .put("/car/{id}")
                 .then()
                 .log().all()
-                .spec(accepted202) // если API возвращает 202, замените на accepted202
+                .spec(accepted202)
                 .extract()
                 .as(CarRs.class);
     }

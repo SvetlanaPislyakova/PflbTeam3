@@ -34,7 +34,7 @@ public class CarCrudTest extends BaseApiTest {
                 softly.assertThat(car.getEngineType()).isNotNull();
                 softly.assertThat(car.getMark()).isNotNull();
                 softly.assertThat(car.getModel()).isNotNull();
-//                softly.assertThat(car.getPrice()).isNotNull(); - закомментил потому что проверка не проходит
+             softly.assertThat(String.valueOf(car.getPrice())).isNotBlank();
             }
         });
     }
