@@ -58,7 +58,6 @@ public abstract class BasePage {
         List<String> sortedNaturalOrder = new ArrayList<>(startList);
         sortedNaturalOrder = sortNaturalOrder(sortedNaturalOrder, isNumeric);
         new Button(field).clickBtn();
-        sleep(5000);
         List<String> sortedNatural = table.getListOfValues(field);
         assertThat(sortedNatural).isEqualTo(sortedNaturalOrder);
         return this;
@@ -68,7 +67,6 @@ public abstract class BasePage {
         List<String> sortedReverseOrder = new ArrayList<>(startList);
         sortedReverseOrder = sortReverseOrder(sortedReverseOrder, isNumeric);
         new Button("↑ " + field).clickBtn();
-        sleep(5000);
         List<String> sortedReverse = table.getListOfValues(field);
         assertThat(sortedReverse).isEqualTo(sortedReverseOrder);
         return this;
