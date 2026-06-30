@@ -46,9 +46,22 @@ public class Table {
                 this.firstColumn = "Engine\u00A0Type";
                 this.secondColumn = "Mark";
                 break;
+            case "Read all houses:":
+            case "Parkings:":
+                this.firstColumn = "isWarm:";
+                this.secondColumn = "isCovered:";
+                break;
+            case "House info:":
+                this.firstColumn = "Floor\u00A0Count:";
+                this.secondColumn = "Price:";
+                break;
             case "Create new house":
                 this.firstColumn = "Floors";
                 this.secondColumn = "Price";
+                break;
+            case "Lodgers:":
+                this.firstColumn = "ID:";
+                this.secondColumn = "First\u00A0name:";
                 break;
             default:
                 throw new IllegalArgumentException("Неизвестная таблица");
@@ -152,5 +165,10 @@ public class Table {
         String messageResult = $x(String.format(PATTERN + "/parent::div/div/button[3]",
                 firstColumn, secondColumn)).shouldNotBe(empty).getText();
         return Double.parseDouble(messageResult.replaceAll("[^\\d.]", ""));
+    }
+
+    public SelenideElement getTableElement() {
+        log.info("Получить элемент таблицы");
+        return $x(String.format(PATTERN, firstColumn, secondColumn));
     }
 }
