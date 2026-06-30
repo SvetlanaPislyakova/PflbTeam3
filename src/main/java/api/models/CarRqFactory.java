@@ -13,7 +13,7 @@ public class CarRqFactory {
                 .mark(FAKER.lorem().word())
                 .model(FAKER.lorem().word())
                 .price(BigDecimal.valueOf(FAKER.number().randomDouble(2, 1000, 50000)))
-                .engineType(FAKER.options().option("Diesel", "Petrol", "Electric"))
+                .engineType(FAKER.options().option("CNG", "Diesel", "Gasoline", "Hydrogenic", "PHEV", "Electric"))
                 .build();
     }
 

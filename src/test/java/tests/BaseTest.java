@@ -50,12 +50,9 @@ public class BaseTest {
 
     protected List<Integer> createdUserIds = new ArrayList<>();
     protected List<Integer> createdCarIds = new ArrayList<>();
-    protected final UserAdapter userAdapter = new UserAdapter();
-    protected final CarAdapter carAdapter = new CarAdapter();
-
+    protected UserAdapter userAdapter;
+    protected CarAdapter carAdapter;
     protected AllDeletePage allDeletePage = new AllDeletePage();
-
-
 
     @BeforeAll
     public static void setupAllure() {
@@ -101,6 +98,8 @@ public class BaseTest {
         createCarPage = new CreateCarPage();
         allCarsPage = new AllCarsPage();
         buyOrSaleCarPage = new BuyOrSaleCarPage();
+        carAdapter = new CarAdapter();
+        userAdapter = new UserAdapter();
     }
 
     @AfterEach

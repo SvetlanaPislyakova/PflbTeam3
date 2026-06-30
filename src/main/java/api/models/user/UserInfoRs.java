@@ -1,11 +1,14 @@
 package api.models.user;
 
+import api.models.CarRs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Data
 public class UserInfoRs {
 
     @SerializedName("id")
@@ -16,7 +19,7 @@ public class UserInfoRs {
     private Integer age;
     @SerializedName("cars")
     @Expose
-    private List<Car> cars;
+    private List<CarRs> cars;
     @SerializedName("firstName")
     @Expose
     private String firstName;
