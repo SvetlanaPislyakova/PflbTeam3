@@ -53,8 +53,9 @@ public class ReadUserWithCarsPage extends BasePage {
         List<Integer> actualIds = carInfoTable.getListOfValues("ID")
                 .stream()
                 .map(Integer::valueOf)
+                .sorted()
                 .toList();
-        assertThat(actualIds).isEqualTo(carsId);
+        assertThat(actualIds).isEqualTo(carsId.stream().sorted().toList());
         return this;
     }
 

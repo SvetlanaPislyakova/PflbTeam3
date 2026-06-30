@@ -38,8 +38,8 @@ public class Table {
                 this.secondColumn = "House ID";
                 break;
             case "Issue a loan":
-                this.firstColumn = "User ID";
-                this.secondColumn = "Размер кредита";
+                this.firstColumn = "User ID:";
+                this.secondColumn = "Размер кредита:";
                 break;
             case "Read all cars":
             case "Create new car":

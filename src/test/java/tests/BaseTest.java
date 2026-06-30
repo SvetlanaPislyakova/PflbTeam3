@@ -13,13 +13,7 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import ui.pages.AddMoneyPage;
-import ui.pages.AllCarsPage;
-import ui.pages.AllUsersPage;
-import ui.pages.BuyOrSaleCarPage;
-import ui.pages.CreateCarPage;
-import ui.pages.CreateUserPage;
-import ui.pages.MenuPage;
+import ui.pages.*;
 import ui.steps.CarSteps;
 import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
@@ -56,10 +50,9 @@ public class BaseTest {
 
     protected List<Integer> createdUserIds = new ArrayList<>();
     protected List<Integer> createdCarIds = new ArrayList<>();
-    protected final UserAdapter userAdapter = new UserAdapter();
-    protected final CarAdapter carAdapter = new CarAdapter();
-
-
+    protected UserAdapter userAdapter;
+    protected CarAdapter carAdapter;
+    protected AllDeletePage allDeletePage = new AllDeletePage();
 
     @BeforeAll
     public static void setupAllure() {
@@ -105,6 +98,8 @@ public class BaseTest {
         createCarPage = new CreateCarPage();
         allCarsPage = new AllCarsPage();
         buyOrSaleCarPage = new BuyOrSaleCarPage();
+        carAdapter = new CarAdapter();
+        userAdapter = new UserAdapter();
     }
 
     @AfterEach

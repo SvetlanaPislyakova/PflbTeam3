@@ -1,5 +1,7 @@
 package api.adapters;
 
+import api.models.CarRs;
+import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRs;
 import io.restassured.response.ValidatableResponse;
@@ -113,9 +115,9 @@ public class UserAdapter extends BaseAdapter {
                 .getList("", UserRs.class);
     }
 
-    public void getUserCars(Integer userId) {
+    public List<CarRs> getUserCars(Integer userId) {
         log.info("GET - получение автомобилей пользователя, 200");
-        given()
+        return given()
                 .spec(spec)
                 .pathParam("userId", userId)
                 .log().all()
@@ -123,7 +125,10 @@ public class UserAdapter extends BaseAdapter {
                 .get("/user/{userId}/cars")
                 .then()
                 .log().all()
-                .spec(success200);
+                .spec(success200)
+                .extract()
+                .jsonPath()
+                .getList("", CarRs.class);
     }
 
     private ValidatableResponse getUserInfoRequest(Integer userId) {
@@ -137,10 +142,12 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void getUserInfo(Integer userId) {
+    public UserInfoRs getUserInfo(Integer userId) {
         log.info("GET - получение информации о пользователе, 200");
-        getUserInfoRequest(userId)
-                .spec(success200);
+        return getUserInfoRequest(userId)
+                .spec(success200)
+                .extract()
+                .as(UserInfoRs.class);
     }
 
     public void getNotExistingUserInfo(Integer userId) {
@@ -171,6 +178,12 @@ public class UserAdapter extends BaseAdapter {
         log.info("DELETE - попытка удаления несуществующего пользователя, 404");
         deleteUserRequest(userId, token)
                 .spec(notFound404);
+    }
+
+    public void deleteUserNegative(Integer userId, String token) {
+        log.info("DELETE - попытка удаления пользователя с имуществом, 409");
+        deleteUserRequest(userId, token)
+                .spec(conflict409);
     }
 
     private ValidatableResponse addMoneyRequest(Integer userId, BigDecimal amount, String token) {
@@ -204,5 +217,43 @@ public class UserAdapter extends BaseAdapter {
         log.info("POST - Начисление денег пользователю, отрицательная сумма, 400");
         addMoneyRequest(userId, amount, token)
                 .spec(badRequest400);
+    }
+
+    private ValidatableResponse buyCarRequest(Integer userId, Integer carId, String token) {
+        return given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .pathParam("userId", userId)
+                .pathParam("carId", carId)
+                .log().all()
+                .when()
+                .post("/user/{userId}/buyCar/{carId}")
+                .then()
+                .log().all();
+    }
+
+    public void buyCar(Integer userId, Integer carId, String token) {
+        log.info("POST - Покупка автомобиля пользователем, 200");
+        buyCarRequest(userId, carId, token)
+                .spec(success200);
+    }
+
+    private ValidatableResponse sellCarRequest(Integer userId, Integer carId, String token) {
+        return given()
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
+                .pathParam("userId", userId)
+                .pathParam("carId", carId)
+                .log().all()
+                .when()
+                .post("/user/{userId}/sellCar/{carId}")
+                .then()
+                .log().all();
+    }
+
+    public void sellCar(Integer userId, Integer carId, String token) {
+        log.info("POST - Продажа автомобиля пользователем, 200");
+        sellCarRequest(userId, carId, token)
+                .spec(success200);
     }
 }

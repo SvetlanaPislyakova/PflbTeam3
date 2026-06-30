@@ -2,18 +2,38 @@ package tests.api;
 
 import api.adapters.CarAdapter;
 import api.models.CarRq;
+import api.models.CarRqFactory;
 import api.models.CarRs;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CarCrudTest extends BaseApiTest {
 
     CarAdapter carAdapter = new CarAdapter();
+
+    @Test
+    @DisplayName("Получение списка автомобилей")
+    public void getCars() {
+        List<CarRs> cars = carAdapter.getCars(accessToken);
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(cars).isNotNull();
+            softly.assertThat(cars).isNotEmpty();
+            for(CarRs car : cars) {
+                softly.assertThat(car.getId()).isNotNull();
+                softly.assertThat(car.getEngineType()).isNotNull();
+                softly.assertThat(car.getMark()).isNotNull();
+                softly.assertThat(car.getModel()).isNotNull();
+             softly.assertThat(String.valueOf(car.getPrice())).isNotBlank();
+            }
+        });
+    }
 
     @Test
     @DisplayName("Получение автомобиля по ID")
@@ -30,6 +50,36 @@ public class CarCrudTest extends BaseApiTest {
         CarRs received = carAdapter.getCar(created.getId(), accessToken);
         assertEquals(created.getId(), received.getId());
         carAdapter.deleteCar(created.getId(), accessToken);
+    }
+
+    @Test
+    @DisplayName("Изменение автомобиля")
+    @Description("Тест проверяет создание и последующее изменение автомобиля, затем удаляет автомобиль")
+    void updateCarTest() {
+        CarRq original = CarRqFactory.validCar();
+
+        Integer carID = carAdapter.createCarAndGetId(original, accessToken);
+
+        try {
+            CarRq updatedRq = original.toBuilder()
+                    .price(BigDecimal.valueOf(12345.00))
+                    .model("UpdatedModel")
+                    .build();
+
+            CarRs updatedRs = carAdapter.updateCar(carID, updatedRq, accessToken);
+
+            SoftAssertions softly = new SoftAssertions();
+            softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
+            softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
+            softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
+
+            CarRs received = carAdapter.getCar(carID, accessToken);
+            softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
+            softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
+
+        } finally {
+            carAdapter.deleteCar(carID, accessToken);
+        }
     }
 
     @Test
