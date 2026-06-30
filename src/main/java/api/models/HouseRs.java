@@ -23,4 +23,7 @@ public class HouseRs {
     @SerializedName("lodgers")
     @Expose
     private List<UserRs> lodgers;
+    @SerializedName("parkingPlaces")
+    @Expose
+    private List<ParkingPlaceRs> parkingPlaces;
 }
