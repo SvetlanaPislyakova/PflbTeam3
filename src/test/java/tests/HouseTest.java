@@ -20,12 +20,8 @@ public class HouseTest extends BaseTest {
     @Test
     @Description("Создание нового дома с базовыми параметрами")
     public void createSimpleHouse() {
-        int floors = 5;
-        double price = 100000.00;
-        int parkingPlaces = 10;
-
-        houseStep.createSimpleHouse(floors, price, parkingPlaces);
+        houseStep.createSimpleHouse(1, 10000.01, 10);
         String houseId = houseStep.checkCreateHouseAndGetId();
-        houseStep.checkHouseData(String.valueOf(houseId), floors, price);
+        houseStep.checkHouseData(String.valueOf(houseId), 1, 10000.01);
     }
 }

@@ -44,13 +44,17 @@ public class CreateNewHousePage extends BasePage {
     // Методы для заполнения основной информации
     public CreateNewHousePage setFloors(int floors) {
         log.info("Установить количество этажей: {}", floors);
-        FLOORS_INPUT.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(floors));
+        FLOORS_INPUT.shouldBe(visible).shouldBe(enabled);
+        FLOORS_INPUT.clear();
+        FLOORS_INPUT.setValue(String.valueOf(floors));
         return this;
     }
 
     public CreateNewHousePage setPrice(double price) {
         log.info("Установить цену дома: {}", price);
-        PRICE_INPUT.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(price));
+        PRICE_INPUT.shouldBe(visible)
+                .shouldBe(enabled)
+                .setValue(String.valueOf(price));
         return this;
     }
 
@@ -82,7 +86,9 @@ public class CreateNewHousePage extends BasePage {
     // Методы для отправки и получения результатов
     public CreateNewHousePage clickPushToApi() {
         log.info("Нажать кнопку 'PUSH TO API'");
-        PUSH_BUTTON.shouldBe(visible).shouldBe(enabled).click();
+        PUSH_BUTTON.shouldBe(visible)
+                .shouldBe(enabled)
+                .click();
         return this;
     }
 
@@ -90,18 +96,16 @@ public class CreateNewHousePage extends BasePage {
         log.info("Получить статус операции");
         STATUS_BUTTON.shouldHave(
                 com.codeborne.selenide.Condition.text("Successfully pushed"),
-                java.time.Duration.ofSeconds(30)
+                java.time.Duration.ofSeconds(10)
         );
         return STATUS_BUTTON.getText();
     }
 
     public String getHouseId() {
         log.info("Get the ID of the created property");
-        // Ждём, что кнопка содержит текст
-        NEW_HOUSE_ID.shouldNotBe(com.codeborne.selenide.Condition.empty, Duration.ofSeconds(30));
+        NEW_HOUSE_ID.shouldNotBe(com.codeborne.selenide.Condition.empty, Duration.ofSeconds(10));
         String text = NEW_HOUSE_ID.text();
         log.info("Button text: {}", text);
-        // Извлекаем только цифры
         return text.replaceAll("\\D", "");
     }
 
