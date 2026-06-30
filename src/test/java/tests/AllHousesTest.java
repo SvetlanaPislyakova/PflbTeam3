@@ -1,7 +1,7 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ui.pages.AllHousesPage;
 
@@ -16,7 +16,7 @@ public class AllHousesTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("Проверка открытия страницы Read all houses и кнопки Reload")
+    @Description("Проверка открытия страницы Read all houses и кнопки Reload")
     public void testReadAllHousesPage() {
 
         AllHousesPage allHousesPage = new AllHousesPage().openPage();
@@ -25,7 +25,6 @@ public class AllHousesTest extends BaseTest {
 
         assertTrue(
                 allHousesPage.getTable().getTableElement().isDisplayed(),
-                "Таблица должна быть видна после нажатия Reload"
-        );
+                "Таблица должна быть видна после нажатия Reload");
     }
 }

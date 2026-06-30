@@ -42,7 +42,7 @@ public class ReadHouseOneById extends BasePage {
     public ReadHouseOneById clickRead() {
         log.info("Нажать кнопку 'Read'");
         new Button("Read").clickBtn();
-        sleep(12000);
+        houseInfoTable.checkTableVisible();
         return this;
     }
 

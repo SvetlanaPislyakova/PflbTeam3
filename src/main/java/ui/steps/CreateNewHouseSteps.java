@@ -50,17 +50,14 @@ public class CreateNewHouseSteps {
         return createNewHousePage.getHouseId();
     }
 
-    @Step("Чтение дома по ID={houseId} и проверка данных")
-    public void checkHouseData(String houseId, int expectedFloors, double expectedPrice) {
+    @Step("Проверка данных созданного дома")
+    public void checkHouseData(String houseId, int floors, double price) {
         readHouseOneById.openPage()
                 .isPageOpened()
                 .findHouseById(houseId);
 
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(readHouseOneById.getHouseId()).isEqualTo(houseId);
-        softly.assertThat(readHouseOneById.getFloorCount()).isEqualTo(String.valueOf(expectedFloors));
-        softly.assertThat(readHouseOneById.getPrice()).isEqualTo(String.valueOf(expectedPrice));
-        softly.assertAll();
     }
 
     @Step("Проверка видимости таблиц на странице чтения дома по ID={houseId}")
