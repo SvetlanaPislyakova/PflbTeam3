@@ -1,4 +1,4 @@
-package tests;
+package tests.ui.base;
 
 import api.adapters.CarAdapter;
 import api.adapters.UserAdapter;
@@ -19,7 +19,7 @@ import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
 import utils.PropertyReader;
-import utils.TestListener;
+import tests.listners.TestListener;
 import utils.TokenProvider;
 
 import java.util.ArrayList;

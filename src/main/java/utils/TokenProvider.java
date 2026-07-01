@@ -1,7 +1,7 @@
 package utils;
 
 import api.adapters.LoginAdapter;
-import api.models.LoginRq;
+import api.models.login.LoginRq;
 
 public class TokenProvider {
 

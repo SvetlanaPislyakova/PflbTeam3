@@ -1,9 +1,10 @@
-package utils;
+package tests.listners;
 
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestWatcher;
 import org.openqa.selenium.WebDriver;
+import utils.AllureUtils;
 
 import java.util.Optional;
 

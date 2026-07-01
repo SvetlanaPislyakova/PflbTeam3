@@ -1,16 +1,17 @@
-package tests;
+package tests.ui.allpost;
 
 import api.adapters.HouseAdapter;
-import api.models.CarRq;
-import api.models.CarRs;
-import api.models.HouseRq;
-import api.models.HouseRs;
+import api.models.car.CarRq;
+import api.models.car.CarRs;
+import api.models.house.HouseRq;
+import api.models.house.HouseRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import tests.ui.base.BaseTest;
 import ui.dto.Car;
 import ui.dto.User;
 import ui.pages.AllPostPage;

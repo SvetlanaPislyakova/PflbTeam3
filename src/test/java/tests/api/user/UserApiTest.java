@@ -1,13 +1,13 @@
-package tests.api;
+package tests.api.user;
 
 import api.adapters.CarAdapter;
 import api.adapters.HouseAdapter;
 import api.adapters.UserAdapter;
-import api.models.CarRq;
-import api.models.CarRqFactory;
-import api.models.CarRs;
-import api.models.HouseRq;
-import api.models.HouseRs;
+import api.models.car.CarRq;
+import api.models.car.CarRqFactory;
+import api.models.car.CarRs;
+import api.models.house.HouseRq;
+import api.models.house.HouseRs;
 import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
@@ -20,6 +20,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import tests.api.base.BaseApiTest;
 import ui.steps.DBSteps;
 
 import java.math.BigDecimal;
@@ -28,7 +29,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class UserApiTest extends  BaseApiTest {
+public class UserApiTest extends BaseApiTest {
 
     private final UserAdapter userAdapter = new UserAdapter();
     private final DBSteps dbSteps = new DBSteps();

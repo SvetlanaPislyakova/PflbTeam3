@@ -1,15 +1,14 @@
-package tests.api;
+package tests.api.car;
 
 import api.adapters.CarAdapter;
-import api.models.CarRq;
-import api.models.CarRs;
+import api.models.car.CarRq;
+import api.models.car.CarRs;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 

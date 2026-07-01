@@ -7,10 +7,9 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tests.BaseTest;
+import tests.ui.base.BaseTest;
 import ui.dto.Car;
 import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class SellCarTest extends BaseTest {
 

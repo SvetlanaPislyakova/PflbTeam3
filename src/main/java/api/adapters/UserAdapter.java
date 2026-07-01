@@ -1,6 +1,6 @@
 package api.adapters;
 
-import api.models.CarRs;
+import api.models.car.CarRs;
 import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRs;

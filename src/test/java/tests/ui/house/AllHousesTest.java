@@ -1,8 +1,9 @@
-package tests;
+package tests.ui.house;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import tests.ui.base.BaseTest;
 import ui.pages.AllHousesPage;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;

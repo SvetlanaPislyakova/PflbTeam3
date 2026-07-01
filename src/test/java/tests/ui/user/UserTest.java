@@ -1,9 +1,9 @@
-package tests;
+package tests.ui.user;
 
 import api.adapters.UserAdapter;
-import api.models.CarRq;
-import api.models.CarRqFactory;
-import api.models.CarRs;
+import api.models.car.CarRq;
+import api.models.car.CarRqFactory;
+import api.models.car.CarRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
@@ -17,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import tests.ui.base.BaseTest;
 import ui.dto.User;
 import ui.dto.UserFactory;
 
