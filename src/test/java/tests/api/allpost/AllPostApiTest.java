@@ -1,14 +1,15 @@
-package tests.api;
+package tests.api.allpost;
 
 import api.adapters.HouseAdapter;
 import api.adapters.UserAdapter;
-import api.models.HouseRq;
-import api.models.HouseRs;
+import api.models.house.HouseRq;
+import api.models.house.HouseRs;
 import api.models.user.UserRqFactory;
 import api.models.user.UserRs;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 import java.util.List;

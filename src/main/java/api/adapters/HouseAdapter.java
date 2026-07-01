@@ -1,7 +1,7 @@
 package api.adapters;
 
-import api.models.HouseRq;
-import api.models.HouseRs;
+import api.models.house.HouseRq;
+import api.models.house.HouseRs;
 import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
 

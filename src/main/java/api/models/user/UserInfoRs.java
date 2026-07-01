@@ -1,6 +1,6 @@
 package api.models.user;
 
-import api.models.CarRs;
+import api.models.car.CarRs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

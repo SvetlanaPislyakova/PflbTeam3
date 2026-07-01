@@ -1,15 +1,16 @@
-package tests.api;
+package tests.api.car;
 
 import api.adapters.CarAdapter;
-import api.models.CarRq;
+import api.models.car.CarRq;
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 
-public class CarNegativeTest extends BaseApiTest  {
+public class CarNegativeTest extends BaseApiTest {
 
     private final CarAdapter carAdapter = new CarAdapter();
 

@@ -2,7 +2,7 @@ package tests.ui.car;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import tests.BaseTest;
+import tests.ui.base.BaseTest;
 
 public class CarSortTest extends BaseTest {
 

@@ -1,4 +1,4 @@
-package api.models;
+package api.models.house;
 
 import com.github.javafaker.Faker;
 

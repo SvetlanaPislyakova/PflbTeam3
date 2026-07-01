@@ -1,6 +1,6 @@
 package api.adapters;
 
-import api.models.LoginRq;
+import api.models.login.LoginRq;
 
 import static io.restassured.RestAssured.given;
 

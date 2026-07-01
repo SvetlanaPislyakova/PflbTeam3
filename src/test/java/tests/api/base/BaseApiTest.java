@@ -1,7 +1,7 @@
-package tests.api;
+package tests.api.base;
 
 import api.adapters.LoginAdapter;
-import api.models.LoginRq;
+import api.models.login.LoginRq;
 import utils.PropertyReader;
 
 public class BaseApiTest {

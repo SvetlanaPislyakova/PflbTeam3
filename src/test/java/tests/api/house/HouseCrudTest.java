@@ -1,10 +1,11 @@
-package tests.api;
+package tests.api.house;
 
 import api.adapters.HouseAdapter;
-import api.models.HouseRq;
-import api.models.HouseRs;
+import api.models.house.HouseRq;
+import api.models.house.HouseRs;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 import java.util.List;
