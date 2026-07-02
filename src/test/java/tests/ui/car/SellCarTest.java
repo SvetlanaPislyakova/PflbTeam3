@@ -13,7 +13,6 @@ import tests.ui.base.BaseTest;
 import ui.dto.Car;
 import java.math.BigDecimal;
 
-import static com.codeborne.selenide.Selenide.sleep;
 
 public class SellCarTest extends BaseTest {
 
@@ -43,6 +42,7 @@ public class SellCarTest extends BaseTest {
 
         carSteps.sellNewCar(sellerID, carID);
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
+        softly.assertAll();
     }
 
     @ParameterizedTest

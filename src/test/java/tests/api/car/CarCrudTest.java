@@ -58,7 +58,6 @@ public class CarCrudTest {
     void updateCarTest() {
         CarRq original = CarRqFactory.validCar();
         Integer carID = carAdapter.createCarAndGetId(original);
-        try {
             CarRq updatedRq = original.toBuilder()
                     .price(BigDecimal.valueOf(12345.00))
                     .model("UpdatedModel")
@@ -75,10 +74,8 @@ public class CarCrudTest {
             softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
             softly.assertAll();
-        } finally {
-            carAdapter.deleteCar(carID);
         }
-    }
+
 
     @Test
     @DisplayName("Удаление автомобиля")
