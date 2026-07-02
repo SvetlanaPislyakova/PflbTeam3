@@ -54,7 +54,7 @@ public class SellCarTest extends BaseTest {
                 .toBuilder()
                 .money(BigDecimal.valueOf(100000000))
                 .build();
-        Integer sellerID = userAdapter.createUserAndGetId(seller, token);
+        Integer sellerID = userAdapter.createUserAndGetId(seller);
         createdUserIds.add(sellerID);
 
         for (int i = 0; i < carCount; i++) {
