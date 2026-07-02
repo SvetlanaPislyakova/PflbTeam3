@@ -5,7 +5,6 @@ import api.models.house.HouseRq;
 import api.models.house.HouseRs;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-    public class HouseCrudTest extends BaseApiTest {
+    public class HouseCrudTest {
 
         HouseAdapter houseAdapter = new HouseAdapter();
 
@@ -28,31 +27,28 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
                     .lodgers(List.of())
                     .build();
 
-            HouseRs created = houseAdapter.createHouse(houseRq, accessToken);
-            HouseRs received = houseAdapter.getHouse(created.getId(), accessToken);
+            HouseRs created = houseAdapter.createHouse(houseRq);
+            HouseRs received = houseAdapter.getHouse(created.getId());
             assertEquals(created.getId(), received.getId());
         }
 
         @Test
         @DisplayName("Получение списка домов")
         void getHousesTest() {
-
-            List<HouseRs> houses = houseAdapter.getHouses(accessToken);
+            List<HouseRs> houses = houseAdapter.getHouses();
             assertFalse(houses.isEmpty());
         }
 
         @Test
         @DisplayName("Изменение дома")
         void updateHouseTest() {
-
             HouseRq houseRq = HouseRq.builder()
                     .floorCount(2)
                     .price(BigDecimal.valueOf(50000))
                     .parkingPlaces(List.of())
                     .lodgers(List.of())
                     .build();
-
-            HouseRs created = houseAdapter.createHouse(houseRq, accessToken);
+            HouseRs created = houseAdapter.createHouse(houseRq);
             HouseRq updateRq = HouseRq.builder()
                     .id(created.getId())
                     .floorCount(5)
@@ -60,8 +56,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
                     .parkingPlaces(List.of())
                     .lodgers(List.of())
                     .build();
-
-            HouseRs updated = houseAdapter.updateHouse(created.getId(), updateRq, accessToken);
+            HouseRs updated = houseAdapter.updateHouse(created.getId(), updateRq);
             assertEquals(5, updated.getFloorCount());
         }
     }
