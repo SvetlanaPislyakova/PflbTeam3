@@ -71,6 +71,7 @@ public class BuyCarTest extends BaseTest {
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(404);
         softly.assertThat(buyOrSaleCarPage.getStatusMessage()).contains("Status: AxiosError: Request failed with status code 404");
+        softly.assertAll();
     }
 
     @ParameterizedTest
