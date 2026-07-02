@@ -37,8 +37,7 @@ public class BuyCarTest extends BaseTest {
         createdCarIds.add(carID);
 
         carSteps.buyNewCar(buyerID, carID);
-        assertTrue(carSteps.isCarBought(buyerID, carID),
-                "Автомобиль должен быть успешно куплен");
+        assertTrue(carSteps.isCarBought(buyerID, carID));
     }
 
     @Test
@@ -87,8 +86,7 @@ public class BuyCarTest extends BaseTest {
             int carID = carSteps.checkCreateCarAndGetId();
             carSteps.buyNewCar(buyerID,carID);
             createdCarIds.add(carID);
-            assertTrue(carSteps.isCarBought(buyerID, carID),
-                    "Автомобиль " + carID + " должен быть куплен");
+            assertTrue(carSteps.isCarBought(buyerID, carID));
         }
 
     }
@@ -106,7 +104,6 @@ public class BuyCarTest extends BaseTest {
         createdCarIds.add(carID);
         carSteps.buyNewCar(buyerID, carID);
 
-        assertEquals(200, carSteps.checkStatusCode(),
-                "Статус должен быть 200 OK");
+        assertEquals(200, carSteps.checkStatusCode());
     }
 }
