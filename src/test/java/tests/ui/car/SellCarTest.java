@@ -67,6 +67,7 @@ public class SellCarTest extends BaseTest {
             carSteps.sellNewCar(sellerID, carID);
 
             softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
+            softly.assertAll();
         }
     }
 
