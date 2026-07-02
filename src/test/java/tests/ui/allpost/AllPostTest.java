@@ -115,7 +115,7 @@ public class AllPostTest extends BaseTest {
         UserRq userRq = UserRqFactory.validUser().toBuilder()
                 .money(BigDecimal.valueOf(1_000))
                 .build();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         BigDecimal amount = BigDecimal.valueOf(500);
 
         allPostPage.addMoneyToUser(userId, amount);
@@ -134,14 +134,14 @@ public class AllPostTest extends BaseTest {
         UserRq userRq = UserRqFactory.validUser().toBuilder()
                 .money(BigDecimal.valueOf(100_000))
                 .build();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         CarRq carRq = CarRq.builder()
                 .engineType("Gasoline")
                 .mark("Toyota")
                 .model("Corolla")
                 .price(BigDecimal.valueOf(1_000))
                 .build();
-        CarRs carRs = carAdapter.createCar(carRq, token);
+        CarRs carRs = carAdapter.createCar(carRq);
 
         allPostPage.buyCarForUser(userId, carRs.getId());
 
@@ -157,14 +157,14 @@ public class AllPostTest extends BaseTest {
         UserRq userRq = UserRqFactory.validUser().toBuilder()
                 .money(BigDecimal.valueOf(100_000))
                 .build();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         CarRq carRq = CarRq.builder()
                 .engineType("Gasoline")
                 .mark("Toyota")
                 .model("Corolla")
                 .price(BigDecimal.valueOf(1_000))
                 .build();
-        CarRs carRs = carAdapter.createCar(carRq, token);
+        CarRs carRs = carAdapter.createCar(carRq);
 
         allPostPage.buyCarForUser(userId, carRs.getId());
         allPostPage.openPage().isPageOpened();
@@ -181,14 +181,14 @@ public class AllPostTest extends BaseTest {
     public void settleUserToHouseFromAllPostPage() {
         Integer userId = userAdapter.createUserAndGetId(UserRqFactory.validUser().toBuilder()
                 .money(BigDecimal.valueOf(1_000_000))
-                .build(), token);
+                .build());
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(3)
                 .price(BigDecimal.valueOf(100))
                 .parkingPlaces(List.of())
                 .lodgers(List.of())
                 .build();
-        HouseRs houseRs = houseAdapter.createHouse(houseRq, token);
+        HouseRs houseRs = houseAdapter.createHouse(houseRq);
 
         allPostPage.settleUserToHouse(userId, houseRs.getId());
 
@@ -203,15 +203,15 @@ public class AllPostTest extends BaseTest {
     public void evictUserFromHouseFromAllPostPage() {
         Integer userId = userAdapter.createUserAndGetId(UserRqFactory.validUser().toBuilder()
                 .money(BigDecimal.valueOf(1_000_000))
-                .build(), token);
+                .build());
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(3)
                 .price(BigDecimal.valueOf(100))
                 .parkingPlaces(List.of())
                 .lodgers(List.of())
                 .build();
-        HouseRs houseRs = houseAdapter.createHouse(houseRq, token);
-        houseAdapter.settleUser(houseRs.getId(), userId, token);
+        HouseRs houseRs = houseAdapter.createHouse(houseRq);
+        houseAdapter.settleUser(houseRs.getId(), userId);
 
         allPostPage.evictUserFromHouse(userId, houseRs.getId());
 

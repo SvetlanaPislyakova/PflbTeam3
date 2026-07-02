@@ -24,7 +24,7 @@ public class SellCarTest extends BaseTest {
     @Description("Тест проверяет продажу автомобиля")
     public void sellCarSuccess() {
         UserRq seller = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
-        Integer sellerID = userAdapter.createUserAndGetId(seller,token);
+        Integer sellerID = userAdapter.createUserAndGetId(seller);
 
         Car car = Car.builder().build();
         carSteps.createNewCar(car);

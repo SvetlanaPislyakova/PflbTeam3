@@ -8,21 +8,20 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CarCrudTest extends BaseApiTest {
+public class CarCrudTest {
 
     CarAdapter carAdapter = new CarAdapter();
 
     @Test
     @DisplayName("Получение списка автомобилей")
     public void getCars() {
-        List<CarRs> cars = carAdapter.getCars(accessToken);
+        List<CarRs> cars = carAdapter.getCars();
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(cars).isNotNull();
             softly.assertThat(cars).isNotEmpty();
@@ -47,10 +46,10 @@ public class CarCrudTest extends BaseApiTest {
                 .price(BigDecimal.valueOf(15000.0))
                 .build();
 
-        CarRs created = carAdapter.createCar(carRq, accessToken);
-        CarRs received = carAdapter.getCar(created.getId(), accessToken);
+        CarRs created = carAdapter.createCar(carRq);
+        CarRs received = carAdapter.getCar(created.getId());
         assertEquals(created.getId(), received.getId());
-        carAdapter.deleteCar(created.getId(), accessToken);
+        carAdapter.deleteCar(created.getId());
     }
 
     @Test
@@ -58,28 +57,26 @@ public class CarCrudTest extends BaseApiTest {
     @Description("Тест проверяет создание и последующее изменение автомобиля, затем удаляет автомобиль")
     void updateCarTest() {
         CarRq original = CarRqFactory.validCar();
-
-        Integer carID = carAdapter.createCarAndGetId(original, accessToken);
-
+        Integer carID = carAdapter.createCarAndGetId(original);
         try {
             CarRq updatedRq = original.toBuilder()
                     .price(BigDecimal.valueOf(12345.00))
                     .model("UpdatedModel")
                     .build();
 
-            CarRs updatedRs = carAdapter.updateCar(carID, updatedRq, accessToken);
+            CarRs updatedRs = carAdapter.updateCar(carID, updatedRq);
 
             SoftAssertions softly = new SoftAssertions();
             softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
             softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
 
-            CarRs received = carAdapter.getCar(carID, accessToken);
+            CarRs received = carAdapter.getCar(carID);
             softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
-
+            softly.assertAll();
         } finally {
-            carAdapter.deleteCar(carID, accessToken);
+            carAdapter.deleteCar(carID);
         }
     }
 
@@ -94,8 +91,8 @@ public class CarCrudTest extends BaseApiTest {
                 .price(BigDecimal.valueOf(5000.0))
                 .build();
 
-        CarRs car = carAdapter.createCar(carRq, accessToken);
-        carAdapter.deleteCar(car.getId(), accessToken);
+        CarRs car = carAdapter.createCar(carRq);
+        carAdapter.deleteCar(car.getId());
     }
 
     @Test
@@ -151,18 +148,14 @@ public class CarCrudTest extends BaseApiTest {
                                 String model,
                                 String engineType,
                                 BigDecimal price) {
-
         CarRq carRq = CarRq.builder()
                 .mark(mark)
                 .model(model)
                 .engineType(engineType)
                 .price(price)
                 .build();
-
-        CarRs car = carAdapter.createCar(carRq, accessToken);
-
+        CarRs car = carAdapter.createCar(carRq);
         assertEquals(mark, car.getMark());
-
-        carAdapter.deleteCar(car.getId(), accessToken);
+        carAdapter.deleteCar(car.getId());
     }
 }

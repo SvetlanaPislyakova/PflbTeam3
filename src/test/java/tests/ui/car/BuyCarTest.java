@@ -29,7 +29,7 @@ public class BuyCarTest extends BaseTest {
     @Description("Тест проверяет покупку автомобиля с достаточными средствами")
     public void buyCarWithSufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
-        Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
+        Integer buyerID = userAdapter.createUserAndGetId(buyer);
 
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
@@ -46,7 +46,7 @@ public class BuyCarTest extends BaseTest {
     @Description("Тест проверяет покупку автомобиля с недостаточными средствами")
     public void buyCarWithInsufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(100)).build();
-        Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
+        Integer buyerID = userAdapter.createUserAndGetId(buyer);
 
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
@@ -64,7 +64,7 @@ public class BuyCarTest extends BaseTest {
     @Description("Тест проверяет возможность покупки несуществующего автомобиля")
     public void buyNonExistentCar() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
-        Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
+        Integer buyerID = userAdapter.createUserAndGetId(buyer);
 
         int nonExistentCarID = 999999999;
 
@@ -79,7 +79,7 @@ public class BuyCarTest extends BaseTest {
     @DisplayName("Множественные покупки одним пользователем")
     public void multiplePurchasesByUser(int carCount) {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
-        Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
+        Integer buyerID = userAdapter.createUserAndGetId(buyer);
 
         for (int i = 0; i < carCount; i++) {
             Car car = Car.builder().build();
@@ -98,7 +98,7 @@ public class BuyCarTest extends BaseTest {
     @Description("Тест проверяет множественную покупку автомобиля и сверяет статус код в каждой итерацииёё")
     public void checkStatusAfterPurchase() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
-        Integer buyerID = userAdapter.createUserAndGetId(buyer,token);
+        Integer buyerID = userAdapter.createUserAndGetId(buyer);
 
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
