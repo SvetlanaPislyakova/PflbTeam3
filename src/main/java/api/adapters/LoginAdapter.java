@@ -8,7 +8,7 @@ public class LoginAdapter extends BaseAdapter {
 
     public static String getAccessToken(LoginRq rq) {
         return given()
-                .spec(spec)
+                .spec(baseSpec)
                 .body(gson.toJson(rq))
                 .when()
                 .post("/login")

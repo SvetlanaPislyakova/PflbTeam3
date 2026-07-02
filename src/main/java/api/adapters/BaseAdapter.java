@@ -1,20 +1,40 @@
 package api.adapters;
 
+import api.models.login.LoginRq;
 import com.google.gson.Gson;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import utils.PropertyReader;
 
 public class BaseAdapter {
 
+    private static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
+    private static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    private static final String baseUri = PropertyReader.getProperty("baseUri");
     static Gson gson = new Gson();
 
-    public static RequestSpecification spec = new RequestSpecBuilder()
-            .setBaseUri("http://82.142.167.37:4879")
+    private static String getAccessToken() {
+        LoginRq rq = LoginRq.builder()
+                .username(email)
+                .password(password)
+                .build();
+        return LoginAdapter.getAccessToken(rq);
+    }
+
+    public static RequestSpecification baseSpec = new RequestSpecBuilder()
+            .setBaseUri(baseUri)
             .setContentType(ContentType.JSON)
             .build();
+
+    protected static RequestSpecification getAuthSpec() {
+        return new RequestSpecBuilder()
+                .addRequestSpecification(baseSpec)
+                .addHeader("Authorization", "Bearer " + getAccessToken())
+                .build();
+    }
 
     public static ResponseSpecification success200 = new ResponseSpecBuilder()
             .expectStatusCode(200)

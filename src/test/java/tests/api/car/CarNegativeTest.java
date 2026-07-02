@@ -6,11 +6,10 @@ import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 
-public class CarNegativeTest extends BaseApiTest {
+public class CarNegativeTest {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
@@ -33,14 +32,12 @@ public class CarNegativeTest extends BaseApiTest {
             String model,
             String engineType,
             BigDecimal price) {
-
         CarRq car = CarRq.builder()
                 .mark(mark)
                 .model(model)
                 .engineType(engineType)
                 .price(price)
                 .build();
-
-        carAdapter.createCarBadRequest(car, accessToken);
+        carAdapter.createCarBadRequest(car);
     }
 }

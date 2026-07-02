@@ -20,7 +20,6 @@ import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
 import utils.PropertyReader;
 import tests.listners.TestListener;
-import utils.TokenProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,6 @@ public class BaseTest {
 
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
-    protected String token;
 
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
@@ -66,7 +64,6 @@ public class BaseTest {
         log.info("======================================== STARTING TEST {} " +
                         "========================================",
                 testInfo.getDisplayName());
-        token = TokenProvider.getAccessToken();
 
         Configuration.timeout = 10000;
         Configuration.baseUrl = "http://82.142.167.37:4881/";

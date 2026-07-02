@@ -8,13 +8,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-public class CarApiTest extends BaseApiTest {
+public class CarApiTest {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
@@ -32,23 +29,18 @@ public class CarApiTest extends BaseApiTest {
             String model,
             String engineType,
             BigDecimal price) {
-
         CarRq carRq = CarRq.builder()
                 .mark(mark)
                 .model(model)
                 .engineType(engineType)
                 .price(price)
                 .build();
-
-        CarRs createdCar = carAdapter.createCar(carRq, accessToken);
-
-
+        CarRs createdCar = carAdapter.createCar(carRq);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(createdCar.getMark()).isEqualTo(mark);
         softly.assertThat(createdCar.getModel()).isEqualTo(model);
         softly.assertThat(createdCar.getEngineType()).isEqualTo(engineType);
         softly.assertAll();
-
-        carAdapter.deleteCar(createdCar.getId(), accessToken);
+        carAdapter.deleteCar(createdCar.getId());
     }
 }

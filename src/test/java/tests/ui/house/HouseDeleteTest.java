@@ -35,7 +35,7 @@ public class HouseDeleteTest extends BaseTest {
                 .parkingPlaces(List.of())
                 .lodgers(List.of())
                 .build();
-        HouseRs houseRs = houseAdapter.createHouse(houseRq, token);
+        HouseRs houseRs = houseAdapter.createHouse(houseRq);
         Integer houseId = houseRs.getId();
 
         assertThat(dbSteps.isHouseExistsInDB(houseId)).isTrue();

@@ -34,7 +34,7 @@ public class CarDeleteTest extends BaseTest {
                 .engineType("Diesel")
                 .price(BigDecimal.valueOf(25000.00))
                 .build();
-        CarRs carRs = carAdapter.createCar(carRq, token);
+        CarRs carRs = carAdapter.createCar(carRq);
         Integer carId = carRs.getId();
 
         assertThat(dbSteps.isCarExistsInDB(carId)).isTrue();
