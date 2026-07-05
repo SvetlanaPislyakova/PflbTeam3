@@ -5,6 +5,7 @@ import api.models.car.CarRq;
 import api.models.car.CarRqFactory;
 import api.models.car.CarRs;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,7 @@ public class CarCrudTest {
     CarAdapter carAdapter = new CarAdapter();
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Получение списка автомобилей")
     public void getCars() {
         List<CarRs> cars = carAdapter.getCars();
@@ -53,6 +55,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Изменение автомобиля")
     @Description("Тест проверяет создание и последующее изменение автомобиля, затем удаляет автомобиль")
     void updateCarTest() {

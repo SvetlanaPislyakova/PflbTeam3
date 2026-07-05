@@ -1,5 +1,6 @@
 package ui.pages;
 
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import ui.dto.User;
 import ui.wrappers.Table;
@@ -16,6 +17,7 @@ public class CreateUserPage extends BasePage {
 
 
     @Override
+    @Step("Открытие страницы создания пользователя")
     public CreateUserPage openPage() {
         log.info("Открыть страницу '{}'", tableName);
         open(baseUrl + "#/create/user");
@@ -23,12 +25,14 @@ public class CreateUserPage extends BasePage {
     }
 
     @Override
+    @Step("Проверка открытия страницы создания пользователя")
     public CreateUserPage isPageOpened() {
         log.info("Проверить, что страница '{}' открыта", tableName);
         table.checkTableVisible();
         return this;
     }
 
+    @Step("Создание нового пользователя")
     public CreateUserPage createNewUser(User user) {
         table.setValueToInput("First Name", user.getFirstName());
         table.setValueToInput("Last Name", user.getLastName());
@@ -39,14 +43,17 @@ public class CreateUserPage extends BasePage {
         return this;
     }
 
+    @Step("Получение сообщения о статусе операции")
     public String getStatusMessage() {
         return table.getMessagePushToApi();
     }
 
+    @Step("Получение кода статуса")
     public Integer getStatusCode() {
         return table.getStatus();
     }
 
+    @Step("Получение ID созданного пользователя")
     public Integer getUserId() {
         return table.getResultInt();
     }

@@ -3,6 +3,7 @@ package tests.ui.car;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,7 @@ public class BuyCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Успешная покупка автомобиля с достаточными средствами")
     @Description("Тест проверяет покупку автомобиля с достаточными средствами")
     public void buyCarWithSufficientMoney() {
@@ -41,6 +43,7 @@ public class BuyCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при покупке с недостаточными средствами")
     @Description("Тест проверяет покупку автомобиля с недостаточными средствами")
     public void buyCarWithInsufficientMoney() {
@@ -59,6 +62,7 @@ public class BuyCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при попытке купить несуществующий автомобиль")
     @Description("Тест проверяет возможность покупки несуществующего автомобиля")
     public void buyNonExistentCar() {
@@ -93,6 +97,7 @@ public class BuyCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Проверка статуса после покупки")
     @Description("Тест проверяет множественную покупку автомобиля и сверяет статус код в каждой итерацииёё")
     public void checkStatusAfterPurchase() {

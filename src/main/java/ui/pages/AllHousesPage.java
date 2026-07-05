@@ -1,5 +1,6 @@
 package ui.pages;
 
+import io.qameta.allure.Step;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import ui.wrappers.Table;
@@ -15,6 +16,7 @@ public class AllHousesPage extends BasePage {
     private final Table table = new Table(tableName);
 
     @Override
+    @Step("Открытие страницы 'Read all houses'")
     public AllHousesPage openPage() {
         log.info("Открыть страницу '{}'", tableName);
         open(baseUrl + "#/read/houses");
@@ -22,12 +24,14 @@ public class AllHousesPage extends BasePage {
     }
 
     @Override
+    @Step("Проверка открытия страницы 'Read all houses'")
     public AllHousesPage isPageOpened() {
         log.info("Проверить, что страница '{}' открыта", tableName);
         table.checkTableVisible();
         return this;
     }
 
+    @Step("Нажатие на кнопку Reload")
     public AllHousesPage clickReload() {
         log.info("Нажать на кнопку Reload");
         new ui.wrappers.Button("Reload").clickBtn();

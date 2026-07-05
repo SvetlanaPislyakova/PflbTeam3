@@ -3,6 +3,7 @@ package tests.ui.car;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,6 +26,7 @@ public class SellCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Продажа автомобиля пользователем")
     @Description("Тест проверяет продажу автомобиля")
     public void sellCarSuccess() {
@@ -46,6 +48,7 @@ public class SellCarTest extends BaseTest {
     }
 
     @ParameterizedTest
+    @Owner("Akhunov Gayaz")
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("Множественная продажа автомобилей одним пользователем")
     @Description("Тест проверяет продажу нескольких автомобилей одним пользователем")
@@ -72,6 +75,7 @@ public class SellCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при продаже с недействительным ID пользователя")
     @Description("Тест проверяет попытку продажи с недействительным ID пользователя")
     public void sellCarWithInvalidUserId() {

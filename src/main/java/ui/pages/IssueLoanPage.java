@@ -1,5 +1,6 @@
 package ui.pages;
 
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import ui.wrappers.Table;
 
@@ -15,6 +16,7 @@ public class IssueLoanPage extends BasePage {
     Table table = new Table(tableName);
 
     @Override
+    @Step("Открытие страницы 'Issue a loan'")
     public IssueLoanPage openPage() {
         log.info("Открыть страницу '{}'", tableName);
         open(baseUrl + "/#/update/Issue_A_Loan");
@@ -22,12 +24,14 @@ public class IssueLoanPage extends BasePage {
     }
 
     @Override
+    @Step("Проверка открытия страницы 'Issue a loan'")
     public IssueLoanPage isPageOpened() {
         log.info("Проверить, что страница '{}' открыта", tableName);
         table.checkTableVisible();
         return this;
     }
 
+    @Step("Запрос кредита: userId={userId}, сумма={money}")
     public IssueLoanPage requestALoan(Integer userId, BigDecimal money) {
         table.setValueToInput("User ID", String.valueOf(userId));
         table.setValueToInput("Размер кредита", String.valueOf(money));

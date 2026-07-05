@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -49,12 +50,14 @@ public class MenuPage extends BasePage {
     @Override
     public BasePage isPageOpened() { return null; }
 
+    @Step("Открытие страницы All Post")
     public AllPostPage openAllPostPage() {
         ALL_POST_BTN.click();
         switchTo().window(1);
         return new AllPostPage();
     }
 
+    @Step("Открытие страницы All Delete")
     public AllDeletePage openAllDeletePage() {
         ALL_DELETE_BTN.click();
         switchTo().window(1);

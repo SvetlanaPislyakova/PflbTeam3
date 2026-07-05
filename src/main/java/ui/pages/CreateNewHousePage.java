@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.Duration;
@@ -26,6 +27,7 @@ public class CreateNewHousePage extends BasePage {
     private final SelenideElement NEW_HOUSE_ID = $x("//button[contains(@class, 'newId')]");
 
     @Override
+    @Step("Открытие страницы 'Houses -> Create new'")
     public CreateNewHousePage openPage() {
         log.info("Открыть страницу 'Houses -> Create new'");
         open(baseUrl + "#/create/house");
@@ -33,6 +35,7 @@ public class CreateNewHousePage extends BasePage {
     }
 
     @Override
+    @Step("Проверка открытия страницы создания дома")
     public CreateNewHousePage isPageOpened() {
         log.info("Проверить, что страница открыта");
         FLOORS_INPUT.shouldBe(visible);
@@ -42,6 +45,7 @@ public class CreateNewHousePage extends BasePage {
     }
 
     // Методы для заполнения основной информации
+    @Step("Установка количества этажей: {floors}")
     public CreateNewHousePage setFloors(int floors) {
         log.info("Установить количество этажей: {}", floors);
         FLOORS_INPUT.shouldBe(visible).shouldBe(enabled);
@@ -50,6 +54,7 @@ public class CreateNewHousePage extends BasePage {
         return this;
     }
 
+    @Step("Установка цены дома: {price}")
     public CreateNewHousePage setPrice(double price) {
         log.info("Установить цену дома: {}", price);
         PRICE_INPUT.shouldBe(visible)
@@ -59,24 +64,28 @@ public class CreateNewHousePage extends BasePage {
     }
 
     // Методы для заполнения парковочных мест
+    @Step("Установка количества теплых крытых парковок: {count}")
     public CreateNewHousePage setWarmCoveredParking(int count) {
         log.info("Установить количество теплых крытых парковок: {}", count);
         PARKING_WARM_COVERED.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(count));
         return this;
     }
 
+    @Step("Установка количества теплых открытых парковок: {count}")
     public CreateNewHousePage setWarmNotCoveredParking(int count) {
         log.info("Установить количество теплых открытых парковок: {}", count);
         PARKING_WARM_NOT_COVERED.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(count));
         return this;
     }
 
+    @Step("Установка количества холодных крытых парковок: {count}")
     public CreateNewHousePage setColdCoveredParking(int count) {
         log.info("Установить количество холодных крытых парковок: {}", count);
         PARKING_COLD_COVERED.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(count));
         return this;
     }
 
+    @Step("Установка количества холодных открытых парковок: {count}")
     public CreateNewHousePage setColdNotCoveredParking(int count) {
         log.info("Установить количество холодных открытых парковок: {}", count);
         PARKING_COLD_NOT_COVERED.shouldBe(visible).shouldBe(enabled).setValue(String.valueOf(count));
@@ -84,6 +93,7 @@ public class CreateNewHousePage extends BasePage {
     }
 
     // Методы для отправки и получения результатов
+    @Step("Нажатие кнопки 'PUSH TO API'")
     public CreateNewHousePage clickPushToApi() {
         log.info("Нажать кнопку 'PUSH TO API'");
         PUSH_BUTTON.shouldBe(visible)
@@ -92,6 +102,7 @@ public class CreateNewHousePage extends BasePage {
         return this;
     }
 
+    @Step("Получение статуса операции")
     public String getStatus() {
         log.info("Получить статус операции");
         STATUS_BUTTON.shouldHave(
@@ -101,6 +112,7 @@ public class CreateNewHousePage extends BasePage {
         return STATUS_BUTTON.getText();
     }
 
+    @Step("Получение ID созданного дома")
     public String getHouseId() {
         log.info("Get the ID of the created property");
         NEW_HOUSE_ID.shouldNotBe(com.codeborne.selenide.Condition.empty, Duration.ofSeconds(10));
@@ -110,6 +122,7 @@ public class CreateNewHousePage extends BasePage {
     }
 
     // Комплексные методы
+    @Step("Создание дома: этажей={floors}, цена={price}, парковок")
     public CreateNewHousePage createHouse(int floors, double price,
                                           int warmCovered, int warmNotCovered,
                                           int coldCovered, int coldNotCovered) {
@@ -124,6 +137,7 @@ public class CreateNewHousePage extends BasePage {
         return this;
     }
 
+    @Step("Создание простого дома: этажей={floors}, цена={price}, всего парковок={totalParkingPlaces}")
     public CreateNewHousePage createSimpleHouse(int floors, double price, int totalParkingPlaces) {
         log.info("Создать простой дом: этажей={}, цена={}, всего парковок={}", floors, price,
                 totalParkingPlaces);
