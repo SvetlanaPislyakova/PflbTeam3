@@ -4,9 +4,7 @@ import api.models.house.HouseRq;
 import api.models.house.HouseRs;
 import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
-
 import java.util.List;
-
 import static io.restassured.RestAssured.given;
 
 @Log4j2

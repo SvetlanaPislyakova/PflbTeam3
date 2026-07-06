@@ -13,10 +13,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tests.api.base.BaseApiTest;
-
 import java.math.BigDecimal;
 import java.util.List;
-
 
 public class BuyCarApiTest extends BaseApiTest {
 
@@ -49,7 +47,6 @@ public class BuyCarApiTest extends BaseApiTest {
         userAdapter.buyCar(userId, carId);
         List<CarRs> userCars = userAdapter.getUserCars(userId);
 
-
             softly.assertThat(userCars).isNotEmpty();
 
             boolean carFound = userCars.stream()
@@ -71,6 +68,7 @@ public class BuyCarApiTest extends BaseApiTest {
                         .isEqualTo(carRq.getEngineType());
                 softly.assertThat(boughtCar.getPrice())
                         .isEqualByComparingTo(carRq.getPrice());
+                softly.assertAll();
             }
         }
 
@@ -107,6 +105,6 @@ public class BuyCarApiTest extends BaseApiTest {
 
         softly.assertThat(userInfo.getMoney())
                 .isEqualByComparingTo(expectedBalance);
-
+        softly.assertAll();
     }
 }

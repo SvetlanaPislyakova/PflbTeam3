@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 
-public class SellCarApiTest extends BaseApiTest {
+public class SellCarApiTest {
 
     private final UserAdapter userAdapter = new UserAdapter();
     private final CarAdapter carAdapter = new CarAdapter();
