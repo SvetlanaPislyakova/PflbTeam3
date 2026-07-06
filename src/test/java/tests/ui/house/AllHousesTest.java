@@ -9,7 +9,6 @@ import ui.pages.AllHousesPage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AllHousesTest extends BaseTest {
-
     @BeforeEach
     public void login() {
         loginSteps.login(email, password)

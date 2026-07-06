@@ -3,19 +3,18 @@ package tests.ui.car;
 import api.adapters.CarAdapter;
 import api.models.car.CarRq;
 import api.models.car.CarRs;
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import tests.ui.base.BaseTest;
-import io.qameta.allure.Description;
 
 import java.math.BigDecimal;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CarDeleteTest extends BaseTest {
-
     private final CarAdapter carAdapter = new CarAdapter();
 
     @BeforeEach

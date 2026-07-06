@@ -5,6 +5,7 @@ import api.adapters.UserAdapter;
 import api.models.car.CarRq;
 import api.models.car.CarRqFactory;
 import api.models.car.CarRs;
+import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import io.qameta.allure.Description;
@@ -12,11 +13,11 @@ import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 public class BuyCarApiTest {
-
     private final UserAdapter userAdapter = new UserAdapter();
     private final CarAdapter carAdapter = new CarAdapter();
     SoftAssertions softly = new SoftAssertions();
@@ -46,30 +47,30 @@ public class BuyCarApiTest {
         userAdapter.buyCar(userId, carId);
         List<CarRs> userCars = userAdapter.getUserCars(userId);
 
-            softly.assertThat(userCars).isNotEmpty();
+        softly.assertThat(userCars).isNotEmpty();
 
-            boolean carFound = userCars.stream()
-                    .anyMatch(car -> car.getId() == carId);
-            softly.assertThat(carFound).isTrue();
+        boolean carFound = userCars.stream()
+                .anyMatch(car -> car.getId() == carId);
+        softly.assertThat(carFound).isTrue();
 
-            CarRs boughtCar = userCars.stream()
-                    .filter(car -> car.getId() == carId)
-                    .findFirst()
-                    .orElse(null);
+        CarRs boughtCar = userCars.stream()
+                .filter(car -> car.getId() == carId)
+                .findFirst()
+                .orElse(null);
 
-            softly.assertThat(boughtCar).isNotNull();
-            if (boughtCar != null) {
-                softly.assertThat(boughtCar.getMark())
-                        .isEqualTo(carRq.getMark());
-                softly.assertThat(boughtCar.getModel())
-                        .isEqualTo(carRq.getModel());
-                softly.assertThat(boughtCar.getEngineType())
-                        .isEqualTo(carRq.getEngineType());
-                softly.assertThat(boughtCar.getPrice())
-                        .isEqualByComparingTo(carRq.getPrice());
-                softly.assertAll();
-            }
+        softly.assertThat(boughtCar).isNotNull();
+        if (boughtCar != null) {
+            softly.assertThat(boughtCar.getMark())
+                    .isEqualTo(carRq.getMark());
+            softly.assertThat(boughtCar.getModel())
+                    .isEqualTo(carRq.getModel());
+            softly.assertThat(boughtCar.getEngineType())
+                    .isEqualTo(carRq.getEngineType());
+            softly.assertThat(boughtCar.getPrice())
+                    .isEqualByComparingTo(carRq.getPrice());
+            softly.assertAll();
         }
+    }
 
     @Test
     @Owner("Akhunov Gayaz")
@@ -100,7 +101,7 @@ public class BuyCarApiTest {
 
         BigDecimal expectedBalance = initialBalance.subtract(carPrice);
 
-        var userInfo = userAdapter.getUserInfo(userId);
+        UserInfoRs userInfo = userAdapter.getUserInfo(userId);
 
         softly.assertThat(userInfo.getMoney())
                 .isEqualByComparingTo(expectedBalance);

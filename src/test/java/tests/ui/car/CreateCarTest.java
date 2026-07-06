@@ -9,11 +9,12 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import tests.ui.base.BaseTest;
 import ui.dto.Car;
+
 import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateCarTest extends BaseTest {
-
     @BeforeEach
     public void login() {
         loginSteps.login(email, password)

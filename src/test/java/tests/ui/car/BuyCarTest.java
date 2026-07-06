@@ -15,10 +15,10 @@ import ui.dto.Car;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BuyCarTest extends BaseTest {
-
     @BeforeEach
     public void login() {
         loginSteps.login(email, password)
@@ -89,7 +89,7 @@ public class BuyCarTest extends BaseTest {
             Car car = Car.builder().build();
             carSteps.createNewCar(car);
             int carID = carSteps.checkCreateCarAndGetId();
-            carSteps.buyNewCar(buyerID,carID);
+            carSteps.buyNewCar(buyerID, carID);
             createdCarIds.add(carID);
             assertTrue(carSteps.isCarBought(buyerID, carID));
         }

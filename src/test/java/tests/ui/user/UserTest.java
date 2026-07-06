@@ -29,9 +29,18 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserTest extends BaseTest {
-
     private final Faker faker = new Faker();
     private final UserAdapter userAdapter = new UserAdapter();
+
+    static Stream<Arguments> invalidUsers() {
+        return Stream.of(
+                Arguments.of(UserFactory.userWithNullFirstName()),
+                Arguments.of(UserFactory.userWithNullLastName()),
+                Arguments.of(UserFactory.userWithNullAge()),
+                Arguments.of(UserFactory.userWithNullMoney()),
+                Arguments.of(UserFactory.userWithNullSex())
+        );
+    }
 
     @BeforeEach
     public void login() {
@@ -48,16 +57,6 @@ public class UserTest extends BaseTest {
         Integer userId = userSteps.checkCreateUserAndGetId();
         dbSteps.checkUserInDB(user, userId);
         userAdapter.deleteUser(userId);
-    }
-
-    static Stream<Arguments> invalidUsers() {
-        return Stream.of(
-                Arguments.of(UserFactory.userWithNullFirstName()),
-                Arguments.of(UserFactory.userWithNullLastName()),
-                Arguments.of(UserFactory.userWithNullAge()),
-                Arguments.of(UserFactory.userWithNullMoney()),
-                Arguments.of(UserFactory.userWithNullSex())
-        );
     }
 
     @DisplayName("Создание пользователя с невалидными данными")

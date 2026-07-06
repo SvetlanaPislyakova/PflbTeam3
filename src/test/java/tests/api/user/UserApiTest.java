@@ -29,12 +29,20 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserApiTest {
-
     private final UserAdapter userAdapter = new UserAdapter();
     private final DBSteps dbSteps = new DBSteps();
     private final CarAdapter carAdapter = new CarAdapter();
     private final HouseAdapter houseAdapter = new HouseAdapter();
     private final Faker faker = new Faker();
+
+    static Stream<Arguments> invalidUsers() {
+        return Stream.of(
+                Arguments.of(UserRqFactory.userWithNullFirstName()),
+                Arguments.of(UserRqFactory.userWithNullSecondName()),
+                Arguments.of(UserRqFactory.userWithNullAge()),
+                Arguments.of(UserRqFactory.userWithNullMoney())
+        );
+    }
 
     private void assertUserEquals(UserRs userRs, UserRq userRq) {
         SoftAssertions.assertSoftly(softly -> {
@@ -56,15 +64,6 @@ public class UserApiTest {
         userAdapter.deleteUser(userRs.getId());
     }
 
-    static Stream<Arguments> invalidUsers() {
-        return Stream.of(
-                Arguments.of(UserRqFactory.userWithNullFirstName()),
-                Arguments.of(UserRqFactory.userWithNullSecondName()),
-                Arguments.of(UserRqFactory.userWithNullAge()),
-                Arguments.of(UserRqFactory.userWithNullMoney())
-        );
-    }
-
     @DisplayName("API - Создание пользователя с невалидными данными")
     @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
     @MethodSource("invalidUsers")
@@ -81,7 +80,7 @@ public class UserApiTest {
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(users).isNotNull();
             softly.assertThat(users).isNotEmpty();
-            for(UserRs user : users) {
+            for (UserRs user : users) {
                 softly.assertThat(user.getId()).isNotNull();
                 softly.assertThat(user.getFirstName()).isNotNull();
                 softly.assertThat(user.getSecondName()).isNotNull();

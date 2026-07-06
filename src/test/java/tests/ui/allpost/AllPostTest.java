@@ -20,7 +20,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class AllPostTest extends BaseTest {
-
     private final AllPostPage allPostPage = new AllPostPage();
     private final HouseAdapter houseAdapter = new HouseAdapter();
 

@@ -7,10 +7,10 @@ import ui.pages.ReadHouseOneById;
 
 public class CreateNewHouseSteps {
 
-    private final CreateNewHousePage createNewHousePage = new CreateNewHousePage();
+private final CreateNewHousePage createNewHousePage = new CreateNewHousePage();
     private final ReadHouseOneById readHouseOneById = new ReadHouseOneById();
 
-    @Step("Создание нового дома с параметрами: этажей={floors}, цена={price}, парковки: warm+covered={warmCovered}," +
+@Step("Создание нового дома с параметрами: этажей={floors}, цена={price}, парковки: warm+covered={warmCovered}," +
             " warm+not={warmNotCovered}, cold+covered={coldCovered}, cold+not={coldNotCovered}")
     public void createNewHouse(int floors, double price,
                                int warmCovered, int warmNotCovered,
@@ -21,7 +21,7 @@ public class CreateNewHouseSteps {
                 .clickPushToApi();
     }
 
-    @Step("Создание простого дома: этажей={floors}, цена={price}, парковок={parkingPlaces}")
+@Step("Создание простого дома: этажей={floors}, цена={price}, парковок={parkingPlaces}")
     public void createSimpleHouse(int floors, double price, int parkingPlaces) {
         createNewHousePage.openPage()
                 .isPageOpened()
@@ -29,7 +29,7 @@ public class CreateNewHouseSteps {
                 .clickPushToApi();
     }
 
-    @Step("Проверка успешности создания дома и получение его ID")
+@Step("Проверка успешности создания дома и получение его ID")
     public String checkCreateHouseAndGetId() {
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(createNewHousePage.getStatus()).contains("Successfully pushed");
@@ -39,28 +39,27 @@ public class CreateNewHouseSteps {
         return houseId;
     }
 
-
-    @Step("Получение статуса операции создания дома")
+@Step("Получение статуса операции создания дома")
     public String getCreateHouseStatus() {
         return createNewHousePage.getStatus();
     }
 
-    @Step("Получение ID созданного дома")
+@Step("Получение ID созданного дома")
     public String getCreatedHouseId() {
         return createNewHousePage.getHouseId();
     }
 
-    @Step("Проверка данных созданного дома")
+@Step("Проверка данных созданного дома")
     public void checkHouseData(String houseId, int floors, double price) {
         readHouseOneById.openPage()
                 .isPageOpened()
                 .findHouseById(houseId);
 
-        SoftAssertions softly = new SoftAssertions();
+SoftAssertions softly = new SoftAssertions();
         softly.assertThat(readHouseOneById.getHouseId()).isEqualTo(houseId);
     }
 
-    @Step("Проверка видимости таблиц на странице чтения дома по ID={houseId}")
+@Step("Проверка видимости таблиц на странице чтения дома по ID={houseId}")
     public void checkHouseTablesVisible(String houseId) {
         readHouseOneById.openPage()
                 .isPageOpened()

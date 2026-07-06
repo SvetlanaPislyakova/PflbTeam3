@@ -5,10 +5,8 @@ import api.models.login.LoginRq;
 import utils.PropertyReader;
 
 public class BaseApiTest {
-
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
-
     protected final String accessToken;
 
     public BaseApiTest() {

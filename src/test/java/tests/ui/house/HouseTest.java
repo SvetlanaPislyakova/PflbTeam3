@@ -8,7 +8,6 @@ import tests.ui.base.BaseTest;
 import ui.steps.CreateNewHouseSteps;
 
 public class HouseTest extends BaseTest {
-
     private final Faker faker = new Faker();
     private final CreateNewHouseSteps houseStep = new CreateNewHouseSteps();
 

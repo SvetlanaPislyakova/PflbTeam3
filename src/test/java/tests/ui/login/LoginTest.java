@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 public class LoginTest extends BaseTest {
 
-    @Test
+@Test
     @DisplayName("Успешная авторизация с корректными кредами")
     @Description("Проверка успешной авторизации с валидными данными")
     public void successLogin() {
@@ -22,7 +22,7 @@ public class LoginTest extends BaseTest {
                 .checkSuccessLogin();
     }
 
-    @Test
+@Test
     @DisplayName("Негативная авторизация с корректными кредами")
     @Description("Проверка отмены успешной авторизации с валидными данными")
     public void negativeLogin() {
@@ -31,7 +31,7 @@ public class LoginTest extends BaseTest {
                 .checkNegativeLogin();
     }
 
-    static Stream<Arguments> negativeCreds() {
+static Stream<Arguments> negativeCreds() {
         return Stream.of(
                 Arguments.of("test@test.com", password),
                 Arguments.of(email, "test"),
@@ -39,7 +39,7 @@ public class LoginTest extends BaseTest {
         );
     }
 
-    @ParameterizedTest(name = "Негативный логин c email: {0}, password: {1}")
+@ParameterizedTest(name = "Негативный логин c email: {0}, password: {1}")
     @MethodSource("negativeCreds")
     @DisplayName("Негативная авторизация с некорректными кредами")
     @Description("Проверка негативной авторизации с невалидными данными")
@@ -49,8 +49,7 @@ public class LoginTest extends BaseTest {
                 .checkNegativeLogin();
     }
 
-
-    @ParameterizedTest(name = "Ввод невалидных данных в поле 'email': {0}")
+@ParameterizedTest(name = "Ввод невалидных данных в поле 'email': {0}")
     @ValueSource(strings = {"test", "test.com"})
     @DisplayName("Ввод невалидных данных в поле 'email'")
     @Description("Проверка сообщения о некорректном вводе в поле email")
@@ -60,7 +59,7 @@ public class LoginTest extends BaseTest {
                 .acceptAlert("Incorrect input data");
     }
 
-    @ParameterizedTest(name = "Ввод невалидных данных в поле 'password': {0}")
+@ParameterizedTest(name = "Ввод невалидных данных в поле 'password': {0}")
     @ValueSource(strings = {"ok", "loremipsum"})
     @DisplayName("Ввод невалидных данных в поле 'email'")
     @Description("Проверка сообщения о некорректном вводе в поле password")
@@ -70,3 +69,4 @@ public class LoginTest extends BaseTest {
                 .acceptAlert("Incorrect input data");
     }
 }
+

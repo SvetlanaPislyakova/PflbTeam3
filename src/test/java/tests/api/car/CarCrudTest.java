@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CarCrudTest {
 
-    CarAdapter carAdapter = new CarAdapter();
+CarAdapter carAdapter = new CarAdapter();
 
-    @Test
+@Test
     @Owner("Akhunov Gayaz")
     @DisplayName("Получение списка автомобилей")
     public void getCars() {
@@ -37,7 +37,7 @@ public class CarCrudTest {
         });
     }
 
-    @Test
+@Test
     @DisplayName("Получение автомобиля по ID")
     @Description("Тест проверяет создание автомобиля, его получение по ID и последующее удаление")
     void getCarTest() {
@@ -48,13 +48,13 @@ public class CarCrudTest {
                 .price(BigDecimal.valueOf(15000.0))
                 .build();
 
-        CarRs created = carAdapter.createCar(carRq);
+CarRs created = carAdapter.createCar(carRq);
         CarRs received = carAdapter.getCar(created.getId());
         assertEquals(created.getId(), received.getId());
         carAdapter.deleteCar(created.getId());
     }
 
-    @Test
+@Test
     @Owner("Akhunov Gayaz")
     @DisplayName("Изменение автомобиля")
     @Description("Тест проверяет создание и последующее изменение автомобиля, затем удаляет автомобиль")
@@ -66,21 +66,20 @@ public class CarCrudTest {
                     .model("UpdatedModel")
                     .build();
 
-            CarRs updatedRs = carAdapter.updateCar(carID, updatedRq);
+CarRs updatedRs = carAdapter.updateCar(carID, updatedRq);
 
-            SoftAssertions softly = new SoftAssertions();
+SoftAssertions softly = new SoftAssertions();
             softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
             softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
 
-            CarRs received = carAdapter.getCar(carID);
+CarRs received = carAdapter.getCar(carID);
             softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
             softly.assertAll();
         }
 
-
-    @Test
+@Test
     @DisplayName("Удаление автомобиля")
     @Description("Тест проверяет создание и последующее удаление автомобиля")
     void deleteCarTest() {
@@ -91,60 +90,60 @@ public class CarCrudTest {
                 .price(BigDecimal.valueOf(5000.0))
                 .build();
 
-        CarRs car = carAdapter.createCar(carRq);
+CarRs car = carAdapter.createCar(carRq);
         carAdapter.deleteCar(car.getId());
     }
 
-    @Test
+@Test
     @DisplayName("Создание дизельного автомобиля")
     @Description("Тест проверяет создание автомобиля с дизельным двигателем (BMW X5)")
     void createDieselCarTest() {
         createAndCheck("BMW", "X5", "Diesel", BigDecimal.valueOf(10000.0));
     }
 
-    @Test
+@Test
     @DisplayName("Создание водородного автомобиля")
     @Description("Тест проверяет создание автомобиля с водородным двигателем (Audi A4)")
     void createPetrolCarTest() {
         createAndCheck("Audi", "A4", "Hydrogenic", BigDecimal.valueOf(9000.0));
     }
 
-    @Test
+@Test
     @DisplayName("Создание электрического автомобиля")
     @Description("Тест проверяет создание электромобиля (Tesla Model3)")
     void createElectricCarTest() {
         createAndCheck("Tesla", "Model3", "Electric", BigDecimal.valueOf(50000.0));
     }
 
-    @Test
+@Test
     @DisplayName("Создание дешевого автомобиля")
     @Description("Тест проверяет создание недорогого автомобиля (Lada Granta)")
     void createCheapCarTest() {
         createAndCheck("Lada", "Granta", "PHEV", BigDecimal.valueOf(1000.0));
     }
 
-    @Test
+@Test
     @DisplayName("Создание дорогого автомобиля")
     @Description("Тест проверяет создание дорогого электромобиля (Tesla ModelX)")
     void createExpensiveCarTest() {
         createAndCheck("Tesla", "ModelX", "Electric", BigDecimal.valueOf(90000.0));
     }
 
-    @Test
+@Test
     @DisplayName("Создание японского автомобиля")
     @Description("Тест проверяет создание японского автомобиля (Toyota Camry)")
     void createJapaneseCarTest() {
         createAndCheck("Toyota", "Camry", "Diesel", BigDecimal.valueOf(8000.0));
     }
 
-    @Test
+@Test
     @DisplayName("Создание немецкого автомобиля")
     @Description("Тест проверяет создание немецкого автомобиля (Mercedes E200)")
     void createGermanCarTest() {
         createAndCheck("Mercedes", "E200", "Diesel", BigDecimal.valueOf(17000.0));
     }
 
-    private void createAndCheck(String mark,
+private void createAndCheck(String mark,
                                 String model,
                                 String engineType,
                                 BigDecimal price) {
@@ -159,3 +158,4 @@ public class CarCrudTest {
         carAdapter.deleteCar(car.getId());
     }
 }
+

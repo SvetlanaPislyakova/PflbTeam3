@@ -11,12 +11,11 @@ import static com.codeborne.selenide.Selenide.*;
 @Log4j2
 public class CreateUserPage extends BasePage {
 
-    private final String RADIO_BTN = "//input[@value='%s']";
+private final String RADIO_BTN = "//input[@value='%s']";
     private final String tableName = "Create new user";
     private final Table table = new Table(tableName);
 
-
-    @Override
+@Override
     @Step("Открытие страницы создания пользователя")
     public CreateUserPage openPage() {
         log.info("Открыть страницу '{}'", tableName);
@@ -24,7 +23,7 @@ public class CreateUserPage extends BasePage {
         return this;
     }
 
-    @Override
+@Override
     @Step("Проверка открытия страницы создания пользователя")
     public CreateUserPage isPageOpened() {
         log.info("Проверить, что страница '{}' открыта", tableName);
@@ -32,7 +31,7 @@ public class CreateUserPage extends BasePage {
         return this;
     }
 
-    @Step("Создание нового пользователя")
+@Step("Создание нового пользователя")
     public CreateUserPage createNewUser(User user) {
         table.setValueToInput("First Name", user.getFirstName());
         table.setValueToInput("Last Name", user.getLastName());
@@ -43,17 +42,17 @@ public class CreateUserPage extends BasePage {
         return this;
     }
 
-    @Step("Получение сообщения о статусе операции")
+@Step("Получение сообщения о статусе операции")
     public String getStatusMessage() {
         return table.getMessagePushToApi();
     }
 
-    @Step("Получение кода статуса")
+@Step("Получение кода статуса")
     public Integer getStatusCode() {
         return table.getStatus();
     }
 
-    @Step("Получение ID созданного пользователя")
+@Step("Получение ID созданного пользователя")
     public Integer getUserId() {
         return table.getResultInt();
     }

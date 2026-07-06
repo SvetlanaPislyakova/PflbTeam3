@@ -13,13 +13,13 @@ import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import tests.listners.TestListener;
 import ui.pages.*;
 import ui.steps.CarSteps;
 import ui.steps.DBSteps;
 import ui.steps.LoginSteps;
 import ui.steps.UserSteps;
 import utils.PropertyReader;
-import tests.listners.TestListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +29,12 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @Log4j2
 @ExtendWith(TestListener.class)
 public class BaseTest {
-
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
-
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
     protected DBSteps dbSteps;
     protected CarSteps carSteps;
-
     protected CreateUserPage createUserPage;
     protected AllUsersPage allUsersPage;
     protected AddMoneyPage addMoneyPage;
@@ -45,7 +42,6 @@ public class BaseTest {
     protected CreateCarPage createCarPage;
     protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
-
     protected List<Integer> createdUserIds = new ArrayList<>();
     protected List<Integer> createdCarIds = new ArrayList<>();
     protected UserAdapter userAdapter;

@@ -7,11 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import tests.ui.base.BaseTest;
-import ui.pages.*;
+import ui.pages.MenuPage;
 import ui.wrappers.DropDown;
 
 public class MenuTest extends BaseTest {
-
     private final MenuPage menuPage = new MenuPage();
 
     @BeforeEach
