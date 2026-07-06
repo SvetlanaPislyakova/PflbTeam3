@@ -106,16 +106,4 @@ public class BaseTest {
             driver.quit();
         }
     }
-//    public void cleanupTestData() { // для кайфа не хватает CarAdapter
-//        if (!createdUserIds.isEmpty()) {  и сохранять в каждом тесте айди созданных сущностей createdUserIds.add(userID);
-//            createdUserIds.forEach(userId ->
-//                    userAdapter.deleteUser(userId, token)
-//            );
-//        }
-//        if (!createdCarIds.isEmpty()) {
-//            createdCarIds.forEach(carId ->
-//                    carAdapter.deleteCar(carId, token)
-//            );
-//        }
-//    }
 }

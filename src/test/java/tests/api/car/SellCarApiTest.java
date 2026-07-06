@@ -13,7 +13,6 @@ import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tests.api.base.BaseApiTest;
 
 import java.math.BigDecimal;
 import java.util.List;
