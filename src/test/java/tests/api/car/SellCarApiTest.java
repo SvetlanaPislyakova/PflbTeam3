@@ -48,17 +48,16 @@ public class SellCarApiTest {
 
         userAdapter.buyCar(userId, carId);
 
-        List<CarRs> carsBeforeSell = userAdapter.getUserCars(userId);
-        softly.assertThat(carsBeforeSell).isNotEmpty();
-        boolean foundBefore = carsBeforeSell.stream().anyMatch(c -> c.getId() == carId);
-        softly.assertThat(foundBefore).isTrue();
+        UserInfoRs infoBeforeSell = userAdapter.getUserInfo(userId);
+        softly.assertThat(infoBeforeSell.getCars()).isNotEmpty();
 
         userAdapter.sellCar(userId, carId);
 
-        List<CarRs> carsAfterSell = userAdapter.getUserCars(userId);
-        boolean foundAfter = carsAfterSell.stream().anyMatch(c -> c.getId() == carId);
-
-        softly.assertThat(foundAfter).isFalse();
+        UserInfoRs infoAfterSell = userAdapter.getUserInfo(userId);
+        List<CarRs> carsAfterSell = infoAfterSell.getCars();
+        softly.assertThat(carsAfterSell)
+                .as("Массив 'cars' должен быть пустым после успешной продажи автомобиля")
+                .isEmpty();
         softly.assertAll();
     }
 
