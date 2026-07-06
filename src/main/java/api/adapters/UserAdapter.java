@@ -114,7 +114,7 @@ public class UserAdapter extends BaseAdapter {
     }
 
     public List<CarRs> getUserCars(Integer userId) {
-        log.info("GET - получение автомобилей пользователя, 204");
+        log.info("GET - получение автомобилей пользователя, 200");
         return given()
                 .spec(baseSpec)
                 .pathParam("userId", userId)
@@ -123,7 +123,7 @@ public class UserAdapter extends BaseAdapter {
                 .get("/user/{userId}/cars")
                 .then()
                 .log().all()
-                .spec(noContent204)
+                .spec(success200)
                 .extract()
                 .jsonPath()
                 .getList("", CarRs.class);
