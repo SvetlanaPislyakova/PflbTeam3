@@ -1,7 +1,7 @@
 package api.adapters;
 
-import api.models.car.CarRq;
-import api.models.car.CarRs;
+import api.models.CarRq;
+import api.models.CarRs;
 import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
 
@@ -12,9 +12,10 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class CarAdapter extends BaseAdapter {
 
-    private ValidatableResponse createCarRequest(CarRq carRq) {
+    private ValidatableResponse createCarRequest(CarRq carRq, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .body(gson.toJson(carRq))
                 .log().all()
                 .when()
@@ -23,10 +24,11 @@ public class CarAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public CarRs createCar(CarRq carRq) {
+    public CarRs createCar(CarRq carRq, String token) {
         log.info("POST - создание автомобиля, 201");
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .body(carRq)
                 .log().all()
                 .post("/car")
@@ -37,10 +39,11 @@ public class CarAdapter extends BaseAdapter {
                 .as(CarRs.class);
     }
 
-    public void deleteCar(int id) {
+    public void deleteCar(int id, String token) {
         log.info("DELETE - удаление автомобиля, 204");
         given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .pathParam("id", id)
                 .log().all()
                 .delete("/car/{id}")
@@ -49,10 +52,11 @@ public class CarAdapter extends BaseAdapter {
                 .spec(noContent204);
     }
 
-    public CarRs getCar(int id) {
+    public CarRs getCar(int id, String token) {
         log.info("GET - получение автомобиля по id, 200");
         return given()
-                .spec(baseSpec)
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .pathParam("id", id)
                 .log().all()
                 .get("/car/{id}")
@@ -62,28 +66,30 @@ public class CarAdapter extends BaseAdapter {
                 .extract()
                 .as(CarRs.class);
     }
-    public void createCarBadRequest(CarRq carRq) {
+    public void createCarBadRequest(CarRq carRq, String token) {
         log.info("POST - создание автомобиля с невалидными данными, 400");
         given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .body(carRq)
                 .post("/car")
                 .then()
                 .spec(badRequest400);
     }
 
-    public Integer createCarAndGetId(CarRq carRq) {
+    public Integer createCarAndGetId(CarRq carRq, String token) {
         log.info("POST - создание нового автомобиля и получение его id, 201");
-        return createCarRequest(carRq)
+        return createCarRequest(carRq, token)
                 .spec(created201)
                 .extract()
                 .path("id");
     }
 
-    public CarRs updateCar(int id, CarRq carRq) {
+    public CarRs updateCar(int id, CarRq carRq, String token) {
         log.info("PUT - изменение автомобиля, 202");
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .pathParam("id", id)
                 .body(gson.toJson(carRq))
                 .log().all()
@@ -96,10 +102,11 @@ public class CarAdapter extends BaseAdapter {
                 .as(CarRs.class);
     }
 
-    public List<CarRs> getCars() {
+    public List<CarRs> getCars(String token) {
         log.info("GET - получение списка автомобилей, 200");
         return given()
-                .spec(baseSpec)
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .get("/cars")
                 .then()

@@ -1,4 +1,4 @@
-package tests.ui.login;
+package tests;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.DisplayName;
@@ -7,11 +7,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import tests.ui.base.BaseTest;
 
 import java.util.stream.Stream;
 
-public class LoginTest extends BaseTest {
+public class LoginTest extends BaseTest{
 
     @Test
     @DisplayName("Успешная авторизация с корректными кредами")

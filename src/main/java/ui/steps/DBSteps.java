@@ -111,22 +111,4 @@ public class DBSteps {
             connection.close();
         }
     }
-
-    @Step("Проверка, что пользователь с id = {userId} живет в доме с id = {houseId}")
-    public boolean isUserLivesInHouse(Integer userId, Integer houseId) {
-        DBConnection connection = new DBConnection();
-        try {
-            connection.connect();
-            ResultSet result = connection.selectById("person", userId);
-            if (result.next()) {
-                Object userHouseId = result.getObject("house_id");
-                return userHouseId != null && ((Number) userHouseId).longValue() == houseId.longValue();
-            }
-            return false;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            connection.close();
-        }
-    }
 }

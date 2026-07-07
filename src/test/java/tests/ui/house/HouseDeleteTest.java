@@ -1,13 +1,13 @@
 package tests.ui.house;
 
 import api.adapters.HouseAdapter;
-import api.models.house.HouseRq;
-import api.models.house.HouseRs;
+import api.models.HouseRq;
+import api.models.HouseRs;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tests.ui.base.BaseTest;
+import tests.BaseTest;
 import io.qameta.allure.Description;
 
 import java.math.BigDecimal;
@@ -35,7 +35,7 @@ public class HouseDeleteTest extends BaseTest {
                 .parkingPlaces(List.of())
                 .lodgers(List.of())
                 .build();
-        HouseRs houseRs = houseAdapter.createHouse(houseRq);
+        HouseRs houseRs = houseAdapter.createHouse(houseRq, token);
         Integer houseId = houseRs.getId();
 
         assertThat(dbSteps.isHouseExistsInDB(houseId)).isTrue();

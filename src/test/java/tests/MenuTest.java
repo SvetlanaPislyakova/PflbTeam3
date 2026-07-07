@@ -1,4 +1,4 @@
-package tests.ui.menu;
+package tests;
 
 import io.qameta.allure.Description;
 import org.junit.jupiter.api.BeforeEach;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
-import tests.ui.base.BaseTest;
 import ui.pages.*;
 import ui.wrappers.DropDown;
 

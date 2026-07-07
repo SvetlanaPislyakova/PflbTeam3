@@ -2,7 +2,6 @@ package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import ui.dto.Car;
-import ui.dto.House;
 import ui.dto.User;
 import ui.wrappers.Radio;
 import ui.wrappers.Table;
@@ -190,19 +189,19 @@ public class AllPostPage extends BasePage {
         return createCarTable.getResultInt();
     }
 
-    public AllPostPage createHouse(House house) {
-        fillHouseForm(house);
+    public AllPostPage createHouse(Integer floors, BigDecimal price) {
+        fillHouseForm(floors, price);
         createHouseTable.clickPushToApiBtn();
         return this;
     }
 
-    private void fillHouseForm(House house) {
-        createHouseTable.setValueToInput("Floors", String.valueOf(house.getFloors()));
-        createHouseTable.setValueToInput("Price", String.valueOf(house.getPrice()));
-        setHouseInput("#parking_first_send", String.valueOf(house.getWarmCoveredParking()));
-        setHouseInput("#parking_second_send", String.valueOf(house.getWarmNotCoveredParking()));
-        setHouseInput("#parking_third_send", String.valueOf(house.getColdCoveredParking()));
-        setHouseInput("#parking_fourth_send", String.valueOf(house.getColdNotCoveredParking()));
+    private void fillHouseForm(Integer floors, BigDecimal price) {
+        createHouseTable.setValueToInput("Floors", String.valueOf(floors));
+        createHouseTable.setValueToInput("Price", String.valueOf(price));
+        setHouseInput("#parking_first_send", "1");
+        setHouseInput("#parking_second_send", "0");
+        setHouseInput("#parking_third_send", "0");
+        setHouseInput("#parking_fourth_send", "0");
     }
 
     private void setHouseInput(String selector, String fieldValue) {

@@ -1,13 +1,13 @@
 package tests.ui.car;
 
 import api.adapters.CarAdapter;
-import api.models.car.CarRq;
-import api.models.car.CarRs;
+import api.models.CarRq;
+import api.models.CarRs;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import tests.ui.base.BaseTest;
+import tests.BaseTest;
 import io.qameta.allure.Description;
 
 import java.math.BigDecimal;
@@ -34,7 +34,7 @@ public class CarDeleteTest extends BaseTest {
                 .engineType("Diesel")
                 .price(BigDecimal.valueOf(25000.00))
                 .build();
-        CarRs carRs = carAdapter.createCar(carRq);
+        CarRs carRs = carAdapter.createCar(carRq, token);
         Integer carId = carRs.getId();
 
         assertThat(dbSteps.isCarExistsInDB(carId)).isTrue();

@@ -1,6 +1,6 @@
 package api.adapters;
 
-import api.models.car.CarRs;
+import api.models.CarRs;
 import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRs;
@@ -15,9 +15,10 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class UserAdapter extends BaseAdapter {
 
-    private ValidatableResponse createUserRequest(UserRq userRq) {
+    private ValidatableResponse createUserRequest(UserRq userRq, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .body(gson.toJson(userRq))
                 .log().all()
                 .when()
@@ -26,32 +27,33 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public UserRs createUser(UserRq userRq) {
+    public UserRs createUser(UserRq userRq, String token) {
         log.info("POST - создание нового пользователя, 201");
-        return createUserRequest(userRq)
+        return createUserRequest(userRq, token)
                 .spec(created201)
                 .extract()
                 .as(UserRs.class);
     }
 
-    public void createUserWithNullFields(UserRq userRq) {
+    public void createUserWithNullFields(UserRq userRq, String token) {
         log.info("POST - создание нового пользователя с невалидными данными, 400");
-        createUserRequest(userRq)
+        createUserRequest(userRq, token)
                 .spec(badRequest400);
     }
 
-    public Integer createUserAndGetId(UserRq userRq) {
+    public Integer createUserAndGetId(UserRq userRq, String token) {
         log.info("POST - создание нового пользователя и получение его id, 201");
-        return createUserRequest(userRq)
+        return createUserRequest(userRq, token)
                 .spec(created201)
                 .extract()
                 .path("id");
     }
 
-    private ValidatableResponse changeUserRequest(Integer userId, UserRq userRq) {
+    private ValidatableResponse changeUserRequest(Integer userId, UserRq userRq, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
                 .pathParam("userId", userId)
+                .header("Authorization", "Bearer " + token)
                 .body(gson.toJson(userRq))
                 .log().all()
                 .when()
@@ -60,23 +62,23 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public UserRs changeUser(Integer userId, UserRq userRq) {
+    public UserRs changeUser(Integer userId, UserRq userRq, String token) {
         log.info("PUT - Изменение пользователя, 202");
-        return changeUserRequest(userId, userRq)
+        return changeUserRequest(userId, userRq, token)
                 .spec(accepted202)
                 .extract()
                 .as(UserRs.class);
     }
 
-    public void changeNotExistingUser(Integer userId, UserRq userRq) {
+    public void changeNotExistingUser(Integer userId, UserRq userRq, String token) {
         log.info("PUT - Попытка изменения несуществующего пользователя, 404");
-        changeUserRequest(userId, userRq)
+        changeUserRequest(userId, userRq, token)
                 .spec(notFound404);
     }
 
     private ValidatableResponse getUserRequest(Integer userId) {
         return given()
-                .spec(baseSpec)
+                .spec(spec)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -102,7 +104,7 @@ public class UserAdapter extends BaseAdapter {
     public List<UserRs> getUsers() {
         log.info("GET - получение списка пользователей, 200");
         return given()
-                .spec(baseSpec)
+                .spec(spec)
                 .log().all()
                 .when()
                 .get("/users")
@@ -116,7 +118,7 @@ public class UserAdapter extends BaseAdapter {
     public List<CarRs> getUserCars(Integer userId) {
         log.info("GET - получение автомобилей пользователя, 200");
         return given()
-                .spec(baseSpec)
+                .spec(spec)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -131,7 +133,7 @@ public class UserAdapter extends BaseAdapter {
 
     private ValidatableResponse getUserInfoRequest(Integer userId) {
         return given()
-                .spec(baseSpec)
+                .spec(spec)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -154,9 +156,10 @@ public class UserAdapter extends BaseAdapter {
                 .spec(noContent204);
     }
 
-    private ValidatableResponse deleteUserRequest(Integer userId) {
+    private ValidatableResponse deleteUserRequest(Integer userId, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .pathParam("userId", userId)
                 .log().all()
                 .when()
@@ -165,29 +168,30 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void deleteUser(Integer userId) {
+    public void deleteUser(Integer userId, String token) {
         log.info("DELETE - удаление пользователя, 204");
-        deleteUserRequest(userId)
+        deleteUserRequest(userId, token)
                 .spec(noContent204);
     }
 
-    public void deleteNotExistingUser(Integer userId) {
+    public void deleteNotExistingUser(Integer userId, String token) {
         log.info("DELETE - попытка удаления несуществующего пользователя, 404");
-        deleteUserRequest(userId)
+        deleteUserRequest(userId, token)
                 .spec(notFound404);
     }
 
-    public void deleteUserNegative(Integer userId) {
+    public void deleteUserNegative(Integer userId, String token) {
         log.info("DELETE - попытка удаления пользователя с имуществом, 409");
-        deleteUserRequest(userId)
+        deleteUserRequest(userId, token)
                 .spec(conflict409);
     }
 
-    private ValidatableResponse addMoneyRequest(Integer userId, BigDecimal amount) {
+    private ValidatableResponse addMoneyRequest(Integer userId, BigDecimal amount, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
                 .pathParam("userId", userId)
                 .pathParam("amount", amount)
+                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/user/{userId}/money/{amount}")
@@ -195,29 +199,30 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public UserRs addMoneyToUser(Integer userId, BigDecimal amount) {
+    public UserRs addMoneyToUser(Integer userId, BigDecimal amount, String token) {
         log.info("POST - Начисление денег пользователю, 200");
-        return addMoneyRequest(userId, amount)
+        return addMoneyRequest(userId, amount, token)
                 .spec(success200)
                 .extract()
                 .as(UserRs.class);
     }
 
-    public void addMoneyToNotExistingUser(Integer userId, BigDecimal amount) {
+    public void addMoneyToNotExistingUser(Integer userId, BigDecimal amount, String token) {
         log.info("POST - Попытка начисления денег несуществующему пользователю, 404");
-        addMoneyRequest(userId, amount)
+        addMoneyRequest(userId, amount, token)
                 .spec(notFound404);
     }
 
-    public void addInvalidMoneyToUser(Integer userId, BigDecimal amount) {
+    public void addInvalidMoneyToUser(Integer userId, BigDecimal amount, String token) {
         log.info("POST - Начисление денег пользователю, отрицательная сумма, 400");
-        addMoneyRequest(userId, amount)
+        addMoneyRequest(userId, amount, token)
                 .spec(badRequest400);
     }
 
-    private ValidatableResponse buyCarRequest(Integer userId, Integer carId) {
+    private ValidatableResponse buyCarRequest(Integer userId, Integer carId, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .pathParam("userId", userId)
                 .pathParam("carId", carId)
                 .log().all()
@@ -227,15 +232,16 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void buyCar(Integer userId, Integer carId) {
+    public void buyCar(Integer userId, Integer carId, String token) {
         log.info("POST - Покупка автомобиля пользователем, 200");
-        buyCarRequest(userId, carId)
+        buyCarRequest(userId, carId, token)
                 .spec(success200);
     }
 
-    private ValidatableResponse sellCarRequest(Integer userId, Integer carId) {
+    private ValidatableResponse sellCarRequest(Integer userId, Integer carId, String token) {
         return given()
-                .spec(getAuthSpec())
+                .spec(spec)
+                .header("Authorization", "Bearer " + token)
                 .pathParam("userId", userId)
                 .pathParam("carId", carId)
                 .log().all()
@@ -245,9 +251,9 @@ public class UserAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void sellCar(Integer userId, Integer carId) {
+    public void sellCar(Integer userId, Integer carId, String token) {
         log.info("POST - Продажа автомобиля пользователем, 200");
-        sellCarRequest(userId, carId)
+        sellCarRequest(userId, carId, token)
                 .spec(success200);
     }
 }
