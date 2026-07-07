@@ -3,7 +3,6 @@ package tests.api;
 import api.adapters.CarAdapter;
 import api.models.CarRq;
 import io.qameta.allure.Description;
-import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -14,7 +13,6 @@ public class CarNegativeTest extends BaseApiTest  {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
-    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание автомобиля с невалидными данными")
     @Description("Параметризованный тест проверяет обработку ошибок при создании автомобиля с некорректными данными: " +
             "пустые значения, недопустимые типы двигателя, отрицательная цена, числовые значения в строковых полях")
@@ -34,12 +32,14 @@ public class CarNegativeTest extends BaseApiTest  {
             String model,
             String engineType,
             BigDecimal price) {
+
         CarRq car = CarRq.builder()
                 .mark(mark)
                 .model(model)
                 .engineType(engineType)
                 .price(price)
                 .build();
+
         carAdapter.createCarBadRequest(car, accessToken);
     }
 }

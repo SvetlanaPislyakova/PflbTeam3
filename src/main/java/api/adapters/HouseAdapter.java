@@ -1,7 +1,7 @@
 package api.adapters;
 
-import api.models.HouseRq;
-import api.models.HouseRs;
+import api.models.house.HouseRq;
+import api.models.house.HouseRs;
 import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
 
@@ -12,10 +12,9 @@ import static io.restassured.RestAssured.given;
 @Log4j2
 public class HouseAdapter extends BaseAdapter {
 
-    private ValidatableResponse createHouseRequest(HouseRq houseRq, String token) {
+    private ValidatableResponse createHouseRequest(HouseRq houseRq) {
         return given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .body(gson.toJson(houseRq))
                 .log().all()
                 .when()
@@ -24,20 +23,36 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs createHouse(HouseRq houseRq, String token) {
+    private ValidatableResponse createHouseRequest(String houseRq) {
+        return given()
+                .spec(getAuthSpec())
+                .body(houseRq)
+                .log().all()
+                .when()
+                .post("/house")
+                .then()
+                .log().all();
+    }
+
+    public HouseRs createHouse(HouseRq houseRq) {
         log.info("POST - создание дома, 201");
-        return createHouseRequest(houseRq, token)
+        return createHouseRequest(houseRq)
                 .spec(created201)
                 .extract()
                 .as(HouseRs.class);
     }
 
-    private ValidatableResponse settleUserRequest(Integer houseId, Integer userId, String token) {
+    public void createHouseBadRequest(String houseRq) {
+        log.info("POST - создание дома с невалидными данными, 400");
+        createHouseRequest(houseRq)
+                .spec(badRequest400);
+    }
+
+    private ValidatableResponse settleUserRequest(Integer houseId, Integer userId) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("houseId", houseId)
                 .pathParam("userId", userId)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/house/{houseId}/settle/{userId}")
@@ -45,20 +60,31 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs settleUser(Integer houseId, Integer userId, String token) {
+    public HouseRs settleUser(Integer houseId, Integer userId) {
         log.info("POST - заселение пользователя в дом, 200");
-        return settleUserRequest(houseId, userId, token)
+        return settleUserRequest(houseId, userId)
                 .spec(success200)
                 .extract()
                 .as(HouseRs.class);
     }
 
-    private ValidatableResponse evictUserRequest(Integer houseId, Integer userId, String token) {
+    public void settleNonExistingUser(Integer houseId, Integer userId) {
+        log.info("POST - попытка заселения несуществующего пользователя, 404");
+        settleUserRequest(houseId, userId)
+                .spec(notFound404);
+    }
+
+    public void settleUserToNonExistingHouse(Integer houseId, Integer userId) {
+        log.info("POST - попытка заселения пользователя в несуществующий дом, 404");
+        settleUserRequest(houseId, userId)
+                .spec(notFound404);
+    }
+
+    private ValidatableResponse evictUserRequest(Integer houseId, Integer userId) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("houseId", houseId)
                 .pathParam("userId", userId)
-                .header("Authorization", "Bearer " + token)
                 .log().all()
                 .when()
                 .post("/house/{houseId}/evict/{userId}")
@@ -66,10 +92,9 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    private ValidatableResponse deleteHouseRequest(Integer houseId, String token) {
+    private ValidatableResponse deleteHouseRequest(Integer houseId) {
         return given()
-                .spec(spec)
-                .header("Authorization", "Bearer " + token)
+                .spec(getAuthSpec())
                 .pathParam("houseId", houseId)
                 .log().all()
                 .when()
@@ -78,24 +103,36 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public void deleteHouse(Integer houseId, String token) {
+    public void deleteHouse(Integer houseId) {
         log.info("DELETE - удаление дома, 204");
-        deleteHouseRequest(houseId, token)
+        deleteHouseRequest(houseId)
                 .spec(noContent204);
     }
 
-    public HouseRs evictUser(Integer houseId, Integer userId, String token) {
+    public HouseRs evictUser(Integer houseId, Integer userId) {
         log.info("POST - выселение пользователя из дома, 200");
-        return evictUserRequest(houseId, userId, token)
+        return evictUserRequest(houseId, userId)
                 .spec(success200)
                 .extract()
                 .as(HouseRs.class);
     }
-    private ValidatableResponse updateHouseRequest(Integer houseId, HouseRq houseRq, String token) {
+
+    public void evictNonExistingUser(Integer houseId, Integer userId) {
+        log.info("POST - попытка выселения несуществующего пользователя, 404");
+        evictUserRequest(houseId, userId)
+                .spec(notFound404);
+    }
+
+    public void evictUserFromNonExistingHouse(Integer houseId, Integer userId) {
+        log.info("POST - попытка выселения пользователя из несуществующего дома, 404");
+        evictUserRequest(houseId, userId)
+                .spec(notFound404);
+    }
+
+    private ValidatableResponse updateHouseRequest(Integer houseId, HouseRq houseRq) {
         return given()
-                .spec(spec)
+                .spec(getAuthSpec())
                 .pathParam("houseId", houseId)
-                .header("Authorization", "Bearer " + token)
                 .body(gson.toJson(houseRq))
                 .log().all()
                 .when()
@@ -104,16 +141,16 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs updateHouse(Integer houseId, HouseRq houseRq, String token) {
+    public HouseRs updateHouse(Integer houseId, HouseRq houseRq) {
         log.info("PUT - изменение дома, 202");
-        return updateHouseRequest(houseId, houseRq, token)
+        return updateHouseRequest(houseId, houseRq)
                 .spec(accepted202)
                 .extract()
                 .as(HouseRs.class);
     }
     private ValidatableResponse getHouseRequest(Integer houseId) {
         return given()
-                .spec(spec)
+                .spec(baseSpec)
                 .pathParam("houseId", houseId)
                 .log().all()
                 .when()
@@ -122,7 +159,7 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
-    public HouseRs getHouse(Integer houseId, String accessToken) {
+    public HouseRs getHouse(Integer houseId) {
         log.info("GET - получение дома по id, 200");
         return getHouseRequest(houseId)
                 .spec(success200)
@@ -130,11 +167,10 @@ public class HouseAdapter extends BaseAdapter {
                 .as(HouseRs.class);
     }
 
-    public List<HouseRs> getHouses(String accessToken) {
+    public List<HouseRs> getHouses() {
         log.info("GET - получение списка домов, 200");
-
         return given()
-                .spec(spec)
+                .spec(baseSpec)
                 .log().all()
                 .when()
                 .get("/houses")

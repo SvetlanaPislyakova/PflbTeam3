@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import tests.BaseTest;
+import tests.ui.base.BaseTest;
 import ui.dto.Car;
 import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,9 +1,9 @@
-package tests;
+package tests.ui.user;
 
 import api.adapters.UserAdapter;
-import api.models.CarRq;
-import api.models.CarRqFactory;
-import api.models.CarRs;
+import api.models.car.CarRq;
+import api.models.car.CarRqFactory;
+import api.models.car.CarRs;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
@@ -17,6 +17,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
+import tests.ui.base.BaseTest;
 import ui.dto.User;
 import ui.dto.UserFactory;
 
@@ -46,7 +47,7 @@ public class UserTest extends BaseTest {
         userSteps.createNewUser(user);
         Integer userId = userSteps.checkCreateUserAndGetId();
         dbSteps.checkUserInDB(user, userId);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     static Stream<Arguments> invalidUsers() {
@@ -94,11 +95,11 @@ public class UserTest extends BaseTest {
     @Description("Проверка добавления денег пользователю")
     public void addMoney() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         BigDecimal money = BigDecimal.valueOf(faker.number().randomDouble(2, 0, 1000000));
         BigDecimal result = userRq.getMoney().add(money);
         userSteps.checkAddingMoneyToUser(userId, money, result);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @Test
@@ -107,14 +108,14 @@ public class UserTest extends BaseTest {
     @Description("Проверка выдачи кредита пользователю")
     public void issueALoan() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         BigDecimal initialBalance = userRq.getMoney();
         BigDecimal loanAmount = BigDecimal.valueOf(faker.number().randomDouble(2, 100, 10000));
         userSteps.checkGetCredit(userId, loanAmount);
         BigDecimal expectedBalance = initialBalance.add(loanAmount);
         BigDecimal actualBalance = dbSteps.getUserBalance(userId);
         assertThat(actualBalance).isEqualByComparingTo(expectedBalance);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @Test
@@ -122,10 +123,10 @@ public class UserTest extends BaseTest {
     @Description("Проверка получения списка автомобилей пользователя, у пользователя  нет автомобиля")
     public void readUserWithNoCar() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         userSteps.checkUserHaveNoCars(userId);
         userSteps.checkUserExistsInDb(userId);
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @ParameterizedTest(name = "Получение списка автомобилей пользователя - машин у пользователя: {0}")
@@ -138,7 +139,7 @@ public class UserTest extends BaseTest {
                 .toBuilder()
                 .money(BigDecimal.valueOf(1000000))
                 .build();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         List<Integer> carIds = new ArrayList<>();
         for (int i = 0; i < amount; ++i) {
             CarRq carRq = CarRqFactory
@@ -146,23 +147,23 @@ public class UserTest extends BaseTest {
                     .toBuilder()
                     .price(BigDecimal.valueOf(10000))
                     .build();
-            CarRs car = carAdapter.createCar(carRq, token);
-            userAdapter.buyCar(userId, car.getId(), token);
+            CarRs car = carAdapter.createCar(carRq);
+            userAdapter.buyCar(userId, car.getId());
             carIds.add(car.getId());
         }
         userSteps.checkUserCars(userId, carIds);
         for (Integer carId : carIds) {
-            userAdapter.sellCar(userId, carId, token);
-            carAdapter.deleteCar(carId, token);
+            userAdapter.sellCar(userId, carId);
+            carAdapter.deleteCar(carId);
         }
-        userAdapter.deleteUser(userId, token);
+        userAdapter.deleteUser(userId);
     }
 
     @Test
     @DisplayName("UI - Удаление пользователя через страницу All DELETE")
     public void deleteUserThroughUI() {
         UserRq userRq = UserRqFactory.validUser();
-        Integer userId = userAdapter.createUserAndGetId(userRq, token);
+        Integer userId = userAdapter.createUserAndGetId(userRq);
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteUser(userId);

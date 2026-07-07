@@ -7,6 +7,7 @@ import java.util.List;
 
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 
 public class AllCarsPage extends BasePage {
 
@@ -43,6 +44,7 @@ public class AllCarsPage extends BasePage {
 
     public AllCarsPage checkSortCarsByText(String field, boolean isNumeric) {
         List<String> startList = getListFromDb(field);
+        sleep(5000);
         checkSortObjectNaturalOrder(table, startList, field, isNumeric);
         checkSortObjectReverseOrder(table, startList, field, isNumeric);
         return this;

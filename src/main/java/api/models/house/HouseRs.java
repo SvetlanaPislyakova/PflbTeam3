@@ -1,30 +1,29 @@
-package api.models;
+package api.models.house;
 
+import api.models.user.UserRs;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@Builder(toBuilder = true)
-public class HouseRq {
+public class HouseRs {
 
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("floorCount")
     @Expose
     private Integer floorCount;
     @SerializedName("price")
     @Expose
     private BigDecimal price;
+    @SerializedName("lodgers")
+    @Expose
+    private List<UserRs> lodgers;
     @SerializedName("parkingPlaces")
     @Expose
     private List<ParkingPlaceRs> parkingPlaces;
-    @SerializedName("lodgers")
-    @Expose
-    private List<Object> lodgers;
-    @SerializedName("id")
-    @Expose
-    private Integer id;
 }
