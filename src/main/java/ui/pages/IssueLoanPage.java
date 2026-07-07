@@ -11,7 +11,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 @Log4j2
 public class IssueLoanPage extends BasePage {
-
     private final String tableName = "Issue a loan";
     Table table = new Table(tableName);
 

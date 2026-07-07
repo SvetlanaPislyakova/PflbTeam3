@@ -9,9 +9,7 @@ import java.math.BigDecimal;
 @Data
 @Builder(toBuilder = true)
 public class User {
-
     private static final Faker faker = new Faker();
-
     private final Integer id;
     private final String firstName;
     private final String lastName;

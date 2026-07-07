@@ -7,11 +7,9 @@ import java.sql.*;
 
 @Log4j2
 public class DBConnection {
-
     private final String URL = "jdbc:postgresql://82.142.167.37:4832/pflb_trainingcenter";
     private final String DB_USER = System.getProperty("dbUser", PropertyReader.getProperty("dbUser"));
     private final String DB_PASSWORD = System.getProperty("dbPassword", PropertyReader.getProperty("dbPassword"));
-
     private Connection connection;
     private Statement statement;
     private ResultSet resultSet;
@@ -46,9 +44,9 @@ public class DBConnection {
 
     public void close() {
         try {
-            if(resultSet != null) resultSet.close();
-            if(statement != null) statement.close();
-            if(connection != null) connection.close();
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
             log.info("Подключение к БД закрыто");
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при закрытии соединения с БД");

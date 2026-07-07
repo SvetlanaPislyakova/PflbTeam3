@@ -13,7 +13,6 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class Table {
-
     private final String firstColumn;
     private final String secondColumn;
     private final String PATTERN = "//*[th[contains(text(), '%s')] and th[contains(text(), '%s')]]/ancestor::table";
@@ -105,7 +104,7 @@ public class Table {
                 firstColumn, secondColumn)).getText();
     }
 
-    public List<String> getListOfValues (String label) {
+    public List<String> getListOfValues(String label) {
         log.info("Получить список значений из столбца '{}'", label);
         int columnIndex = findColumnIndex(label) + 1;
         ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
@@ -114,7 +113,7 @@ public class Table {
         return listOfValues.texts();
     }
 
-    public void rowsShouldBeEmpty () {
+    public void rowsShouldBeEmpty() {
         log.info("Проверить, что в таблице нет строк");
         $$x(String.format(PATTERN + "//tbody/tr", firstColumn, secondColumn))
                 .shouldBe(CollectionCondition.empty);

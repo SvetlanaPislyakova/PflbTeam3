@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBSteps {
-
     @Step("Получение списка из базы данных")
     public List<String> getListFromDB(String table, String colName) {
         DBConnection connection = new DBConnection();

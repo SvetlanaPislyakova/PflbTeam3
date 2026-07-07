@@ -6,7 +6,6 @@ import lombok.Data;
 
 @Data
 public class ParkingPlaceRs {
-
     @SerializedName("id")
     @Expose
     private Integer id;

@@ -5,7 +5,6 @@ import api.models.login.LoginRq;
 import static io.restassured.RestAssured.given;
 
 public class LoginAdapter extends BaseAdapter {
-
     public static String getAccessToken(LoginRq rq) {
         return given()
                 .spec(baseSpec)

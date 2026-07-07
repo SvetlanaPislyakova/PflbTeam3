@@ -8,21 +8,15 @@ import ui.wrappers.Table;
 
 import java.math.BigDecimal;
 
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Condition.enabled;
-import static com.codeborne.selenide.Condition.value;
-import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-import static com.codeborne.selenide.Selenide.sleep;
+import static com.codeborne.selenide.Selenide.*;
 
 public class AllPostPage extends BasePage {
-
     private static final String BUY_OR_SELL_CAR_FORM =
             "//*[th[contains(text(), 'User ID')] and th[contains(text(), 'Car Id')]]/ancestor::table";
     private static final String SETTLE_OR_EVICT_FORM =
             "//*[th[contains(text(), 'User ID')] and th[contains(text(), 'House ID')]]/ancestor::table";
-
     private final Table createUserTable = new Table("Create new user");
     private final Table addMoneyTable = new Table("Add money");
     private final Table buyOrSellCarTable = new Table("Buy or sell car");

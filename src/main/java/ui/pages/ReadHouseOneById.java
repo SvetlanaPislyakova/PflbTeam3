@@ -12,7 +12,6 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class ReadHouseOneById extends BasePage {
-
     private final Table houseInfoTable = new Table("House info:");
     private final Table lodgersTable = new Table("Lodgers:");
     private final Table parkingsTable = new Table("Parkings:");

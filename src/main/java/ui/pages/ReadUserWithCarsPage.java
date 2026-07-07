@@ -16,7 +16,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Log4j2
 public class ReadUserWithCarsPage extends BasePage {
-
     private final Table carInfoTable = new Table("Read all cars");
     private final Table userInfoTable = new Table("Read all users");
     private final SelenideElement ID_INPUT = $("#user_input");

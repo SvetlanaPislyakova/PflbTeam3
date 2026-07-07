@@ -11,10 +11,9 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class AllCarsPage extends BasePage {
-
     private final String tableName = "Read all cars";
-    Table table = new Table(tableName);
     private final DBSteps dbSteps = new DBSteps();
+    Table table = new Table(tableName);
 
     @Override
     @Step("Открытие страницы read/cars")
@@ -29,11 +28,12 @@ public class AllCarsPage extends BasePage {
         table.checkTableVisible();
         return this;
     }
+
     @Step("Получение списка из базы данных")
     private List<String> getListFromDb(String field) {
         if (field.equals("Mark"))
             return dbSteps.getListFromDB("car", "mark");
-        else if(field.equals("Model"))
+        else if (field.equals("Model"))
             return dbSteps.getListFromDB("car", "model");
         return null;
     }

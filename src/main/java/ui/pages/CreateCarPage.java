@@ -13,7 +13,6 @@ public class CreateCarPage extends BasePage {
     private static final String MARK_FIELD = "Mark";
     private static final String MODEL_FIELD = "Model";
     private static final String PRICE_FIELD = "Price";
-
     private final Table table = new Table(TABLE_NAME);
 
     @Override
@@ -29,6 +28,7 @@ public class CreateCarPage extends BasePage {
         table.checkTableVisible();
         return this;
     }
+
     @Step("Создание авто")
     public CreateCarPage createNewCar(Car car) {
         if (car == null) {

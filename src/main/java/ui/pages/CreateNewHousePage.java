@@ -13,15 +13,12 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class CreateNewHousePage extends BasePage {
-
     private final SelenideElement FLOORS_INPUT = $("#floor_send");
     private final SelenideElement PRICE_INPUT = $("#price_send");
-
     private final SelenideElement PARKING_WARM_COVERED = $("#parking_first_send");
     private final SelenideElement PARKING_WARM_NOT_COVERED = $("#parking_second_send");
     private final SelenideElement PARKING_COLD_COVERED = $("#parking_third_send");
     private final SelenideElement PARKING_COLD_NOT_COVERED = $("#parking_fourth_send");
-
     private final SelenideElement PUSH_BUTTON = $x("//button[contains(@class, 'tableButton')]");
     private final SelenideElement STATUS_BUTTON = $x("//button[contains(@class, 'status')]");
     private final SelenideElement NEW_HOUSE_ID = $x("//button[contains(@class, 'newId')]");

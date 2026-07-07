@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Log4j2
 public class LoginSteps {
-
     private final LoginPage loginPage = new LoginPage();
     private final CreateUserPage createUserPage = new CreateUserPage();
 
@@ -43,7 +42,7 @@ public class LoginSteps {
     public LoginSteps checkSuccessLogin() {
         log.info("Проверить успешность авторизации");
         createUserPage.openPage()
-                        .isPageOpened();
+                .isPageOpened();
         return this;
     }
 

@@ -10,7 +10,6 @@ import java.math.BigDecimal;
 @Data
 @Builder(toBuilder = true)
 public class UserRq {
-
     @SerializedName("id")
     @Expose
     private Integer id;

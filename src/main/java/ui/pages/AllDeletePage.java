@@ -9,14 +9,13 @@ import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
 
+import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.$x;
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
-import static com.codeborne.selenide.Configuration.baseUrl;
 
 @Log4j2
 public class AllDeletePage extends BasePage {
-
     private final String DELETE_BUTTON = "//button[@value = '%s']";
     private final String DELETE_INPUT = "//button[@value = '%s']/ancestor::div[@role='group']//input";
     private final String DELETE_STATUS = "//button[@value = '%s']/ancestor::div[@role='group']//button[@class='status btn btn-secondary']";

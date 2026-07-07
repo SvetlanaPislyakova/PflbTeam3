@@ -12,7 +12,6 @@ public class BuyOrSaleCarPage extends BasePage {
     private static final String USER_ID_FIELD = "User ID";
     private static final String CAR_ID_FIELD = "Car Id";
     private static final String BUY_OPTION = "BUY";
-
     private final Table table = new Table(TABLE_NAME);
 
     @Override
@@ -28,6 +27,7 @@ public class BuyOrSaleCarPage extends BasePage {
         table.checkTableVisible();
         return this;
     }
+
     @Step("Заполнение полей на странице")
     public BuyOrSaleCarPage setData(int userID, int carID, String name) {
         table.setValueToInput("User ID", String.valueOf(userID));

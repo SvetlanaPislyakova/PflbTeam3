@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 import java.math.BigDecimal;
 
 public class UserCarsRs {
-
     @SerializedName("engineType")
     @Expose
     private String engineType;

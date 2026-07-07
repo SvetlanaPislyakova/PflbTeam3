@@ -10,7 +10,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 @Log4j2
 public class AllHousesPage extends BasePage {
-
     private final String tableName = "Read all houses:";
     @Getter
     private final Table table = new Table(tableName);

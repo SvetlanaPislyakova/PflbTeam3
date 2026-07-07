@@ -11,7 +11,6 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserSteps {
-
     private final CreateUserPage createUserPage = new CreateUserPage();
     private final AllUsersPage allUsersPage = new AllUsersPage();
     private final IssueLoanPage issueLoanPage = new IssueLoanPage();

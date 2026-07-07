@@ -11,7 +11,6 @@ import static io.restassured.RestAssured.given;
 
 @Log4j2
 public class CarAdapter extends BaseAdapter {
-
     private ValidatableResponse createCarRequest(CarRq carRq) {
         return given()
                 .spec(getAuthSpec())
@@ -62,6 +61,7 @@ public class CarAdapter extends BaseAdapter {
                 .extract()
                 .as(CarRs.class);
     }
+
     public void createCarBadRequest(CarRq carRq) {
         log.info("POST - создание автомобиля с невалидными данными, 400");
         given()

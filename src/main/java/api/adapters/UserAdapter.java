@@ -14,7 +14,6 @@ import static io.restassured.RestAssured.given;
 
 @Log4j2
 public class UserAdapter extends BaseAdapter {
-
     private ValidatableResponse createUserRequest(UserRq userRq) {
         return given()
                 .spec(getAuthSpec())

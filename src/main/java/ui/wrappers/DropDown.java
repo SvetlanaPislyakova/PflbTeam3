@@ -6,7 +6,6 @@ import static com.codeborne.selenide.Selenide.$x;
 
 @Log4j2
 public class DropDown {
-
     private final String label;
     private final String PATTERN = "//a[contains(text(), '%s')]";
 

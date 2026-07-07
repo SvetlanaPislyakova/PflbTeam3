@@ -10,7 +10,6 @@ import java.util.List;
 
 @Data
 public class UserInfoRs {
-
     @SerializedName("id")
     @Expose
     private Integer id;

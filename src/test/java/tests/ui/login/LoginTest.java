@@ -12,8 +12,15 @@ import tests.ui.base.BaseTest;
 import java.util.stream.Stream;
 
 public class LoginTest extends BaseTest {
+    static Stream<Arguments> negativeCreds() {
+        return Stream.of(
+                Arguments.of("test@test.com", password),
+                Arguments.of(email, "test"),
+                Arguments.of("test@test.com", "test")
+        );
+    }
 
-@Test
+    @Test
     @DisplayName("Успешная авторизация с корректными кредами")
     @Description("Проверка успешной авторизации с валидными данными")
     public void successLogin() {
@@ -22,7 +29,7 @@ public class LoginTest extends BaseTest {
                 .checkSuccessLogin();
     }
 
-@Test
+    @Test
     @DisplayName("Негативная авторизация с корректными кредами")
     @Description("Проверка отмены успешной авторизации с валидными данными")
     public void negativeLogin() {
@@ -31,15 +38,7 @@ public class LoginTest extends BaseTest {
                 .checkNegativeLogin();
     }
 
-static Stream<Arguments> negativeCreds() {
-        return Stream.of(
-                Arguments.of("test@test.com", password),
-                Arguments.of(email, "test"),
-                Arguments.of("test@test.com", "test")
-        );
-    }
-
-@ParameterizedTest(name = "Негативный логин c email: {0}, password: {1}")
+    @ParameterizedTest(name = "Негативный логин c email: {0}, password: {1}")
     @MethodSource("negativeCreds")
     @DisplayName("Негативная авторизация с некорректными кредами")
     @Description("Проверка негативной авторизации с невалидными данными")
@@ -49,7 +48,7 @@ static Stream<Arguments> negativeCreds() {
                 .checkNegativeLogin();
     }
 
-@ParameterizedTest(name = "Ввод невалидных данных в поле 'email': {0}")
+    @ParameterizedTest(name = "Ввод невалидных данных в поле 'email': {0}")
     @ValueSource(strings = {"test", "test.com"})
     @DisplayName("Ввод невалидных данных в поле 'email'")
     @Description("Проверка сообщения о некорректном вводе в поле email")
@@ -59,7 +58,7 @@ static Stream<Arguments> negativeCreds() {
                 .acceptAlert("Incorrect input data");
     }
 
-@ParameterizedTest(name = "Ввод невалидных данных в поле 'password': {0}")
+    @ParameterizedTest(name = "Ввод невалидных данных в поле 'password': {0}")
     @ValueSource(strings = {"ok", "loremipsum"})
     @DisplayName("Ввод невалидных данных в поле 'email'")
     @Description("Проверка сообщения о некорректном вводе в поле password")

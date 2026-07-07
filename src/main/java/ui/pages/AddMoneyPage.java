@@ -11,7 +11,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 @Log4j2
 public class AddMoneyPage extends BasePage {
-
     private final String tableName = "Add money";
     Table table = new Table(tableName);
 
@@ -45,12 +44,12 @@ public class AddMoneyPage extends BasePage {
     }
 
     @Step("Получение сообщения о статусе операции")
-    public String getStatusMessage () {
+    public String getStatusMessage() {
         return table.getMessagePushToApi();
     }
 
     @Step("Получение кода статуса")
-    public int getStatusCode () {
+    public int getStatusCode() {
         return table.getStatus();
     }
 }
