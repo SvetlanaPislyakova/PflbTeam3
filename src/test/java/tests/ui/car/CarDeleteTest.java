@@ -3,6 +3,7 @@ package tests.ui.car;
 import api.adapters.CarAdapter;
 import api.models.car.CarRq;
 import api.models.car.CarRs;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,8 +26,9 @@ public class CarDeleteTest extends BaseTest {
     }
 
     @Test
-    @DisplayName("UI - Удаление автомобиля через страницу All DELETE")
-    @Description("Удаление авто через страницу All DELETE с проверкой в БД")
+    @Owner("Marinin Konstantin")
+    @DisplayName("Удаление автомобиля через страницу All DELETE")
+    @Description("Проверка удаления авто через страницу All DELETE")
     public void deleteCarThroughUI() {
         CarRq carRq = CarRq.builder()
                 .mark("Toyota")
