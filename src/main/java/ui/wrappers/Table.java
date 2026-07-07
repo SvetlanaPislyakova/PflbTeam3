@@ -90,6 +90,7 @@ public class Table {
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
+        input.shouldHave(value(value));
     }
 
     public String getValueFromInput(String label) {
