@@ -1,6 +1,7 @@
 package tests.ui.login;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +17,7 @@ public class LoginTest extends BaseTest {
     @Test
     @DisplayName("Успешная авторизация с корректными кредами")
     @Description("Проверка успешной авторизации с валидными данными")
+    @Owner("Пислякова Светлана")
     public void successLogin() {
         loginSteps.login(email, password)
                 .acceptAlert("Successful authorization")
@@ -25,6 +27,7 @@ public class LoginTest extends BaseTest {
     @Test
     @DisplayName("Негативная авторизация с корректными кредами")
     @Description("Проверка отмены успешной авторизации с валидными данными")
+    @Owner("Пислякова Светлана")
     public void negativeLogin() {
         loginSteps.login(email, password)
                 .rejectAlert("Successful authorization")
@@ -43,6 +46,7 @@ public class LoginTest extends BaseTest {
     @MethodSource("negativeCreds")
     @DisplayName("Негативная авторизация с некорректными кредами")
     @Description("Проверка негативной авторизации с невалидными данными")
+    @Owner("Пислякова Светлана")
     public void negativeLoginWith(String login, String pass) {
         loginSteps.login(login, pass)
                 .acceptAlert("Bad request")
@@ -53,6 +57,7 @@ public class LoginTest extends BaseTest {
     @ValueSource(strings = {"test", "test.com"})
     @DisplayName("Ввод невалидных данных в поле 'email'")
     @Description("Проверка сообщения о некорректном вводе в поле email")
+    @Owner("Пислякова Светлана")
     public void validateEmailInput(String email) {
         String errorMsg = "incorrect Email";
         loginSteps.checkErrorEmailMsg(email, errorMsg)
@@ -63,6 +68,7 @@ public class LoginTest extends BaseTest {
     @ValueSource(strings = {"ok", "loremipsum"})
     @DisplayName("Ввод невалидных данных в поле 'email'")
     @Description("Проверка сообщения о некорректном вводе в поле password")
+    @Owner("Пислякова Светлана")
     public void validatePasswordInput(String password) {
         String errorMsg = "password length must be more than 3 symbols and less than 8 symbols";
         loginSteps.checkErrorPasswordMsg(password, errorMsg)

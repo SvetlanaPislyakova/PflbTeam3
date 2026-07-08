@@ -1,6 +1,7 @@
 package tests.ui.menu;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ public class MenuTest extends BaseTest {
     @ParameterizedTest(name = "Проверка открытия страницы {0}")
     @EnumSource(MenuPage.MenuOption.class)
     @Description("Проверка переходов по основным разделам сайта")
+    @Owner("Пислякова Светлана")
     public void checkOpeningPage(MenuPage.MenuOption menuOption) {
         new DropDown(menuOption.getDropdown()).selectOption(menuOption.getOption());
         menuOption.getPage().isPageOpened();
@@ -31,6 +33,7 @@ public class MenuTest extends BaseTest {
     @Test
     @DisplayName("Проверка открытия страницы ALL_POST")
     @Description("Проверка открытия страницы ALL_POST")
+    @Owner("Пислякова Светлана")
     public void openAllPost() {
         menuPage.openAllPostPage()
                 .isPageOpened();
@@ -39,6 +42,7 @@ public class MenuTest extends BaseTest {
     @Test
     @DisplayName("Проверка открытия страницы ALL_DELETE")
     @Description("Проверка открытия страницы ALL_DELETE")
+    @Owner("Пислякова Светлана")
     public void openAllDelete() {
         menuPage.openAllDeletePage()
                 .isPageOpened();
