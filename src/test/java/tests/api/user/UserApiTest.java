@@ -36,15 +36,6 @@ public class UserApiTest {
     private final HouseAdapter houseAdapter = new HouseAdapter();
     private final Faker faker = new Faker();
 
-    static Stream<Arguments> invalidUsers() {
-        return Stream.of(
-                Arguments.of(UserRqFactory.userWithNullFirstName()),
-                Arguments.of(UserRqFactory.userWithNullSecondName()),
-                Arguments.of(UserRqFactory.userWithNullAge()),
-                Arguments.of(UserRqFactory.userWithNullMoney())
-        );
-    }
-
     private void assertUserEquals(UserRs userRs, UserRq userRq) {
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(userRs.getFirstName()).isEqualTo(userRq.getFirstName());
@@ -63,6 +54,15 @@ public class UserApiTest {
         UserRs userRs = userAdapter.createUser(userRq);
         assertUserEquals(userRs, userRq);
         userAdapter.deleteUser(userRs.getId());
+    }
+
+    static Stream<Arguments> invalidUsers() {
+        return Stream.of(
+                Arguments.of(UserRqFactory.userWithNullFirstName()),
+                Arguments.of(UserRqFactory.userWithNullSecondName()),
+                Arguments.of(UserRqFactory.userWithNullAge()),
+                Arguments.of(UserRqFactory.userWithNullMoney())
+        );
     }
 
     @DisplayName("API - Создание пользователя с невалидными данными")

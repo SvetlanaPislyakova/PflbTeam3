@@ -13,14 +13,6 @@ import java.util.stream.Stream;
 
 public class LoginTest extends BaseTest {
 
-    static Stream<Arguments> negativeCreds() {
-        return Stream.of(
-                Arguments.of("test@test.com", password),
-                Arguments.of(email, "test"),
-                Arguments.of("test@test.com", "test")
-        );
-    }
-
     @Test
     @DisplayName("Успешная авторизация с корректными кредами")
     @Description("Проверка успешной авторизации с валидными данными")
@@ -37,6 +29,14 @@ public class LoginTest extends BaseTest {
         loginSteps.login(email, password)
                 .rejectAlert("Successful authorization")
                 .checkNegativeLogin();
+    }
+
+    static Stream<Arguments> negativeCreds() {
+        return Stream.of(
+                Arguments.of("test@test.com", password),
+                Arguments.of(email, "test"),
+                Arguments.of("test@test.com", "test")
+        );
     }
 
     @ParameterizedTest(name = "Негативный логин c email: {0}, password: {1}")
