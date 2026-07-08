@@ -1,5 +1,6 @@
 package tests.ui.car;
 
+import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -9,6 +10,7 @@ public class CarSortTest extends BaseTest {
 
     @ParameterizedTest(name = "Сортировка автомобилей по полю {0}")
     @Owner("Akhunov Gayaz")
+    @Description("Проверка сортировки списка автомобилей")
     @ValueSource(strings = {"Mark", "Model"})
     public void checkSortingByTextField(String field) {
         carSteps.checkSortCarsByTextField(field);
@@ -16,6 +18,7 @@ public class CarSortTest extends BaseTest {
 
     @ParameterizedTest(name = "Сортировка автомобилей по полю {0}")
     @Owner("Akhunov Gayaz")
+    @Description("Проверка сортировки списка автомобилей")
     @ValueSource(strings = {"ID", "Price"})
     public void checkSortingByNumericField(String field) {
         carSteps.checkSortCarsByNumericField(field);
@@ -23,6 +26,7 @@ public class CarSortTest extends BaseTest {
 
     @ParameterizedTest(name = "Сортировка автомобилей по полю {0}")
     @Owner("Akhunov Gayaz")
+    @Description("Проверка сортировки списка автомобилей")
     @ValueSource(strings = {"Engine Type"})
     public void checkSortingByFixedTextField(String field) {
         carSteps.checkSortCarsByFixedTextField(field);

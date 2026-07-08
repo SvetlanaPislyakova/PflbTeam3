@@ -52,5 +52,9 @@ public class CreateCarTest extends BaseTest {
                 .model(model)
                 .price(new BigDecimal(price))
                 .build();
+        carSteps.createNewCar(car);
+        int carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
+        assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
 }
