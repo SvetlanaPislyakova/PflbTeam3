@@ -3,6 +3,7 @@ package tests.ui.car;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +15,8 @@ import ui.dto.Car;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BuyCarTest extends BaseTest {
 
@@ -25,33 +27,31 @@ public class BuyCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Успешная покупка автомобиля с достаточными средствами")
     @Description("Тест проверяет покупку автомобиля с достаточными средствами")
     public void buyCarWithSufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-
         carSteps.buyNewCar(buyerID, carID);
         assertTrue(carSteps.isCarBought(buyerID, carID));
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при покупке с недостаточными средствами")
     @Description("Тест проверяет покупку автомобиля с недостаточными средствами")
     public void buyCarWithInsufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(100)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-
         carSteps.buyNewCar(buyerID, carID);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(404);
@@ -59,14 +59,13 @@ public class BuyCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при попытке купить несуществующий автомобиль")
     @Description("Тест проверяет возможность покупки несуществующего автомобиля")
     public void buyNonExistentCar() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         int nonExistentCarID = 999999999;
-
         carSteps.buyNewCar(buyerID, nonExistentCarID);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(404);
@@ -77,34 +76,32 @@ public class BuyCarTest extends BaseTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("Множественные покупки одним пользователем")
+    @Description("Тест проверяет возможность покупки нескольких автомобилей одним пользователем")
     public void multiplePurchasesByUser(int carCount) {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         for (int i = 0; i < carCount; i++) {
             Car car = Car.builder().build();
             carSteps.createNewCar(car);
             int carID = carSteps.checkCreateCarAndGetId();
-            carSteps.buyNewCar(buyerID,carID);
+            carSteps.buyNewCar(buyerID, carID);
             createdCarIds.add(carID);
             assertTrue(carSteps.isCarBought(buyerID, carID));
         }
-
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Проверка статуса после покупки")
     @Description("Тест проверяет множественную покупку автомобиля и сверяет статус код в каждой итерацииёё")
     public void checkStatusAfterPurchase() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
         carSteps.buyNewCar(buyerID, carID);
-
         assertEquals(200, carSteps.checkStatusCode());
     }
 }

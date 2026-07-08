@@ -5,6 +5,7 @@ import api.models.car.CarRq;
 import api.models.car.CarRqFactory;
 import api.models.car.CarRs;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,30 +13,33 @@ import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarCrudTest {
 
     CarAdapter carAdapter = new CarAdapter();
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Получение списка автомобилей")
+    @Description("Тест проверяет получение списка автомобилей")
     public void getCars() {
         List<CarRs> cars = carAdapter.getCars();
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(cars).isNotNull();
             softly.assertThat(cars).isNotEmpty();
-            for(CarRs car : cars) {
+            for (CarRs car : cars) {
                 softly.assertThat(car.getId()).isNotNull();
                 softly.assertThat(car.getEngineType()).isNotNull();
                 softly.assertThat(car.getMark()).isNotNull();
                 softly.assertThat(car.getModel()).isNotNull();
-             softly.assertThat(String.valueOf(car.getPrice())).isNotBlank();
+                softly.assertThat(String.valueOf(car.getPrice())).isNotBlank();
             }
         });
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Получение автомобиля по ID")
     @Description("Тест проверяет создание автомобиля, его получение по ID и последующее удаление")
     void getCarTest() {
@@ -45,7 +49,6 @@ public class CarCrudTest {
                 .engineType("CNG")
                 .price(BigDecimal.valueOf(15000.0))
                 .build();
-
         CarRs created = carAdapter.createCar(carRq);
         CarRs received = carAdapter.getCar(created.getId());
         assertEquals(created.getId(), received.getId());
@@ -53,31 +56,29 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Изменение автомобиля")
     @Description("Тест проверяет создание и последующее изменение автомобиля, затем удаляет автомобиль")
     void updateCarTest() {
         CarRq original = CarRqFactory.validCar();
         Integer carID = carAdapter.createCarAndGetId(original);
-            CarRq updatedRq = original.toBuilder()
-                    .price(BigDecimal.valueOf(12345.00))
-                    .model("UpdatedModel")
-                    .build();
-
-            CarRs updatedRs = carAdapter.updateCar(carID, updatedRq);
-
-            SoftAssertions softly = new SoftAssertions();
-            softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
-            softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
-            softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
-
-            CarRs received = carAdapter.getCar(carID);
-            softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
-            softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
-            softly.assertAll();
-        }
-
+        CarRq updatedRq = original.toBuilder()
+                .price(BigDecimal.valueOf(12345.00))
+                .model("UpdatedModel")
+                .build();
+        CarRs updatedRs = carAdapter.updateCar(carID, updatedRq);
+        SoftAssertions softly = new SoftAssertions();
+        softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
+        softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
+        softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
+        CarRs received = carAdapter.getCar(carID);
+        softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
+        softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
+        softly.assertAll();
+    }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Удаление автомобиля")
     @Description("Тест проверяет создание и последующее удаление автомобиля")
     void deleteCarTest() {
@@ -87,12 +88,12 @@ public class CarCrudTest {
                 .engineType("Gasoline")
                 .price(BigDecimal.valueOf(5000.0))
                 .build();
-
         CarRs car = carAdapter.createCar(carRq);
         carAdapter.deleteCar(car.getId());
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дизельного автомобиля")
     @Description("Тест проверяет создание автомобиля с дизельным двигателем (BMW X5)")
     void createDieselCarTest() {
@@ -100,6 +101,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание водородного автомобиля")
     @Description("Тест проверяет создание автомобиля с водородным двигателем (Audi A4)")
     void createPetrolCarTest() {
@@ -107,6 +109,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание электрического автомобиля")
     @Description("Тест проверяет создание электромобиля (Tesla Model3)")
     void createElectricCarTest() {
@@ -114,6 +117,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дешевого автомобиля")
     @Description("Тест проверяет создание недорогого автомобиля (Lada Granta)")
     void createCheapCarTest() {
@@ -121,6 +125,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дорогого автомобиля")
     @Description("Тест проверяет создание дорогого электромобиля (Tesla ModelX)")
     void createExpensiveCarTest() {
@@ -128,6 +133,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание японского автомобиля")
     @Description("Тест проверяет создание японского автомобиля (Toyota Camry)")
     void createJapaneseCarTest() {
@@ -135,6 +141,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание немецкого автомобиля")
     @Description("Тест проверяет создание немецкого автомобиля (Mercedes E200)")
     void createGermanCarTest() {
@@ -156,3 +163,4 @@ public class CarCrudTest {
         carAdapter.deleteCar(car.getId());
     }
 }
+

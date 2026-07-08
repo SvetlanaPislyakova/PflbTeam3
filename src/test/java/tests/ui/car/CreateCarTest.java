@@ -1,6 +1,7 @@
 package tests.ui.car;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,8 +9,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import tests.ui.base.BaseTest;
 import ui.dto.Car;
+
 import java.math.BigDecimal;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateCarTest extends BaseTest {
 
@@ -20,18 +23,19 @@ public class CreateCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Создание нового автомобиля с валидными данными")
     @Description("Тест проверяет создание нового автомобиля с валидными данными")
     public void createCarWithValidData() {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
-
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
         assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
 
     @ParameterizedTest
+    @Owner("Akhunov Gayaz")
     @DisplayName("Создание автомобилей с разными параметрами")
     @Description("Тест параметризованный тест на создание автомобиля")
     @CsvSource({
@@ -48,5 +52,9 @@ public class CreateCarTest extends BaseTest {
                 .model(model)
                 .price(new BigDecimal(price))
                 .build();
+        carSteps.createNewCar(car);
+        int carID = carSteps.checkCreateCarAndGetId();
+        createdCarIds.add(carID);
+        assertTrue(carID > 0, "ID автомобиля должен быть положительным");
     }
 }

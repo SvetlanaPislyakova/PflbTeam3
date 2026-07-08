@@ -148,6 +148,7 @@ public class HouseAdapter extends BaseAdapter {
                 .extract()
                 .as(HouseRs.class);
     }
+
     private ValidatableResponse getHouseRequest(Integer houseId) {
         return given()
                 .spec(baseSpec)

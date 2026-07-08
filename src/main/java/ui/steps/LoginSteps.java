@@ -43,7 +43,7 @@ public class LoginSteps {
     public LoginSteps checkSuccessLogin() {
         log.info("Проверить успешность авторизации");
         createUserPage.openPage()
-                        .isPageOpened();
+                .isPageOpened();
         return this;
     }
 

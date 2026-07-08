@@ -14,15 +14,12 @@ public class CarRq {
     @SerializedName("engineType")
     @Expose
     private String engineType;
-
     @SerializedName("mark")
     @Expose
     private String mark;
-
     @SerializedName("model")
     @Expose
     private String model;
-
     @SerializedName("price")
     @Expose
     private BigDecimal price;

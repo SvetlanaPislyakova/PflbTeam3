@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import ui.wrappers.Button;
 import ui.wrappers.Table;
@@ -10,7 +11,9 @@ import java.util.List;
 import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @Log4j2
@@ -21,6 +24,7 @@ public class ReadUserWithCarsPage extends BasePage {
     private final SelenideElement ID_INPUT = $("#user_input");
 
     @Override
+    @Step("Открытие страницы 'Read user with cars'")
     public ReadUserWithCarsPage openPage() {
         log.info("Открыть страницу 'ReadUserWithCarsPage'");
         open(baseUrl + "#/read/userInfo");
@@ -28,6 +32,7 @@ public class ReadUserWithCarsPage extends BasePage {
     }
 
     @Override
+    @Step("Проверка открытия страницы 'Read user with cars'")
     public ReadUserWithCarsPage isPageOpened() {
         log.info("Проверить, что страница 'ReadUserWithCarsPage' открыта");
         carInfoTable.checkTableVisible();
@@ -35,6 +40,7 @@ public class ReadUserWithCarsPage extends BasePage {
         return this;
     }
 
+    @Step("Поиск автомобилей пользователя: userId={userId}")
     public ReadUserWithCarsPage findCarsByUserId(Integer userId) {
         log.info("Заполнить инпут значением userId = {}", userId);
         sleep(300);
@@ -43,12 +49,14 @@ public class ReadUserWithCarsPage extends BasePage {
         return this;
     }
 
+    @Step("Проверка информации пользователя: userId={userId}")
     public ReadUserWithCarsPage checkUserInfo(Integer userId) {
         Integer userIdActual = Integer.valueOf(userInfoTable.getValueFromCell("ID"));
         assertThat(userIdActual).isEqualTo(userId);
         return this;
     }
 
+    @Step("Проверка информации об автомобилях пользователя")
     public ReadUserWithCarsPage checkCarsInfo(List<Integer> carsId) {
         List<Integer> actualIds = carInfoTable.getListOfValues("ID")
                 .stream()
@@ -59,6 +67,7 @@ public class ReadUserWithCarsPage extends BasePage {
         return this;
     }
 
+    @Step("Проверка отсутствия автомобилей у пользователя")
     public ReadUserWithCarsPage checkEmptyCarsInfo() {
         carInfoTable.rowsShouldBeEmpty();
         return this;

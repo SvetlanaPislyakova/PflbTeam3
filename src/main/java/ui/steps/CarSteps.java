@@ -24,14 +24,14 @@ public class CarSteps {
     public void buyNewCar(int userID, int carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
-                .setData(userID, carID,"BUY");
+                .setData(userID, carID, "BUY");
     }
 
     @Step("Продажа автомобиля пользователем")
     public void sellNewCar(int userID, int carID) {
         buyOrSaleCarPage.openPage()
                 .isPageOpened()
-                .setData(userID, carID,"SELL");
+                .setData(userID, carID, "SELL");
     }
 
     @Step("Получение статус кода")
@@ -75,5 +75,4 @@ public class CarSteps {
                 .isPageOpened()
                 .checkSortCarsByText(field, false);
     }
-
 }

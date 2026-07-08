@@ -62,6 +62,7 @@ public class CarAdapter extends BaseAdapter {
                 .extract()
                 .as(CarRs.class);
     }
+
     public void createCarBadRequest(CarRq carRq) {
         log.info("POST - создание автомобиля с невалидными данными, 400");
         given()

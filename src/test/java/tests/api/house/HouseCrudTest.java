@@ -3,6 +3,7 @@ package tests.api.house;
 import api.adapters.HouseAdapter;
 import api.models.house.HouseRq;
 import api.models.house.HouseRs;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,51 +13,53 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-    public class HouseCrudTest {
+public class HouseCrudTest {
 
-        HouseAdapter houseAdapter = new HouseAdapter();
+    HouseAdapter houseAdapter = new HouseAdapter();
 
-        @Test
-        @DisplayName("Получение дома по ID")
-        void getHouseTest() {
-
-            HouseRq houseRq = HouseRq.builder()
-                    .floorCount(3)
-                    .price(BigDecimal.valueOf(100000))
-                    .parkingPlaces(List.of())
-                    .lodgers(List.of())
-                    .build();
-
-            HouseRs created = houseAdapter.createHouse(houseRq);
-            HouseRs received = houseAdapter.getHouse(created.getId());
-            assertEquals(created.getId(), received.getId());
-        }
-
-        @Test
-        @DisplayName("Получение списка домов")
-        void getHousesTest() {
-            List<HouseRs> houses = houseAdapter.getHouses();
-            assertFalse(houses.isEmpty());
-        }
-
-        @Test
-        @DisplayName("Изменение дома")
-        void updateHouseTest() {
-            HouseRq houseRq = HouseRq.builder()
-                    .floorCount(2)
-                    .price(BigDecimal.valueOf(50000))
-                    .parkingPlaces(List.of())
-                    .lodgers(List.of())
-                    .build();
-            HouseRs created = houseAdapter.createHouse(houseRq);
-            HouseRq updateRq = HouseRq.builder()
-                    .id(created.getId())
-                    .floorCount(5)
-                    .price(BigDecimal.valueOf(150000))
-                    .parkingPlaces(List.of())
-                    .lodgers(List.of())
-                    .build();
-            HouseRs updated = houseAdapter.updateHouse(created.getId(), updateRq);
-            assertEquals(5, updated.getFloorCount());
-        }
+    @Test
+    @Owner("Shapovalov Dmitry")
+    @DisplayName("Получение дома по ID")
+    void getHouseTest() {
+        HouseRq houseRq = HouseRq.builder()
+                .floorCount(3)
+                .price(BigDecimal.valueOf(100000))
+                .parkingPlaces(List.of())
+                .lodgers(List.of())
+                .build();
+        HouseRs created = houseAdapter.createHouse(houseRq);
+        HouseRs received = houseAdapter.getHouse(created.getId());
+        assertEquals(created.getId(), received.getId());
     }
+
+    @Test
+    @Owner("Shapovalov Dmitry")
+    @DisplayName("Получение списка домов")
+    void getHousesTest() {
+        List<HouseRs> houses = houseAdapter.getHouses();
+        assertFalse(houses.isEmpty());
+    }
+
+    @Test
+    @Owner("Shapovalov Dmitry")
+    @DisplayName("Изменение дома")
+    void updateHouseTest() {
+        HouseRq houseRq = HouseRq.builder()
+                .floorCount(2)
+                .price(BigDecimal.valueOf(50000))
+                .parkingPlaces(List.of())
+                .lodgers(List.of())
+                .build();
+        HouseRs created = houseAdapter.createHouse(houseRq);
+        HouseRq updateRq = HouseRq.builder()
+                .id(created.getId())
+                .floorCount(5)
+                .price(BigDecimal.valueOf(150000))
+                .parkingPlaces(List.of())
+                .lodgers(List.of())
+                .build();
+        HouseRs updated = houseAdapter.updateHouse(created.getId(), updateRq);
+        assertEquals(5, updated.getFloorCount());
+    }
+}
+

@@ -17,16 +17,4 @@ public class HouseRqFactory {
                 .lodgers(List.of())
                 .build();
     }
-
-    public static HouseRq houseWithNullFloors() {
-        return validHouse().toBuilder()
-                .floorCount(null)
-                .build();
-    }
-
-    public static HouseRq houseWithNullPrice() {
-        return validHouse().toBuilder()
-                .price(null)
-                .build();
-    }
 }

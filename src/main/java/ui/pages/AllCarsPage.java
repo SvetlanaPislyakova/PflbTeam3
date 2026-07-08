@@ -1,5 +1,6 @@
 package ui.pages;
 
+import io.qameta.allure.Step;
 import ui.steps.DBSteps;
 import ui.wrappers.Table;
 
@@ -12,29 +13,33 @@ import static com.codeborne.selenide.Selenide.sleep;
 public class AllCarsPage extends BasePage {
 
     private final String tableName = "Read all cars";
-    Table table = new Table(tableName);
     private final DBSteps dbSteps = new DBSteps();
+    Table table = new Table(tableName);
 
     @Override
+    @Step("Открытие страницы Read all cars")
     public AllCarsPage openPage() {
         open(baseUrl + "#/read/cars");
         return this;
     }
 
     @Override
+    @Step("Проверка открытия страницы Read all cars")
     public AllCarsPage isPageOpened() {
         table.checkTableVisible();
         return this;
     }
 
+    @Step("Получение списка из базы данных")
     private List<String> getListFromDb(String field) {
         if (field.equals("Mark"))
             return dbSteps.getListFromDB("car", "mark");
-        else if(field.equals("Model"))
+        else if (field.equals("Model"))
             return dbSteps.getListFromDB("car", "model");
         return null;
     }
 
+    @Step("Проверка сортировки автомобилей по полю '{field}'")
     public AllCarsPage checkSortCars(String field, boolean isNumeric) {
         List<String> startList = table.getListOfValues(field);
         checkSortObjectNaturalOrder(table, startList, field, isNumeric);
@@ -42,6 +47,7 @@ public class AllCarsPage extends BasePage {
         return this;
     }
 
+    @Step("Проверка сортировки автомобилей по полю '{field}' из базы данных")
     public AllCarsPage checkSortCarsByText(String field, boolean isNumeric) {
         List<String> startList = getListFromDb(field);
         sleep(5000);

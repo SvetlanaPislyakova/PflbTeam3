@@ -43,6 +43,7 @@ public class UserTest extends BaseTest {
     @Test
     @DisplayName("Создание нового пользователя")
     @Description("Проверка создания нового пользователя")
+    @Owner("Пислякова Светлана")
     public void createUser() {
         User user = UserFactory.validUser();
         userSteps.createNewUser(user);
@@ -65,6 +66,7 @@ public class UserTest extends BaseTest {
     @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
     @MethodSource("invalidUsers")
     @Description("Проверка создания пользователя с невалидными данными")
+    @Owner("Пислякова Светлана")
     public void createInvalidUser(User user) {
         userSteps.createNewUser(user);
         userSteps.checkMessageContainsText("Invalid request data");
@@ -73,6 +75,7 @@ public class UserTest extends BaseTest {
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @ValueSource(strings = {"First name", "Last name"})
     @Description("Проверка сортировки списка пользователей")
+    @Owner("Пислякова Светлана")
     public void checkSortingByTextField(String field) {
         userSteps.checkSortUsersByTextField(field);
     }
@@ -80,6 +83,7 @@ public class UserTest extends BaseTest {
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @ValueSource(strings = {"ID", "Age", "Money"})
     @Description("Проверка сортировки списка пользователей")
+    @Owner("Пислякова Светлана")
     public void checkSortingByNumericField(String field) {
         userSteps.checkSortUsersByNumericField(field);
     }
@@ -87,6 +91,7 @@ public class UserTest extends BaseTest {
     @ParameterizedTest(name = "Сортировка пользователей по полю {0}")
     @ValueSource(strings = {"Sex"})
     @Description("Проверка сортировки списка пользователей")
+    @Owner("Пислякова Светлана")
     public void checkSortingByFixedTextField(String field) {
         userSteps.checkSortUsersByFixedTextField(field);
     }
@@ -94,6 +99,7 @@ public class UserTest extends BaseTest {
     @Test
     @DisplayName("Добавление денег пользователю")
     @Description("Проверка добавления денег пользователю")
+    @Owner("Пислякова Светлана")
     public void addMoney() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -107,6 +113,7 @@ public class UserTest extends BaseTest {
     @Disabled("Временно отключен, чиним")
     @DisplayName("Выдача кредита пользователю")
     @Description("Проверка выдачи кредита пользователю")
+    @Owner("Marinin Konstantin")
     public void issueALoan() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -122,6 +129,7 @@ public class UserTest extends BaseTest {
     @Test
     @DisplayName("Получение списка автомобилей пользователя (у пользователя нет машины)")
     @Description("Проверка получения списка автомобилей пользователя, у пользователя  нет автомобиля")
+    @Owner("Пислякова Светлана")
     public void readUserWithNoCar() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -130,10 +138,33 @@ public class UserTest extends BaseTest {
         userAdapter.deleteUser(userId);
     }
 
+    @Test
+    @DisplayName("Получение списка автомобилей пользователя (у пользователя 1 машина)")
+    @Description("Проверка получения списка автомобилей пользователя, у пользователя 1 машина")
+    @Owner("Marinin Konstantin")
+    public void readUserWithOneCar() {
+        UserRq userRq = UserRqFactory.validUser();
+        Integer userId = userAdapter.createUserAndGetId(userRq);
+        CarRq carRq = CarRq.builder()
+                .mark("Toyota")
+                .model("Camry")
+                .engineType("Diesel")
+                .price(BigDecimal.valueOf(25000.00))
+                .build();
+        CarRs carRs = carAdapter.createCar(carRq);
+        Integer carId = carRs.getId();
+        userAdapter.buyCar(userId, carId);
+        userSteps.checkUserCars(userId, List.of(carId));
+        userAdapter.sellCar(userId, carId);
+        carAdapter.deleteCar(carId);
+        userAdapter.deleteUser(userId);
+    }
+
     @ParameterizedTest(name = "Получение списка автомобилей пользователя - машин у пользователя: {0}")
     @DisplayName("Получение списка автомобилей пользователя")
-    @ValueSource(ints = {1, 3, 5})
-    @Description("Проверка получения списка автомобилей пользователя, у пользователя  несколько машин")
+    @ValueSource(ints = {3, 5})
+    @Description("Проверка получения списка автомобилей пользователя, у пользователя несколько машин")
+    @Owner("Пислякова Светлана")
     public void readUserWithCars(int amount) {
         UserRq userRq = UserRqFactory
                 .validUser()

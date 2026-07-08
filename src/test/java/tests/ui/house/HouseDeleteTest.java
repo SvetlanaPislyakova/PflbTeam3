@@ -39,13 +39,10 @@ public class HouseDeleteTest extends BaseTest {
                 .build();
         HouseRs houseRs = houseAdapter.createHouse(houseRq);
         Integer houseId = houseRs.getId();
-
         assertThat(dbSteps.isHouseExistsInDB(houseId)).isTrue();
-
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteHouse(houseId);
-
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(allDeletePage.getHouseStatusCode()).isEqualTo(204);
         softly.assertThat(dbSteps.isHouseExistsInDB(houseId)).isFalse();

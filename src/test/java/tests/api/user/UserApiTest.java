@@ -14,6 +14,7 @@ import api.models.user.UserRqFactory;
 import api.models.user.UserRs;
 import com.github.javafaker.Faker;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,6 +50,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Создание нового пользователя")
     @Description("Проверка создания нового пользователя")
+    @Owner("Пислякова Светлана")
     public void createUser() {
         UserRq userRq = UserRqFactory.validUser();
         UserRs userRs = userAdapter.createUser(userRq);
@@ -69,6 +71,7 @@ public class UserApiTest {
     @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
     @MethodSource("invalidUsers")
     @Description("Проверка создания пользователя с невалидными данными")
+    @Owner("Пислякова Светлана")
     void createUserWithNullFields(UserRq userRq) {
         userAdapter.createUserWithNullFields(userRq);
     }
@@ -76,12 +79,13 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Получение списка пользователей")
     @Description("Проверка получения списка пользователей")
+    @Owner("Пислякова Светлана")
     public void getUsers() {
         List<UserRs> users = userAdapter.getUsers();
         SoftAssertions.assertSoftly(softly -> {
             softly.assertThat(users).isNotNull();
             softly.assertThat(users).isNotEmpty();
-            for(UserRs user : users) {
+            for (UserRs user : users) {
                 softly.assertThat(user.getId()).isNotNull();
                 softly.assertThat(user.getFirstName()).isNotNull();
                 softly.assertThat(user.getSecondName()).isNotNull();
@@ -95,6 +99,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Удаление пользователя по id")
     @Description("Проверка удаления пользователя по id")
+    @Owner("Пислякова Светлана")
     public void deleteUser() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -105,6 +110,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Попытка удаления несуществующего пользователя")
     @Description("Проверка удаления несуществующего пользователя")
+    @Owner("Пислякова Светлана")
     public void deleteNotExistingUser() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -116,6 +122,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Получение пользователя по id")
     @Description("Проверка получения пользователя по id")
+    @Owner("Пислякова Светлана")
     public void getUserById() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -127,6 +134,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Попытка получения несуществующего пользователя по id")
     @Description("Проверка получения несуществующего пользователя")
+    @Owner("Пислякова Светлана")
     public void getNotExistingUserById() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -137,6 +145,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Изменение пользователя")
     @Description("Проверка изменения пользователя")
+    @Owner("Пислякова Светлана")
     public void changeUser() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -152,6 +161,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Попытка изменения несуществующего пользователя")
     @Description("Проверка изменения несуществующего пользователя")
+    @Owner("Пислякова Светлана")
     public void changeNotExistingUserById() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -163,6 +173,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Начисление денег пользователю")
     @Description("Проверка начисления денег пользователю")
+    @Owner("Пислякова Светлана")
     public void addMoneyToUser() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -175,6 +186,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Попытка начисления денег несуществующему пользователю")
     @Description("Проверка начисления денег несуществующему пользователю")
+    @Owner("Пислякова Светлана")
     public void addMoneyToNotExistingUser() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -186,6 +198,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Попытка начисления денег пользователю, отрицательная сумма")
     @Description("Проверка начисления отрицательной суммы")
+    @Owner("Пислякова Светлана")
     public void addInvalidMoneyToUser() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -196,6 +209,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Получение списка автомобилей пользователя")
     @Description("Проверка получения списка автомобилей пользователя")
+    @Owner("Marinin Konstantin")
     public void getUserCars() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -218,6 +232,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Получение имущества несуществующего пользователя")
     @Description("Проверка получения имущества несуществующего пользователя")
+    @Owner("Пислякова Светлана")
     public void getNotExistingUserInfo() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);
@@ -228,6 +243,7 @@ public class UserApiTest {
     @Test
     @DisplayName("API - Получение имущества пользователя")
     @Description("Проверка получения имущества пользователя")
+    @Owner("Пислякова Светлана")
     public void getUserInfo() {
         UserRq userRq = UserRqFactory
                 .validUser()
@@ -266,6 +282,7 @@ public class UserApiTest {
     @Test
     @DisplayName("Попытка удаления пользователя, у которого есть машина")
     @Description("Проверка удаления пользователя, у которого есть машина")
+    @Owner("Пислякова Светлана")
     public void deleteUserHavingCar() {
         UserRq userRq = UserRqFactory
                 .validUser()
@@ -289,6 +306,7 @@ public class UserApiTest {
     @Test
     @DisplayName("Попытка удаления пользователя, проживающего в доме")
     @Description("Проверка удаления пользователя, проживающего в доме")
+    @Owner("Пислякова Светлана")
     public void deleteUserLiveInHouse() {
         UserRq userRq = UserRqFactory
                 .validUser()

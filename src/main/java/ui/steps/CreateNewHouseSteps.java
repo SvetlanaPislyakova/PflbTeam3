@@ -39,7 +39,6 @@ public class CreateNewHouseSteps {
         return houseId;
     }
 
-
     @Step("Получение статуса операции создания дома")
     public String getCreateHouseStatus() {
         return createNewHousePage.getStatus();

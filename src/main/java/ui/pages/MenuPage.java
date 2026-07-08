@@ -1,6 +1,7 @@
 package ui.pages;
 
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import lombok.Getter;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -18,18 +19,15 @@ public class MenuPage extends BasePage {
         USERS_READ_WITH_CARS("Users", "Read user with cars", new ReadUserWithCarsPage()),
         USERS_ADD_MONEY("Users", "Add money", new AddMoneyPage()),
         USERS_BUY_OR_SELL_CAR("Users", "Buy or sell car", new BuyOrSaleCarPage()),
-//        USERS_SETTLE_TO_HOUSE("Users", "Settle to house", new SettleToHousePage()),
+        USERS_SETTLE_TO_HOUSE("Users", "Settle to house", new SettleOrEvictPage()),
         USERS_ISSUE_LOAN("Users", "Issue a loan", new IssueLoanPage()),
-
         CARS_READ_ALL("Cars", "Read all", new AllCarsPage()),
         CARS_CREATE_NEW("Cars", "Create new", new CreateCarPage()),
-        CARS_BUY_OR_SELL_CAR("Cars", "Buy or sell car", new BuyOrSaleCarPage());
-
-//        HOUSES_READ_ALL("Houses", "Read all", new AllHousesPage()),
-//        HOUSES_READ_ONE_BY_ID("Houses", "Read one by ID", new ReadOneHousePage()),
-//        HOUSES_CREATE_NEW("Houses", "Create new", new CreateHousePage()),
-//        HOUSES_SETTLE_OR_EVICT_USER("Houses", "Settle or evict user", new SettleOrEvictPage());
-
+        CARS_BUY_OR_SELL_CAR("Cars", "Buy or sell car", new BuyOrSaleCarPage()),
+        HOUSES_READ_ALL("Houses", "Read all", new AllHousesPage()),
+        HOUSES_READ_ONE_BY_ID("Houses", "Read one by ID", new ReadHouseOneById()),
+        HOUSES_CREATE_NEW("Houses", "Create new", new CreateNewHousePage()),
+        HOUSES_SETTLE_OR_EVICT_USER("Houses", "Settle or evict user", new SettleOrEvictPage());
         private final String dropdown;
         private final String option;
         private final BasePage page;
@@ -47,14 +45,18 @@ public class MenuPage extends BasePage {
     }
 
     @Override
-    public BasePage isPageOpened() { return null; }
+    public BasePage isPageOpened() {
+        return null;
+    }
 
+    @Step("Открытие страницы All Post")
     public AllPostPage openAllPostPage() {
         ALL_POST_BTN.click();
         switchTo().window(1);
         return new AllPostPage();
     }
 
+    @Step("Открытие страницы All Delete")
     public AllDeletePage openAllDeletePage() {
         ALL_DELETE_BTN.click();
         switchTo().window(1);

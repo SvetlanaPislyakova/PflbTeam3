@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public abstract class BasePage {

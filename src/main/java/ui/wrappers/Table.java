@@ -90,13 +90,6 @@ public class Table {
         SelenideElement input = $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
                 firstColumn, secondColumn));
         input.shouldBe(visible).shouldBe(enabled).setValue(value);
-        input.shouldHave(value(value));
-    }
-
-    public String getValueFromInput(String label) {
-        int columnIndex = findColumnIndex(label) + 1;
-        return $x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]/input",
-                firstColumn, secondColumn)).getValue();
     }
 
     public String getValueFromCell(String label) {
@@ -106,7 +99,7 @@ public class Table {
                 firstColumn, secondColumn)).getText();
     }
 
-    public List<String> getListOfValues (String label) {
+    public List<String> getListOfValues(String label) {
         log.info("Получить список значений из столбца '{}'", label);
         int columnIndex = findColumnIndex(label) + 1;
         ElementsCollection listOfValues = $$x(String.format(PATTERN + "//tbody//td[" + columnIndex + "]",
@@ -115,7 +108,7 @@ public class Table {
         return listOfValues.texts();
     }
 
-    public void rowsShouldBeEmpty () {
+    public void rowsShouldBeEmpty() {
         log.info("Проверить, что в таблице нет строк");
         $$x(String.format(PATTERN + "//tbody/tr", firstColumn, secondColumn))
                 .shouldBe(CollectionCondition.empty);

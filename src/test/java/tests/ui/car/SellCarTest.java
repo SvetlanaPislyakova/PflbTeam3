@@ -3,6 +3,7 @@ package tests.ui.car;
 import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import tests.ui.base.BaseTest;
 import ui.dto.Car;
 import java.math.BigDecimal;
-
 
 public class SellCarTest extends BaseTest {
 
@@ -25,27 +25,26 @@ public class SellCarTest extends BaseTest {
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Продажа автомобиля пользователем")
     @Description("Тест проверяет продажу автомобиля")
     public void sellCarSuccess() {
         UserRq seller = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer sellerID = userAdapter.createUserAndGetId(seller);
-
         Car car = Car.builder().build();
-        carSteps.createNewCar(car);
-        int carID = carSteps.checkCreateCarAndGetId();
-        createdCarIds.add(carID);
-
+                carSteps.createNewCar(car);
+                int carID = carSteps.checkCreateCarAndGetId();
+                createdCarIds.add(carID);
         carSteps.buyNewCar(sellerID, carID);
-        SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(carSteps.isCarBought(sellerID, carID)).isTrue();
-
+                SoftAssertions softly = new SoftAssertions();
+                softly.assertThat(carSteps.isCarBought(sellerID, carID)).isTrue();
         carSteps.sellNewCar(sellerID, carID);
-        softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
-        softly.assertAll();
+                softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
+                softly.assertAll();
     }
 
     @ParameterizedTest
+    @Owner("Akhunov Gayaz")
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("Множественная продажа автомобилей одним пользователем")
     @Description("Тест проверяет продажу нескольких автомобилей одним пользователем")
@@ -56,22 +55,20 @@ public class SellCarTest extends BaseTest {
                 .build();
         Integer sellerID = userAdapter.createUserAndGetId(seller);
         createdUserIds.add(sellerID);
-
         for (int i = 0; i < carCount; i++) {
-            Car car = Car.builder().build();
-            carSteps.createNewCar(car);
-            int carID = carSteps.checkCreateCarAndGetId();
-            createdCarIds.add(carID);
-
-            carSteps.buyNewCar(sellerID, carID);
-            carSteps.sellNewCar(sellerID, carID);
-
-            softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
-            softly.assertAll();
+                    Car car = Car.builder().build();
+                    carSteps.createNewCar(car);
+                    int carID = carSteps.checkCreateCarAndGetId();
+                    createdCarIds.add(carID);
+        carSteps.buyNewCar(sellerID, carID);
+                    carSteps.sellNewCar(sellerID, carID);
+        softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
+                    softly.assertAll();
         }
     }
 
     @Test
+    @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при продаже с недействительным ID пользователя")
     @Description("Тест проверяет попытку продажи с недействительным ID пользователя")
     public void sellCarWithInvalidUserId() {
@@ -79,12 +76,10 @@ public class SellCarTest extends BaseTest {
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-
         int invalidUserID = 999999999;
-        carSteps.sellNewCar(invalidUserID, carID);
-
+                carSteps.sellNewCar(invalidUserID, carID);
         SoftAssertions softly = new SoftAssertions();
-        softly.assertThat(carSteps.checkStatusCode()).isNotEqualTo(200);
-        softly.assertAll();
+                softly.assertThat(carSteps.checkStatusCode()).isNotEqualTo(200);
+                softly.assertAll();
     }
 }

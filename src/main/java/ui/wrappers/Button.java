@@ -10,10 +10,8 @@ import static com.codeborne.selenide.Selenide.$x;
 public class Button {
 
     private final String label;
-
     private final String PATTERN =
             "contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '%s')";
-//    private final String PATTERN = "contains(., '%s')";
 
     public Button(String label) {
         this.label = label.toLowerCase();
@@ -23,7 +21,7 @@ public class Button {
         log.info("Кликнуть кнопку {}", label);
         StringBuilder textBtn = new StringBuilder();
         List<String> words = List.of(label.split(" "));
-        for(int i = 0; i < words.size(); i++) {
+        for (int i = 0; i < words.size(); i++) {
             if (i != 0) textBtn.append(" and ");
             textBtn.append(String.format(PATTERN, words.get(i)));
         }
