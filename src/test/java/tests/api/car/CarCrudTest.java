@@ -5,6 +5,7 @@ import api.models.CarRq;
 import api.models.CarRqFactory;
 import api.models.CarRs;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Получение автомобиля по ID")
     @Description("Тест проверяет создание автомобиля, его получение по ID и последующее удаление")
     void getCarTest() {
@@ -45,7 +47,6 @@ public class CarCrudTest extends BaseApiTest {
                 .engineType("CNG")
                 .price(BigDecimal.valueOf(15000.0))
                 .build();
-
         CarRs created = carAdapter.createCar(carRq, accessToken);
         CarRs received = carAdapter.getCar(created.getId(), accessToken);
         assertEquals(created.getId(), received.getId());
@@ -65,24 +66,21 @@ public class CarCrudTest extends BaseApiTest {
                     .price(BigDecimal.valueOf(12345.00))
                     .model("UpdatedModel")
                     .build();
-
             CarRs updatedRs = carAdapter.updateCar(carID, updatedRq, accessToken);
-
             SoftAssertions softly = new SoftAssertions();
             softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
             softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
-
             CarRs received = carAdapter.getCar(carID, accessToken);
             softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
             softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
-
         } finally {
             carAdapter.deleteCar(carID, accessToken);
         }
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Удаление автомобиля")
     @Description("Тест проверяет создание и последующее удаление автомобиля")
     void deleteCarTest() {
@@ -92,12 +90,12 @@ public class CarCrudTest extends BaseApiTest {
                 .engineType("Gasoline")
                 .price(BigDecimal.valueOf(5000.0))
                 .build();
-
         CarRs car = carAdapter.createCar(carRq, accessToken);
         carAdapter.deleteCar(car.getId(), accessToken);
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дизельного автомобиля")
     @Description("Тест проверяет создание автомобиля с дизельным двигателем (BMW X5)")
     void createDieselCarTest() {
@@ -105,6 +103,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание водородного автомобиля")
     @Description("Тест проверяет создание автомобиля с водородным двигателем (Audi A4)")
     void createPetrolCarTest() {
@@ -112,6 +111,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание электрического автомобиля")
     @Description("Тест проверяет создание электромобиля (Tesla Model3)")
     void createElectricCarTest() {
@@ -119,6 +119,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дешевого автомобиля")
     @Description("Тест проверяет создание недорогого автомобиля (Lada Granta)")
     void createCheapCarTest() {
@@ -126,6 +127,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дорогого автомобиля")
     @Description("Тест проверяет создание дорогого электромобиля (Tesla ModelX)")
     void createExpensiveCarTest() {
@@ -133,6 +135,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание японского автомобиля")
     @Description("Тест проверяет создание японского автомобиля (Toyota Camry)")
     void createJapaneseCarTest() {
@@ -140,6 +143,7 @@ public class CarCrudTest extends BaseApiTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание немецкого автомобиля")
     @Description("Тест проверяет создание немецкого автомобиля (Mercedes E200)")
     void createGermanCarTest() {
@@ -150,18 +154,14 @@ public class CarCrudTest extends BaseApiTest {
                                 String model,
                                 String engineType,
                                 BigDecimal price) {
-
         CarRq carRq = CarRq.builder()
                 .mark(mark)
                 .model(model)
                 .engineType(engineType)
                 .price(price)
                 .build();
-
         CarRs car = carAdapter.createCar(carRq, accessToken);
-
         assertEquals(mark, car.getMark());
-
         carAdapter.deleteCar(car.getId(), accessToken);
     }
 }
