@@ -9,9 +9,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.baseUrl;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class CreateNewHousePage extends BasePage {
@@ -48,6 +46,7 @@ public class CreateNewHousePage extends BasePage {
     @Step("Установка количества этажей: {floors}")
     public CreateNewHousePage setFloors(int floors) {
         log.info("Установить количество этажей: {}", floors);
+        sleep(300);
         FLOORS_INPUT.shouldBe(visible).shouldBe(enabled);
         FLOORS_INPUT.clear();
         FLOORS_INPUT.setValue(String.valueOf(floors));

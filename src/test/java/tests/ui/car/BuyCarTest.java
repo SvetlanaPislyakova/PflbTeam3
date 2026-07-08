@@ -76,6 +76,7 @@ public class BuyCarTest extends BaseTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("Множественные покупки одним пользователем")
+    @Description("Тест проверяет возможность покупки нескольких автомобилей одним пользователем")
     public void multiplePurchasesByUser(int carCount) {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);

@@ -3,7 +3,11 @@ package ui.steps;
 import io.qameta.allure.Step;
 import org.assertj.core.api.SoftAssertions;
 import ui.dto.User;
-import ui.pages.*;
+import ui.pages.AddMoneyPage;
+import ui.pages.AllUsersPage;
+import ui.pages.CreateUserPage;
+import ui.pages.IssueLoanPage;
+import ui.pages.ReadUserWithCarsPage;
 
 import java.math.BigDecimal;
 import java.util.List;

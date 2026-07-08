@@ -52,10 +52,6 @@ public class BaseAdapter {
             .expectStatusCode(204)
             .build();
 
-    public static ResponseSpecification forbidden403 = new ResponseSpecBuilder()
-            .expectStatusCode(403)
-            .build();
-
     public static ResponseSpecification badRequest400 = new ResponseSpecBuilder()
             .expectStatusCode(400)
             .build();
