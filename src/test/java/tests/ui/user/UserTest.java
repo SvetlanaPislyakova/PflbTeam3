@@ -8,6 +8,7 @@ import api.models.user.UserRq;
 import api.models.user.UserRqFactory;
 import com.github.javafaker.Faker;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -160,7 +161,9 @@ public class UserTest extends BaseTest {
     }
 
     @Test
+    @Owner("Marinin Konstantin")
     @DisplayName("UI - Удаление пользователя через страницу All DELETE")
+    @Description("Проверка удаления пользователя через страницу All DELETE")
     public void deleteUserThroughUI() {
         UserRq userRq = UserRqFactory.validUser();
         Integer userId = userAdapter.createUserAndGetId(userRq);

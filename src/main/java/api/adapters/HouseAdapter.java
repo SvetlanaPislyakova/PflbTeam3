@@ -23,12 +23,29 @@ public class HouseAdapter extends BaseAdapter {
                 .log().all();
     }
 
+    private ValidatableResponse createHouseRequest(String houseRq) {
+        return given()
+                .spec(getAuthSpec())
+                .body(houseRq)
+                .log().all()
+                .when()
+                .post("/house")
+                .then()
+                .log().all();
+    }
+
     public HouseRs createHouse(HouseRq houseRq) {
         log.info("POST - создание дома, 201");
         return createHouseRequest(houseRq)
                 .spec(created201)
                 .extract()
                 .as(HouseRs.class);
+    }
+
+    public void createHouseBadRequest(String houseRq) {
+        log.info("POST - создание дома с невалидными данными, 400");
+        createHouseRequest(houseRq)
+                .spec(badRequest400);
     }
 
     private ValidatableResponse settleUserRequest(Integer houseId, Integer userId) {
@@ -49,6 +66,18 @@ public class HouseAdapter extends BaseAdapter {
                 .spec(success200)
                 .extract()
                 .as(HouseRs.class);
+    }
+
+    public void settleNonExistingUser(Integer houseId, Integer userId) {
+        log.info("POST - попытка заселения несуществующего пользователя, 404");
+        settleUserRequest(houseId, userId)
+                .spec(notFound404);
+    }
+
+    public void settleUserToNonExistingHouse(Integer houseId, Integer userId) {
+        log.info("POST - попытка заселения пользователя в несуществующий дом, 404");
+        settleUserRequest(houseId, userId)
+                .spec(notFound404);
     }
 
     private ValidatableResponse evictUserRequest(Integer houseId, Integer userId) {
@@ -86,6 +115,18 @@ public class HouseAdapter extends BaseAdapter {
                 .spec(success200)
                 .extract()
                 .as(HouseRs.class);
+    }
+
+    public void evictNonExistingUser(Integer houseId, Integer userId) {
+        log.info("POST - попытка выселения несуществующего пользователя, 404");
+        evictUserRequest(houseId, userId)
+                .spec(notFound404);
+    }
+
+    public void evictUserFromNonExistingHouse(Integer houseId, Integer userId) {
+        log.info("POST - попытка выселения пользователя из несуществующего дома, 404");
+        evictUserRequest(houseId, userId)
+                .spec(notFound404);
     }
 
     private ValidatableResponse updateHouseRequest(Integer houseId, HouseRq houseRq) {
