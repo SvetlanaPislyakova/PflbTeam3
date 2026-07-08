@@ -38,6 +38,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Получение автомобиля по ID")
     @Description("Тест проверяет создание автомобиля, его получение по ID и последующее удаление")
     void getCarTest() {
@@ -76,6 +77,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Удаление автомобиля")
     @Description("Тест проверяет создание и последующее удаление автомобиля")
     void deleteCarTest() {
@@ -90,6 +92,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дизельного автомобиля")
     @Description("Тест проверяет создание автомобиля с дизельным двигателем (BMW X5)")
     void createDieselCarTest() {
@@ -97,6 +100,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание водородного автомобиля")
     @Description("Тест проверяет создание автомобиля с водородным двигателем (Audi A4)")
     void createPetrolCarTest() {
@@ -104,6 +108,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание электрического автомобиля")
     @Description("Тест проверяет создание электромобиля (Tesla Model3)")
     void createElectricCarTest() {
@@ -111,6 +116,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дешевого автомобиля")
     @Description("Тест проверяет создание недорогого автомобиля (Lada Granta)")
     void createCheapCarTest() {
@@ -118,6 +124,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание дорогого автомобиля")
     @Description("Тест проверяет создание дорогого электромобиля (Tesla ModelX)")
     void createExpensiveCarTest() {
@@ -125,6 +132,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание японского автомобиля")
     @Description("Тест проверяет создание японского автомобиля (Toyota Camry)")
     void createJapaneseCarTest() {
@@ -132,6 +140,7 @@ public class CarCrudTest {
     }
 
     @Test
+    @Owner("Shapovalov Dmitry")
     @DisplayName("Создание немецкого автомобиля")
     @Description("Тест проверяет создание немецкого автомобиля (Mercedes E200)")
     void createGermanCarTest() {

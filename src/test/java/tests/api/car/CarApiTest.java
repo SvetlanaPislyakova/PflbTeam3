@@ -4,6 +4,7 @@ import api.adapters.CarAdapter;
 import api.models.car.CarRq;
 import api.models.car.CarRs;
 import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -15,6 +16,7 @@ public class CarApiTest {
 
     private final CarAdapter carAdapter = new CarAdapter();
 
+    @Owner("Shapovalov Dmitry")
     @ParameterizedTest(name = "{0} {1}")
     @DisplayName("Создание и удаление автомобиля с различными параметрами")
     @Description("Параметризованный тест проверяет создание автомобиля с разными комбинациями марки, " +
