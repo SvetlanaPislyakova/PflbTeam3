@@ -43,6 +43,7 @@ public class AllUsersPage extends BasePage {
         return null;
     }
 
+    @Step("Проверка сортировки пользователей по полю '{field}'")
     public AllUsersPage checkSortUsers(String field, boolean isNumeric) {
         List<String> startList = table.getListOfValues(field);
         checkSortObjectNaturalOrder(table, startList, field, isNumeric);
@@ -50,6 +51,7 @@ public class AllUsersPage extends BasePage {
         return this;
     }
 
+    @Step("Проверка сортировки пользователей по полю '{field}'")
     public AllUsersPage checkSortUsersByText(String field, boolean isNumeric) {
         List<String> startList = getListFromDb(field);
         sleep(5000);

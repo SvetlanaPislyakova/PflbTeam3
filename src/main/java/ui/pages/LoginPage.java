@@ -8,7 +8,10 @@ import org.openqa.selenium.Keys;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.switchTo;
 
 @Log4j2
 public class LoginPage extends BasePage {

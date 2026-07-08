@@ -17,14 +17,14 @@ public class AllCarsPage extends BasePage {
     Table table = new Table(tableName);
 
     @Override
-    @Step("Открытие страницы read/cars")
+    @Step("Открытие страницы Read all cars")
     public AllCarsPage openPage() {
         open(baseUrl + "#/read/cars");
         return this;
     }
 
     @Override
-    @Step("Проверка открытия страницы read/cars")
+    @Step("Проверка открытия страницы Read all cars")
     public AllCarsPage isPageOpened() {
         table.checkTableVisible();
         return this;

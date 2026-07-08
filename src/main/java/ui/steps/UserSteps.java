@@ -88,6 +88,7 @@ public class UserSteps {
                 .checkEmptyCarsInfo();
     }
 
+    @Step("Проверить, что у пользователь есть в БД")
     public void checkUserExistsInDb(Integer userId) {
         assertThat(dbSteps.isUserExistsInDB(userId)).isTrue();
     }
