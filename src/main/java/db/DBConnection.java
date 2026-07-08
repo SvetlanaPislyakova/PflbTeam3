@@ -3,7 +3,11 @@ package db;
 import lombok.extern.log4j.Log4j2;
 import utils.PropertyReader;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 @Log4j2
 public class DBConnection {

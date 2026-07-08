@@ -22,6 +22,7 @@ public class CarCrudTest {
     @Test
     @Owner("Akhunov Gayaz")
     @DisplayName("Получение списка автомобилей")
+    @Description("Тест проверяет получение списка автомобилей")
     public void getCars() {
         List<CarRs> cars = carAdapter.getCars();
         SoftAssertions.assertSoftly(softly -> {
