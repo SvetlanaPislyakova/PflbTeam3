@@ -32,19 +32,13 @@ public class BaseTest {
 
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
+    protected List<Integer> createdUserIds = new ArrayList<>();
+    protected List<Integer> createdCarIds = new ArrayList<>();
     protected LoginSteps loginSteps;
     protected UserSteps userSteps;
     protected DBSteps dbSteps;
     protected CarSteps carSteps;
-    protected CreateUserPage createUserPage;
-    protected AllUsersPage allUsersPage;
-    protected AddMoneyPage addMoneyPage;
-    protected MenuPage menuPage;
-    protected CreateCarPage createCarPage;
-    protected AllCarsPage allCarsPage;
     protected BuyOrSaleCarPage buyOrSaleCarPage;
-    protected List<Integer> createdUserIds = new ArrayList<>();
-    protected List<Integer> createdCarIds = new ArrayList<>();
     protected UserAdapter userAdapter;
     protected CarAdapter carAdapter;
     protected AllDeletePage allDeletePage = new AllDeletePage();
@@ -73,7 +67,6 @@ public class BaseTest {
         options.addArguments("--disable-notifications");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--disable-infobars");
-
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
@@ -84,13 +77,6 @@ public class BaseTest {
         userSteps = new UserSteps();
         dbSteps = new DBSteps();
         carSteps = new CarSteps();
-
-        createUserPage = new CreateUserPage();
-        allUsersPage = new AllUsersPage();
-        addMoneyPage = new AddMoneyPage();
-        menuPage = new MenuPage();
-        createCarPage = new CreateCarPage();
-        allCarsPage = new AllCarsPage();
         buyOrSaleCarPage = new BuyOrSaleCarPage();
         carAdapter = new CarAdapter();
         userAdapter = new UserAdapter();
