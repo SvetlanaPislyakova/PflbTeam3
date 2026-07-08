@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 
 @Data
 public class CarRs {
+
     private int id;
     private String mark;
     private String model;

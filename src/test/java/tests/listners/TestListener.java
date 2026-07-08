@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Log4j2
 public class TestListener implements TestWatcher {
+
     @Override
     public void testDisabled(ExtensionContext context, Optional<String> reason) {
         log.warn("======================================== SKIPPED TEST {} ========================================",

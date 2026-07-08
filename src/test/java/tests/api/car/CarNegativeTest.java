@@ -10,6 +10,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 
 public class CarNegativeTest {
+
     private final CarAdapter carAdapter = new CarAdapter();
 
     @DisplayName("Создание автомобиля с невалидными данными")

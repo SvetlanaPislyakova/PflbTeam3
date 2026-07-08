@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class CreateNewHousePage extends BasePage {
+
     private final SelenideElement FLOORS_INPUT = $("#floor_send");
     private final SelenideElement PRICE_INPUT = $("#price_send");
     private final SelenideElement PARKING_WARM_COVERED = $("#parking_first_send");

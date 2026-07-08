@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class AllPostApiTest {
+
     private final HouseAdapter houseAdapter = new HouseAdapter();
     private final UserAdapter userAdapter = new UserAdapter();
 

@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AllPostPage extends BasePage {
+
     private static final String BUY_OR_SELL_CAR_FORM =
             "//*[th[contains(text(), 'User ID')] and th[contains(text(), 'Car Id')]]/ancestor::table";
     private static final String SETTLE_OR_EVICT_FORM =
@@ -218,5 +219,4 @@ public class AllPostPage extends BasePage {
     public Integer getCreateHouseId() {
         return createHouseTable.getResultInt();
     }
-
 }

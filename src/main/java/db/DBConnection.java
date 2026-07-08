@@ -7,6 +7,7 @@ import java.sql.*;
 
 @Log4j2
 public class DBConnection {
+
     private final String URL = "jdbc:postgresql://82.142.167.37:4832/pflb_trainingcenter";
     private final String DB_USER = System.getProperty("dbUser", PropertyReader.getProperty("dbUser"));
     private final String DB_PASSWORD = System.getProperty("dbPassword", PropertyReader.getProperty("dbPassword"));

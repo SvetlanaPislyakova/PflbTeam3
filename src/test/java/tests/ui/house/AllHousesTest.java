@@ -9,6 +9,7 @@ import ui.pages.AllHousesPage;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AllHousesTest extends BaseTest {
+
     @BeforeEach
     public void login() {
         loginSteps.login(email, password)
@@ -18,11 +19,9 @@ public class AllHousesTest extends BaseTest {
     @Test
     @Description("Проверка открытия страницы Read all houses и кнопки Reload")
     public void testReadAllHousesPage() {
-
         AllHousesPage allHousesPage = new AllHousesPage().openPage();
         allHousesPage.isPageOpened()
                 .clickReload();
-
         assertTrue(
                 allHousesPage.getTable().getTableElement().isDisplayed(),
                 "Таблица должна быть видна после нажатия Reload");

@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserTest extends BaseTest {
+
     private final Faker faker = new Faker();
     private final UserAdapter userAdapter = new UserAdapter();
 

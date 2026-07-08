@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CarDeleteTest extends BaseTest {
+
     private final CarAdapter carAdapter = new CarAdapter();
 
     @BeforeEach
@@ -35,13 +36,10 @@ public class CarDeleteTest extends BaseTest {
                 .build();
         CarRs carRs = carAdapter.createCar(carRq);
         Integer carId = carRs.getId();
-
         assertThat(dbSteps.isCarExistsInDB(carId)).isTrue();
-
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteCar(carId);
-
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(allDeletePage.getCarStatusCode()).isEqualTo(204);
         softly.assertThat(dbSteps.isCarExistsInDB(carId)).isFalse();

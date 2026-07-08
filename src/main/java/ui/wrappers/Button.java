@@ -8,10 +8,10 @@ import static com.codeborne.selenide.Selenide.$x;
 
 @Log4j2
 public class Button {
+
     private final String label;
     private final String PATTERN =
             "contains(translate(., 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz'), '%s')";
-//    private final String PATTERN = "contains(., '%s')";
 
     public Button(String label) {
         this.label = label.toLowerCase();

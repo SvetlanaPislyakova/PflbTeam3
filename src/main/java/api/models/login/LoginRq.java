@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class LoginRq {
+
     @SerializedName("username")
     @Expose
     private final String username;

@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class SellCarApiTest {
+
     private final UserAdapter userAdapter = new UserAdapter();
     private final CarAdapter carAdapter = new CarAdapter();
     SoftAssertions softly = new SoftAssertions();
@@ -32,25 +33,18 @@ public class SellCarApiTest {
                 .toBuilder()
                 .money(BigDecimal.valueOf(100000))
                 .build();
-
         Integer userId = userAdapter.createUserAndGetId(userRq);
-
         CarRq carRq = CarRqFactory
                 .validCar()
                 .toBuilder()
                 .price(BigDecimal.valueOf(15000))
                 .build();
-
         CarRs carRs = carAdapter.createCar(carRq);
         Integer carId = carRs.getId();
-
         userAdapter.buyCar(userId, carId);
-
         UserInfoRs infoBeforeSell = userAdapter.getUserInfo(userId);
         softly.assertThat(infoBeforeSell.getCars()).isNotEmpty();
-
         userAdapter.sellCar(userId, carId);
-
         UserInfoRs infoAfterSell = userAdapter.getUserInfo(userId);
         List<CarRs> carsAfterSell = infoAfterSell.getCars();
         softly.assertThat(carsAfterSell)
@@ -65,33 +59,25 @@ public class SellCarApiTest {
     @Description("Создаём пользователя с известным балансом, создаём авто, покупаем и продаём; проверяем баланс")
     void sellCarCheckBalanceTest() {
         BigDecimal initialBalance = BigDecimal.valueOf(50000);
-
         UserRq userRq = UserRqFactory
                 .validUser()
                 .toBuilder()
                 .money(initialBalance)
                 .build();
-
         Integer userId = userAdapter.createUserAndGetId(userRq);
-
         BigDecimal carPrice = BigDecimal.valueOf(12500.50);
         CarRq carRq = CarRqFactory
                 .validCar()
                 .toBuilder()
                 .price(carPrice)
                 .build();
-
         CarRs carRs = carAdapter.createCar(carRq);
         Integer carId = carRs.getId();
-
         userAdapter.buyCar(userId, carId);
-
         UserInfoRs infoAfterBuy = userAdapter.getUserInfo(userId);
         BigDecimal expectedAfterBuy = initialBalance.subtract(carPrice);
         softly.assertThat(infoAfterBuy.getMoney()).isEqualByComparingTo(expectedAfterBuy);
-
         userAdapter.sellCar(userId, carId);
-
         UserInfoRs infoAfterSell = userAdapter.getUserInfo(userId);
         softly.assertThat(infoAfterSell.getMoney()).isEqualByComparingTo(initialBalance);
         softly.assertAll();

@@ -36,5 +36,4 @@ public class AllHousesPage extends BasePage {
         new ui.wrappers.Button("Reload").clickBtn();
         return this;
     }
-
 }

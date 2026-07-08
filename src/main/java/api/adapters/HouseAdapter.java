@@ -11,6 +11,7 @@ import static io.restassured.RestAssured.given;
 
 @Log4j2
 public class HouseAdapter extends BaseAdapter {
+
     private ValidatableResponse createHouseRequest(HouseRq houseRq) {
         return given()
                 .spec(getAuthSpec())

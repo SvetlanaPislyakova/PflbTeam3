@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.math.BigDecimal;
 
 public class CarApiTest {
+
     private final CarAdapter carAdapter = new CarAdapter();
 
     @ParameterizedTest(name = "{0} {1}")

@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class UserApiTest {
+
     private final UserAdapter userAdapter = new UserAdapter();
     private final DBSteps dbSteps = new DBSteps();
     private final CarAdapter carAdapter = new CarAdapter();

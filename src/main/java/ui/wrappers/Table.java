@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class Table {
+
     private final String firstColumn;
     private final String secondColumn;
     private final String PATTERN = "//*[th[contains(text(), '%s')] and th[contains(text(), '%s')]]/ancestor::table";

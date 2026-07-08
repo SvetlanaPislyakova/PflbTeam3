@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Log4j2
 public class LoginSteps {
+
     private final LoginPage loginPage = new LoginPage();
     private final CreateUserPage createUserPage = new CreateUserPage();
 

@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import tests.ui.base.BaseTest;
 
 public class CarSortTest extends BaseTest {
+
     @ParameterizedTest(name = "Сортировка автомобилей по полю {0}")
     @Owner("Akhunov Gayaz")
     @ValueSource(strings = {"Mark", "Model"})

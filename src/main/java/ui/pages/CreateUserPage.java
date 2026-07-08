@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 
 @Log4j2
 public class CreateUserPage extends BasePage {
+
     private final String RADIO_BTN = "//input[@value='%s']";
     private final String tableName = "Create new user";
     private final Table table = new Table(tableName);

@@ -9,9 +9,6 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class BuyOrSaleCarPage extends BasePage {
     private static final String TABLE_NAME = "Buy or sell car";
-    private static final String USER_ID_FIELD = "User ID";
-    private static final String CAR_ID_FIELD = "Car Id";
-    private static final String BUY_OPTION = "BUY";
     private final Table table = new Table(TABLE_NAME);
 
     @Override

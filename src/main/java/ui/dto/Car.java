@@ -9,7 +9,9 @@ import java.math.BigDecimal;
 @Data
 @Builder
 public class Car {
+
     private static final Faker faker = new Faker();
+
     @Builder.Default
     private final String engineType = generateEngineType();
     @Builder.Default
@@ -21,6 +23,6 @@ public class Car {
             .randomDouble(2, 1000, 10000));
 
     private static String generateEngineType() {
-        return new Faker().options().option("CNG", "Diesel", "Gasoline", "Hydrogenic", "PHEV");
+        return new Faker().options().option("CNG", "Diesel", "Gasoline", "Hydrogenic", "PHEV", "Electric");
     }
 }

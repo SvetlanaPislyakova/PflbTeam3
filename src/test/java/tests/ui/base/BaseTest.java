@@ -29,6 +29,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 @Log4j2
 @ExtendWith(TestListener.class)
 public class BaseTest {
+
     protected static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     protected static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     protected LoginSteps loginSteps;

@@ -11,6 +11,7 @@ import ui.pages.MenuPage;
 import ui.wrappers.DropDown;
 
 public class MenuTest extends BaseTest {
+
     private final MenuPage menuPage = new MenuPage();
 
     @BeforeEach

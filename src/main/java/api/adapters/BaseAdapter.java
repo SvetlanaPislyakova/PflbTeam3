@@ -10,37 +10,10 @@ import io.restassured.specification.ResponseSpecification;
 import utils.PropertyReader;
 
 public class BaseAdapter {
+
     private static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     private static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
     private static final String baseUri = PropertyReader.getProperty("baseUri");
-    public static RequestSpecification baseSpec = new RequestSpecBuilder()
-            .setBaseUri(baseUri)
-            .setContentType(ContentType.JSON)
-            .build();
-    public static ResponseSpecification success200 = new ResponseSpecBuilder()
-            .expectStatusCode(200)
-            .build();
-    public static ResponseSpecification created201 = new ResponseSpecBuilder()
-            .expectStatusCode(201)
-            .build();
-    public static ResponseSpecification accepted202 = new ResponseSpecBuilder()
-            .expectStatusCode(202)
-            .build();
-    public static ResponseSpecification noContent204 = new ResponseSpecBuilder()
-            .expectStatusCode(204)
-            .build();
-    public static ResponseSpecification forbidden403 = new ResponseSpecBuilder()
-            .expectStatusCode(403)
-            .build();
-    public static ResponseSpecification badRequest400 = new ResponseSpecBuilder()
-            .expectStatusCode(400)
-            .build();
-    public static ResponseSpecification notFound404 = new ResponseSpecBuilder()
-            .expectStatusCode(404)
-            .build();
-    public static ResponseSpecification conflict409 = new ResponseSpecBuilder()
-            .expectStatusCode(409)
-            .build();
     static Gson gson = new Gson();
 
     private static String getAccessToken() {
@@ -51,10 +24,47 @@ public class BaseAdapter {
         return LoginAdapter.getAccessToken(rq);
     }
 
+    public static RequestSpecification baseSpec = new RequestSpecBuilder()
+            .setBaseUri(baseUri)
+            .setContentType(ContentType.JSON)
+            .build();
+
     protected static RequestSpecification getAuthSpec() {
         return new RequestSpecBuilder()
                 .addRequestSpecification(baseSpec)
                 .addHeader("Authorization", "Bearer " + getAccessToken())
                 .build();
     }
+
+    public static ResponseSpecification success200 = new ResponseSpecBuilder()
+            .expectStatusCode(200)
+            .build();
+
+    public static ResponseSpecification created201 = new ResponseSpecBuilder()
+            .expectStatusCode(201)
+            .build();
+
+    public static ResponseSpecification accepted202 = new ResponseSpecBuilder()
+            .expectStatusCode(202)
+            .build();
+
+    public static ResponseSpecification noContent204 = new ResponseSpecBuilder()
+            .expectStatusCode(204)
+            .build();
+
+    public static ResponseSpecification forbidden403 = new ResponseSpecBuilder()
+            .expectStatusCode(403)
+            .build();
+
+    public static ResponseSpecification badRequest400 = new ResponseSpecBuilder()
+            .expectStatusCode(400)
+            .build();
+
+    public static ResponseSpecification notFound404 = new ResponseSpecBuilder()
+            .expectStatusCode(404)
+            .build();
+
+    public static ResponseSpecification conflict409 = new ResponseSpecBuilder()
+            .expectStatusCode(409)
+            .build();
 }

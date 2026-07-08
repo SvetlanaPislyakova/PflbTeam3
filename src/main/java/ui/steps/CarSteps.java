@@ -8,6 +8,7 @@ import ui.pages.BuyOrSaleCarPage;
 import ui.pages.CreateCarPage;
 
 public class CarSteps {
+
     private final CreateCarPage createCarPage = new CreateCarPage();
     private final BuyOrSaleCarPage buyOrSaleCarPage = new BuyOrSaleCarPage();
     private final AllCarsPage allCarsPage = new AllCarsPage();

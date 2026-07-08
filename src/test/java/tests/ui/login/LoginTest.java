@@ -12,6 +12,7 @@ import tests.ui.base.BaseTest;
 import java.util.stream.Stream;
 
 public class LoginTest extends BaseTest {
+
     static Stream<Arguments> negativeCreds() {
         return Stream.of(
                 Arguments.of("test@test.com", password),

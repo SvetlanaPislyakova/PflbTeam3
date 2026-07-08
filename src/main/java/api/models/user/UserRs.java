@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 
 @Data
 public class UserRs {
+
     @SerializedName("age")
     @Expose
     private Integer age;

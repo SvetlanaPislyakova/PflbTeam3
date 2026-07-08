@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @Data
 @Builder(toBuilder = true)
 public class CarRq {
+
     @SerializedName("engineType")
     @Expose
     private String engineType;

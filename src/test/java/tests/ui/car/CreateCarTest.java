@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CreateCarTest extends BaseTest {
+
     @BeforeEach
     public void login() {
         loginSteps.login(email, password)
@@ -28,7 +29,6 @@ public class CreateCarTest extends BaseTest {
     public void createCarWithValidData() {
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
-
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
         assertTrue(carID > 0, "ID автомобиля должен быть положительным");

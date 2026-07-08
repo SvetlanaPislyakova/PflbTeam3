@@ -16,6 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CarCrudTest {
+
     CarAdapter carAdapter = new CarAdapter();
 
     @Test
@@ -46,7 +47,6 @@ public class CarCrudTest {
                 .engineType("CNG")
                 .price(BigDecimal.valueOf(15000.0))
                 .build();
-
         CarRs created = carAdapter.createCar(carRq);
         CarRs received = carAdapter.getCar(created.getId());
         assertEquals(created.getId(), received.getId());
@@ -64,14 +64,11 @@ public class CarCrudTest {
                 .price(BigDecimal.valueOf(12345.00))
                 .model("UpdatedModel")
                 .build();
-
         CarRs updatedRs = carAdapter.updateCar(carID, updatedRq);
-
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carID.intValue()).isEqualTo(updatedRs.getId());
         softly.assertThat(updatedRq.getModel()).isEqualTo(updatedRs.getModel());
         softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(updatedRs.getPrice()));
-
         CarRs received = carAdapter.getCar(carID);
         softly.assertThat(updatedRq.getModel()).isEqualTo(received.getModel());
         softly.assertThat(0).isEqualTo(updatedRq.getPrice().compareTo(received.getPrice()));
@@ -88,7 +85,6 @@ public class CarCrudTest {
                 .engineType("Gasoline")
                 .price(BigDecimal.valueOf(5000.0))
                 .build();
-
         CarRs car = carAdapter.createCar(carRq);
         carAdapter.deleteCar(car.getId());
     }

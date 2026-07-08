@@ -13,19 +13,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class HouseCrudTest {
+
     HouseAdapter houseAdapter = new HouseAdapter();
 
     @Test
     @DisplayName("Получение дома по ID")
     void getHouseTest() {
-
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(3)
                 .price(BigDecimal.valueOf(100000))
                 .parkingPlaces(List.of())
                 .lodgers(List.of())
                 .build();
-
         HouseRs created = houseAdapter.createHouse(houseRq);
         HouseRs received = houseAdapter.getHouse(created.getId());
         assertEquals(created.getId(), received.getId());

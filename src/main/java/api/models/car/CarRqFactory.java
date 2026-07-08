@@ -5,6 +5,7 @@ import com.github.javafaker.Faker;
 import java.math.BigDecimal;
 
 public class CarRqFactory {
+
     private static final Faker FAKER = new Faker();
 
     public static CarRq validCar() {

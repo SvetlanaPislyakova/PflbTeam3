@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class BuyCarApiTest {
+
     private final UserAdapter userAdapter = new UserAdapter();
     private final CarAdapter carAdapter = new CarAdapter();
     SoftAssertions softly = new SoftAssertions();
@@ -32,32 +33,24 @@ public class BuyCarApiTest {
                 .toBuilder()
                 .money(BigDecimal.valueOf(100000))
                 .build();
-
         Integer userId = userAdapter.createUserAndGetId(userRq);
-
         CarRq carRq = CarRqFactory
                 .validCar()
                 .toBuilder()
                 .price(BigDecimal.valueOf(15000))
                 .build();
-
         CarRs createdCar = carAdapter.createCar(carRq);
         int carId = createdCar.getId();
-
         userAdapter.buyCar(userId, carId);
         List<CarRs> userCars = userAdapter.getUserCars(userId);
-
         softly.assertThat(userCars).isNotEmpty();
-
         boolean carFound = userCars.stream()
                 .anyMatch(car -> car.getId() == carId);
         softly.assertThat(carFound).isTrue();
-
         CarRs boughtCar = userCars.stream()
                 .filter(car -> car.getId() == carId)
                 .findFirst()
                 .orElse(null);
-
         softly.assertThat(boughtCar).isNotNull();
         if (boughtCar != null) {
             softly.assertThat(boughtCar.getMark())
@@ -77,32 +70,24 @@ public class BuyCarApiTest {
     @DisplayName("API - Покупка авто проверяет уменьшение баланса")
     @Description("Тест проверяет, что после покупки авто деньги пользователя уменьшиваются на стоимость авто")
     void buyCarCheckBalanceTest() {
-
         BigDecimal initialBalance = BigDecimal.valueOf(50000);
         UserRq userRq = UserRqFactory
                 .validUser()
                 .toBuilder()
                 .money(initialBalance)
                 .build();
-
         Integer userId = userAdapter.createUserAndGetId(userRq);
-
         BigDecimal carPrice = BigDecimal.valueOf(12500.50);
         CarRq carRq = CarRqFactory
                 .validCar()
                 .toBuilder()
                 .price(carPrice)
                 .build();
-
         CarRs createdCar = carAdapter.createCar(carRq);
         Integer carId = createdCar.getId();
-
         userAdapter.buyCar(userId, carId);
-
         BigDecimal expectedBalance = initialBalance.subtract(carPrice);
-
         UserInfoRs userInfo = userAdapter.getUserInfo(userId);
-
         softly.assertThat(userInfo.getMoney())
                 .isEqualByComparingTo(expectedBalance);
         softly.assertAll();

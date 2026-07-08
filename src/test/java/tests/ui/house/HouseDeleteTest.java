@@ -16,6 +16,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class HouseDeleteTest extends BaseTest {
+
     private final HouseAdapter houseAdapter = new HouseAdapter();
 
     @BeforeEach
@@ -36,13 +37,10 @@ public class HouseDeleteTest extends BaseTest {
                 .build();
         HouseRs houseRs = houseAdapter.createHouse(houseRq);
         Integer houseId = houseRs.getId();
-
         assertThat(dbSteps.isHouseExistsInDB(houseId)).isTrue();
-
         allDeletePage.openPage()
                 .isPageOpened()
                 .deleteHouse(houseId);
-
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(allDeletePage.getHouseStatusCode()).isEqualTo(204);
         softly.assertThat(dbSteps.isHouseExistsInDB(houseId)).isFalse();

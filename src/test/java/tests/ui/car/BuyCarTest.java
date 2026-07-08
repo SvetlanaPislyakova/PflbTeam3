@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BuyCarTest extends BaseTest {
+
     @BeforeEach
     public void login() {
         loginSteps.login(email, password)
@@ -32,12 +33,10 @@ public class BuyCarTest extends BaseTest {
     public void buyCarWithSufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-
         carSteps.buyNewCar(buyerID, carID);
         assertTrue(carSteps.isCarBought(buyerID, carID));
     }
@@ -49,12 +48,10 @@ public class BuyCarTest extends BaseTest {
     public void buyCarWithInsufficientMoney() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(100)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
-
         carSteps.buyNewCar(buyerID, carID);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(404);
@@ -68,9 +65,7 @@ public class BuyCarTest extends BaseTest {
     public void buyNonExistentCar() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         int nonExistentCarID = 999999999;
-
         carSteps.buyNewCar(buyerID, nonExistentCarID);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(404);
@@ -84,7 +79,6 @@ public class BuyCarTest extends BaseTest {
     public void multiplePurchasesByUser(int carCount) {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         for (int i = 0; i < carCount; i++) {
             Car car = Car.builder().build();
             carSteps.createNewCar(car);
@@ -93,7 +87,6 @@ public class BuyCarTest extends BaseTest {
             createdCarIds.add(carID);
             assertTrue(carSteps.isCarBought(buyerID, carID));
         }
-
     }
 
     @Test
@@ -103,13 +96,11 @@ public class BuyCarTest extends BaseTest {
     public void checkStatusAfterPurchase() {
         UserRq buyer = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer buyerID = userAdapter.createUserAndGetId(buyer);
-
         Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
         carSteps.buyNewCar(buyerID, carID);
-
         assertEquals(200, carSteps.checkStatusCode());
     }
 }

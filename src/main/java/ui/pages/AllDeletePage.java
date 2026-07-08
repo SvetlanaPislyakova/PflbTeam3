@@ -16,6 +16,7 @@ import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 @Log4j2
 public class AllDeletePage extends BasePage {
+
     private final String DELETE_BUTTON = "//button[@value = '%s']";
     private final String DELETE_INPUT = "//button[@value = '%s']/ancestor::div[@role='group']//input";
     private final String DELETE_STATUS = "//button[@value = '%s']/ancestor::div[@role='group']//button[@class='status btn btn-secondary']";

@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @Builder(toBuilder = true)
 public class HouseRq {
+
     @SerializedName("floorCount")
     @Expose
     private Integer floorCount;

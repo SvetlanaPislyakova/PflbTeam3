@@ -11,6 +11,7 @@ import static io.restassured.RestAssured.given;
 
 @Log4j2
 public class CarAdapter extends BaseAdapter {
+
     private ValidatableResponse createCarRequest(CarRq carRq) {
         return given()
                 .spec(getAuthSpec())

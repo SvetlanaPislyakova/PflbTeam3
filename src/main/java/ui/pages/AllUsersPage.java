@@ -1,5 +1,6 @@
 package ui.pages;
 
+import io.qameta.allure.Step;
 import lombok.extern.log4j.Log4j2;
 import ui.steps.DBSteps;
 import ui.wrappers.Table;
@@ -12,11 +13,13 @@ import static com.codeborne.selenide.Selenide.sleep;
 
 @Log4j2
 public class AllUsersPage extends BasePage {
+
     private final String tableName = "Read all users";
     private final DBSteps dbSteps = new DBSteps();
     Table table = new Table(tableName);
 
     @Override
+    @Step("Открытие страницы Read all users")
     public AllUsersPage openPage() {
         log.info("Открыть страницу '{}'", tableName);
         open(baseUrl + "#/read/users");
@@ -24,12 +27,14 @@ public class AllUsersPage extends BasePage {
     }
 
     @Override
+    @Step("Проверка открытия страницы Read all users")
     public AllUsersPage isPageOpened() {
         log.info("Проверить, что страница '{}' открыта", tableName);
         table.checkTableVisible();
         return this;
     }
 
+    @Step("Получить список значений из поля {field} из БД")
     private List<String> getListFromDb(String field) {
         if (field.equals("First name"))
             return dbSteps.getListFromDB("person", "first_name");

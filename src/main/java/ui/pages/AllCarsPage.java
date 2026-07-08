@@ -11,6 +11,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class AllCarsPage extends BasePage {
+
     private final String tableName = "Read all cars";
     private final DBSteps dbSteps = new DBSteps();
     Table table = new Table(tableName);

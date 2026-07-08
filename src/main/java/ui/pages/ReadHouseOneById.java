@@ -12,6 +12,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class ReadHouseOneById extends BasePage {
+
     private final Table houseInfoTable = new Table("House info:");
     private final Table lodgersTable = new Table("Lodgers:");
     private final Table parkingsTable = new Table("Parkings:");
@@ -59,7 +60,7 @@ public class ReadHouseOneById extends BasePage {
 
     public String getFloorCount() {
         log.info("Получить количество этажей");
-        return houseInfoTable.getValueFromCell("Floor Count:");  // <-- ИСПРАВЛЕНО
+        return houseInfoTable.getValueFromCell("Floor Count:");
     }
 
     public String getPrice() {

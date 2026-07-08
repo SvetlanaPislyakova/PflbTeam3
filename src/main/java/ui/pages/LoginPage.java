@@ -12,6 +12,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Log4j2
 public class LoginPage extends BasePage {
+
     private final SelenideElement TITLE = $(byText("Authorization"));
     private final SelenideElement EMAIL_INPUT = $("[name='email']");
     private final SelenideElement ERROR_EMAIL_MSG = $x("//*[@name='email']/preceding-sibling::div[1]");

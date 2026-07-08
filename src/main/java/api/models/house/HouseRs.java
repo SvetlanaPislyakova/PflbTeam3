@@ -10,6 +10,7 @@ import java.util.List;
 
 @Data
 public class HouseRs {
+
     @SerializedName("id")
     @Expose
     private Integer id;

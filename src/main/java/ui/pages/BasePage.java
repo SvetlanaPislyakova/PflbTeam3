@@ -10,6 +10,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public abstract class BasePage {
+
     public abstract BasePage openPage();
 
     public abstract BasePage isPageOpened();

@@ -6,6 +6,7 @@ import ui.pages.CreateNewHousePage;
 import ui.pages.ReadHouseOneById;
 
 public class CreateNewHouseSteps {
+
     private final CreateNewHousePage createNewHousePage = new CreateNewHousePage();
     private final ReadHouseOneById readHouseOneById = new ReadHouseOneById();
 
