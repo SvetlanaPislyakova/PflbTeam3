@@ -12,19 +12,19 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import tests.ui.base.BaseTest;
 import ui.dto.Car;
-
 import java.math.BigDecimal;
 
 public class SellCarTest extends BaseTest {
-    SoftAssertions softly = new SoftAssertions();
 
-    @BeforeEach
+SoftAssertions softly = new SoftAssertions();
+
+@BeforeEach
     public void login() {
         loginSteps.login(email, password)
                 .acceptAlert("Successful authorization");
     }
 
-    @Test
+@Test
     @Owner("Akhunov Gayaz")
     @DisplayName("Продажа автомобиля пользователем")
     @Description("Тест проверяет продажу автомобиля")
@@ -32,21 +32,21 @@ public class SellCarTest extends BaseTest {
         UserRq seller = UserRqFactory.validUser().toBuilder().money(BigDecimal.valueOf(10000000)).build();
         Integer sellerID = userAdapter.createUserAndGetId(seller);
 
-        Car car = Car.builder().build();
+Car car = Car.builder().build();
         carSteps.createNewCar(car);
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
 
-        carSteps.buyNewCar(sellerID, carID);
+carSteps.buyNewCar(sellerID, carID);
         SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.isCarBought(sellerID, carID)).isTrue();
 
-        carSteps.sellNewCar(sellerID, carID);
+carSteps.sellNewCar(sellerID, carID);
         softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
         softly.assertAll();
     }
 
-    @ParameterizedTest
+@ParameterizedTest
     @Owner("Akhunov Gayaz")
     @ValueSource(ints = {1, 2, 3})
     @DisplayName("Множественная продажа автомобилей одним пользователем")
@@ -59,21 +59,21 @@ public class SellCarTest extends BaseTest {
         Integer sellerID = userAdapter.createUserAndGetId(seller);
         createdUserIds.add(sellerID);
 
-        for (int i = 0; i < carCount; i++) {
+for (int i = 0; i < carCount; i++) {
             Car car = Car.builder().build();
             carSteps.createNewCar(car);
             int carID = carSteps.checkCreateCarAndGetId();
             createdCarIds.add(carID);
 
-            carSteps.buyNewCar(sellerID, carID);
+carSteps.buyNewCar(sellerID, carID);
             carSteps.sellNewCar(sellerID, carID);
 
-            softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
+softly.assertThat(carSteps.checkStatusCode()).isEqualTo(200);
             softly.assertAll();
         }
     }
 
-    @Test
+@Test
     @Owner("Akhunov Gayaz")
     @DisplayName("Ошибка при продаже с недействительным ID пользователя")
     @Description("Тест проверяет попытку продажи с недействительным ID пользователя")
@@ -83,10 +83,10 @@ public class SellCarTest extends BaseTest {
         int carID = carSteps.checkCreateCarAndGetId();
         createdCarIds.add(carID);
 
-        int invalidUserID = 999999999;
+int invalidUserID = 999999999;
         carSteps.sellNewCar(invalidUserID, carID);
 
-        SoftAssertions softly = new SoftAssertions();
+SoftAssertions softly = new SoftAssertions();
         softly.assertThat(carSteps.checkStatusCode()).isNotEqualTo(200);
         softly.assertAll();
     }
