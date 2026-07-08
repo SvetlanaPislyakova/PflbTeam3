@@ -75,5 +75,4 @@ public class CarSteps {
                 .isPageOpened()
                 .checkSortCarsByText(field, false);
     }
-
 }
