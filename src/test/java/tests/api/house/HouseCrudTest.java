@@ -3,6 +3,7 @@ package tests.api.house;
 import api.adapters.HouseAdapter;
 import api.models.house.HouseRq;
 import api.models.house.HouseRs;
+import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,7 @@ public class HouseCrudTest {
     @Test
     @Owner("Shapovalov Dmitry")
     @DisplayName("Получение дома по ID")
+    @Description("Проверка получения дома по ID")
     void getHouseTest() {
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(3)
@@ -35,6 +37,7 @@ public class HouseCrudTest {
     @Test
     @Owner("Shapovalov Dmitry")
     @DisplayName("Получение списка домов")
+    @Description("Проверка получения списка домов")
     void getHousesTest() {
         List<HouseRs> houses = houseAdapter.getHouses();
         assertFalse(houses.isEmpty());
@@ -43,6 +46,7 @@ public class HouseCrudTest {
     @Test
     @Owner("Shapovalov Dmitry")
     @DisplayName("Изменение дома")
+    @Description("Проверка изменения сущности дома")
     void updateHouseTest() {
         HouseRq houseRq = HouseRq.builder()
                 .floorCount(2)
