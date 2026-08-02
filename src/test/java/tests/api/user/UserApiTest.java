@@ -58,21 +58,22 @@ public class UserApiTest {
         userAdapter.deleteUser(userRs.getId());
     }
 
-    static Stream<Arguments> invalidUsers() {
+    static Stream<Arguments> invalidUserArguments() {
         return Stream.of(
                 Arguments.of(UserRqFactory.userWithNullFirstName()),
                 Arguments.of(UserRqFactory.userWithNullSecondName()),
                 Arguments.of(UserRqFactory.userWithNullAge()),
-                Arguments.of(UserRqFactory.userWithNullMoney())
+                Arguments.of(UserRqFactory.userWithNullMoney()),
+                Arguments.of(UserRqFactory.userWithNegativeAge())
         );
     }
 
     @DisplayName("API - Создание пользователя с невалидными данными")
     @ParameterizedTest(name = "Создание пользователя с невалидными данными - {0}")
-    @MethodSource("invalidUsers")
+    @MethodSource("invalidUserArguments")
     @Description("Проверка создания пользователя с невалидными данными")
     @Owner("Пислякова Светлана")
-    void createUserWithNullFields(UserRq userRq) {
+    void createInvalidUser(UserRq userRq) {
         userAdapter.createUserWithNullFields(userRq);
     }
 

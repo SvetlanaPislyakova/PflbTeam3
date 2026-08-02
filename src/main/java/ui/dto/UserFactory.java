@@ -47,4 +47,10 @@ public class UserFactory {
                 .sex(null)
                 .build();
     }
+
+    public static User userWithNegativeAge() {
+        return validUser().toBuilder()
+                .age(FAKER.number().numberBetween(-100, -1))
+                .build();
+    }
 }
