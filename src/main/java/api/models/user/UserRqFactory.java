@@ -47,4 +47,10 @@ public class UserRqFactory {
                 .money(null)
                 .build();
     }
+
+    public static UserRq userWithNegativeAge() {
+        return validUser().toBuilder()
+                .age(FAKER.number().numberBetween(-100, -1))
+                .build();
+    }
 }

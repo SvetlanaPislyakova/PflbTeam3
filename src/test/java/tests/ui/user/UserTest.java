@@ -58,7 +58,8 @@ public class UserTest extends BaseTest {
                 Arguments.of(UserFactory.userWithNullLastName()),
                 Arguments.of(UserFactory.userWithNullAge()),
                 Arguments.of(UserFactory.userWithNullMoney()),
-                Arguments.of(UserFactory.userWithNullSex())
+                Arguments.of(UserFactory.userWithNullSex()),
+                Arguments.of(UserFactory.userWithNegativeAge())
         );
     }
 
