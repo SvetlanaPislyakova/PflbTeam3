@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "mark": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "price": {
+      "type": "number"
+    },
+    "engineType": {
+      "type": "string",
+      "enum": ["CNG", "Diesel", "Gasoline", "Hydrogenic", "PHEV", "Electric"]
+    }
+  },
+  "required": [
+    "id",
+    "mark",
+    "model",
+    "price",
+    "engineType"
+  ],
+  "additionalProperties": false
+}

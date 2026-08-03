@@ -281,7 +281,7 @@ public class UserApiTest {
     }
 
     @Test
-    @DisplayName("Попытка удаления пользователя, у которого есть машина")
+    @DisplayName("API - Попытка удаления пользователя, у которого есть машина")
     @Description("Проверка удаления пользователя, у которого есть машина")
     @Owner("Пислякова Светлана")
     public void deleteUserHavingCar() {
@@ -305,7 +305,7 @@ public class UserApiTest {
     }
 
     @Test
-    @DisplayName("Попытка удаления пользователя, проживающего в доме")
+    @DisplayName("API - Попытка удаления пользователя, проживающего в доме")
     @Description("Проверка удаления пользователя, проживающего в доме")
     @Owner("Пислякова Светлана")
     public void deleteUserLiveInHouse() {
