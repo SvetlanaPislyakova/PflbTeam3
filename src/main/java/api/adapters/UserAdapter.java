@@ -4,6 +4,7 @@ import api.models.car.CarRs;
 import api.models.user.UserInfoRs;
 import api.models.user.UserRq;
 import api.models.user.UserRs;
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import lombok.extern.log4j.Log4j2;
 
@@ -27,6 +28,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("POST - создание нового пользователя, 201")
     public UserRs createUser(UserRq userRq) {
         log.info("POST - создание нового пользователя, 201");
         long start = System.currentTimeMillis();
@@ -40,6 +42,7 @@ public class UserAdapter extends BaseAdapter {
         return userRs;
     }
 
+    @Step("POST - создание нового пользователя и получение его id, 201")
     public Integer createUserAndGetId(UserRq userRq) {
         log.info("POST - создание нового пользователя и получение его id, 201");
         long start = System.currentTimeMillis();
@@ -53,6 +56,7 @@ public class UserAdapter extends BaseAdapter {
         return userId;
     }
 
+    @Step("POST - создание нового пользователя с невалидными данными, 400")
     public void createUserWithNullFields(UserRq userRq) {
         log.info("POST - создание нового пользователя с невалидными данными, 400");
         long start = System.currentTimeMillis();
@@ -74,6 +78,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("PUT - Изменение пользователя, 202")
     public UserRs changeUser(Integer userId, UserRq userRq) {
         log.info("PUT - Изменение пользователя, 202");
         long start = System.currentTimeMillis();
@@ -87,6 +92,7 @@ public class UserAdapter extends BaseAdapter {
         return userRs;
     }
 
+    @Step("PUT - Попытка изменения несуществующего пользователя, 404")
     public void changeNotExistingUser(Integer userId, UserRq userRq) {
         log.info("PUT - Попытка изменения несуществующего пользователя, 404");
         long start = System.currentTimeMillis();
@@ -107,6 +113,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("GET - получение пользователя по id, 200")
     public UserRs getUserById(Integer userId) {
         log.info("GET - получение пользователя по id, 200");
         long start = System.currentTimeMillis();
@@ -120,6 +127,7 @@ public class UserAdapter extends BaseAdapter {
         return userRs;
     }
 
+    @Step("GET - получение несуществующего пользователя, 204")
     public void getNotExistingUserById(Integer userId) {
         log.info("GET - получение несуществующего пользователя, 204");
         long start = System.currentTimeMillis();
@@ -129,6 +137,7 @@ public class UserAdapter extends BaseAdapter {
         log.info("Данные о несуществующем пользователе с id = {} не получены, duration = {} ms", userId, duration);
     }
 
+    @Step("GET - получение списка пользователей, 200")
     public List<UserRs> getUsers() {
         log.info("GET - получение списка пользователей, 200");
         long start = System.currentTimeMillis();
@@ -149,6 +158,7 @@ public class UserAdapter extends BaseAdapter {
         return users;
     }
 
+    @Step("GET - получение автомобилей пользователя, 200")
     public List<CarRs> getUserCars(Integer userId) {
         log.info("GET - получение автомобилей пользователя, 200");
         long start = System.currentTimeMillis();
@@ -181,6 +191,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("GET - получение информации об имуществе пользователя, 200")
     public UserInfoRs getUserInfo(Integer userId) {
         log.info("GET - получение информации об имуществе пользователя, 200");
         long start = System.currentTimeMillis();
@@ -194,6 +205,7 @@ public class UserAdapter extends BaseAdapter {
         return userInfoRs;
     }
 
+    @Step("GET - попытка получения информации о несуществующем пользователе, 204")
     public void getNotExistingUserInfo(Integer userId) {
         log.info("GET - попытка получения информации о несуществующем пользователе, 204");
         long start = System.currentTimeMillis();
@@ -214,6 +226,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("DELETE - удаление пользователя, 204")
     public void deleteUser(Integer userId) {
         log.info("DELETE - удаление пользователя, 204");
         long start = System.currentTimeMillis();
@@ -223,6 +236,7 @@ public class UserAdapter extends BaseAdapter {
         log.info("Пользователь с id = {} удален, duration = {} ms", userId, duration);
     }
 
+    @Step("DELETE - попытка удаления несуществующего пользователя, 404")
     public void deleteNotExistingUser(Integer userId) {
         log.info("DELETE - попытка удаления несуществующего пользователя, 404");
         long start = System.currentTimeMillis();
@@ -233,6 +247,7 @@ public class UserAdapter extends BaseAdapter {
 
     }
 
+    @Step("DELETE - попытка удаления пользователя с имуществом, 409")
     public void deleteUserNegative(Integer userId) {
         log.info("DELETE - попытка удаления пользователя с имуществом, 409");
         long start = System.currentTimeMillis();
@@ -254,6 +269,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("POST - Начисление денег пользователю, 200")
     public UserRs addMoneyToUser(Integer userId, BigDecimal amount) {
         log.info("POST - Начисление денег пользователю, 200");
         long start = System.currentTimeMillis();
@@ -267,6 +283,7 @@ public class UserAdapter extends BaseAdapter {
         return userRs;
     }
 
+    @Step("POST - Попытка начисления денег несуществующему пользователю, 404")
     public void addMoneyToNotExistingUser(Integer userId, BigDecimal amount) {
         log.info("POST - Попытка начисления денег несуществующему пользователю, 404");
         long start = System.currentTimeMillis();
@@ -276,6 +293,7 @@ public class UserAdapter extends BaseAdapter {
         log.info("Деньги не добавлены, так как пользователь с id = {} не существует, duration = {} ms", userId, duration);
     }
 
+    @Step("POST - Начисление денег пользователю, отрицательная сумма, 400")
     public void addInvalidMoneyToUser(Integer userId, BigDecimal amount) {
         log.info("POST - Начисление денег пользователю, отрицательная сумма, 400");
         long start = System.currentTimeMillis();
@@ -297,6 +315,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("POST - Покупка автомобиля пользователем, 200")
     public void buyCar(Integer userId, Integer carId) {
         log.info("POST - Покупка автомобиля пользователем, 200");
         long start = System.currentTimeMillis();
@@ -319,6 +338,7 @@ public class UserAdapter extends BaseAdapter {
                 .log().ifValidationFails();
     }
 
+    @Step("POST - Продажа автомобиля пользователем, 200")
     public void sellCar(Integer userId, Integer carId) {
         log.info("POST - Продажа автомобиля пользователем, 200");
         long start = System.currentTimeMillis();

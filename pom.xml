@@ -22,6 +22,7 @@
         <allure.maven.version>2.12.0</allure.maven.version>
         <maven.surefire.version>3.2.3</maven.surefire.version>
         <allure.selenide.version>2.24.0</allure.selenide.version>
+        <allure.rest.assured.version>2.24.0</allure.rest.assured.version>
         <junit.version>5.10.2</junit.version>
         <assertj.version>3.27.7</assertj.version>
         <rest.assured.version>6.0.0</rest.assured.version>
@@ -111,6 +112,11 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-rest-assured</artifactId>
+            <version>${allure.rest.assured.version}</version>
         </dependency>
         <dependency>
             <groupId>io.qameta.allure</groupId>

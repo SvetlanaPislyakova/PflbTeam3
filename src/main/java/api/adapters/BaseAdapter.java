@@ -2,6 +2,7 @@ package api.adapters;
 
 import api.models.login.LoginRq;
 import com.google.gson.Gson;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
@@ -27,6 +28,7 @@ public class BaseAdapter {
     public static RequestSpecification baseSpec = new RequestSpecBuilder()
             .setBaseUri(baseUri)
             .setContentType(ContentType.JSON)
+            .addFilter(new AllureRestAssured())
             .build();
 
     protected static RequestSpecification getAuthSpec() {
