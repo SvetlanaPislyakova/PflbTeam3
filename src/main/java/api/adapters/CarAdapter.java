@@ -52,7 +52,7 @@ public class CarAdapter extends BaseAdapter {
     public CarRs getCar(int id) {
         log.info("GET - получение автомобиля по id, 200");
         return given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .pathParam("id", id)
                 .log().all()
                 .get("/car/{id}")
@@ -100,7 +100,7 @@ public class CarAdapter extends BaseAdapter {
     public List<CarRs> getCars() {
         log.info("GET - получение списка автомобилей, 200");
         return given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .log().all()
                 .get("/cars")
                 .then()

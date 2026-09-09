@@ -10,30 +10,45 @@ import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import utils.PropertyReader;
 
+import static io.restassured.RestAssured.given;
+
 public class BaseAdapter {
 
     private static final String email = System.getProperty("email", PropertyReader.getProperty("email"));
     private static final String password = System.getProperty("password", PropertyReader.getProperty("password"));
-    private static final String baseUri = PropertyReader.getProperty("baseUri");
     static Gson gson = new Gson();
 
-    private static String getAccessToken() {
+    private String getBaseUri() {
+        return PropertyReader.getProperty("baseUri");
+    }
+
+    protected RequestSpecification getBaseSpec() {
+        return new RequestSpecBuilder()
+                .setBaseUri(getBaseUri())
+                .setContentType(ContentType.JSON)
+                .addFilter(new AllureRestAssured())
+                .build();
+    }
+
+    private String getAccessToken() {
         LoginRq rq = LoginRq.builder()
                 .username(email)
                 .password(password)
                 .build();
-        return LoginAdapter.getAccessToken(rq);
+        return given()
+                .spec(getBaseSpec())
+                .body(gson.toJson(rq))
+                .when()
+                .post("/login")
+                .then()
+                .spec(accepted202)
+                .extract()
+                .path("access_token");
     }
 
-    public static RequestSpecification baseSpec = new RequestSpecBuilder()
-            .setBaseUri(baseUri)
-            .setContentType(ContentType.JSON)
-            .addFilter(new AllureRestAssured())
-            .build();
-
-    protected static RequestSpecification getAuthSpec() {
+    protected RequestSpecification getAuthSpec() {
         return new RequestSpecBuilder()
-                .addRequestSpecification(baseSpec)
+                .addRequestSpecification(getBaseSpec())
                 .addHeader("Authorization", "Bearer " + getAccessToken())
                 .build();
     }
