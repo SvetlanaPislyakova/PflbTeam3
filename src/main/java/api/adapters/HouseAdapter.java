@@ -151,7 +151,7 @@ public class HouseAdapter extends BaseAdapter {
 
     private ValidatableResponse getHouseRequest(Integer houseId) {
         return given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .pathParam("houseId", houseId)
                 .log().all()
                 .when()
@@ -171,7 +171,7 @@ public class HouseAdapter extends BaseAdapter {
     public List<HouseRs> getHouses() {
         log.info("GET - получение списка домов, 200");
         return given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .log().all()
                 .when()
                 .get("/houses")

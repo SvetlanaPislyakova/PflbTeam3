@@ -1,30 +1,27 @@
 package api.models.user;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
+@Jacksonized
 public class UserRs {
 
-    @SerializedName("age")
-    @Expose
+    @JsonProperty("age")
     private Integer age;
-    @SerializedName("firstName")
-    @Expose
+    @JsonProperty("firstName")
     private String firstName;
-    @SerializedName("id")
-    @Expose
+    @JsonProperty("id")
     private Integer id;
-    @SerializedName("money")
-    @Expose
+    @JsonProperty("money")
     private BigDecimal money;
-    @SerializedName("secondName")
-    @Expose
+    @JsonProperty("secondName")
     private String secondName;
-    @SerializedName("sex")
-    @Expose
+    @JsonProperty("sex")
     private String sex;
 }

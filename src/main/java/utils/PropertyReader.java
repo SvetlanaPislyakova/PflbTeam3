@@ -53,4 +53,11 @@ public class PropertyReader {
     public static String getProperty(String propertyName) {
         return loadProperties().getProperty(propertyName);
     }
+
+    public static void overrideProperty(String key, String value) {
+        if(properties == null) {
+            readProperties();
+        }
+        properties.setProperty(key, value);
+    }
 }

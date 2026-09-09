@@ -104,7 +104,7 @@ public class UserAdapter extends BaseAdapter {
 
     private ValidatableResponse getUserRequest(Integer userId) {
         return given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .pathParam("userId", userId)
                 .log().ifValidationFails()
                 .when()
@@ -142,7 +142,7 @@ public class UserAdapter extends BaseAdapter {
         log.info("GET - получение списка пользователей, 200");
         long start = System.currentTimeMillis();
         List<UserRs> users = given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .log().ifValidationFails()
                 .when()
                 .get("/users")
@@ -163,7 +163,7 @@ public class UserAdapter extends BaseAdapter {
         log.info("GET - получение автомобилей пользователя, 200");
         long start = System.currentTimeMillis();
         List<CarRs> cars = given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .pathParam("userId", userId)
                 .log().ifValidationFails()
                 .when()
@@ -182,7 +182,7 @@ public class UserAdapter extends BaseAdapter {
 
     private ValidatableResponse getUserInfoRequest(Integer userId) {
         return given()
-                .spec(baseSpec)
+                .spec(getBaseSpec())
                 .pathParam("userId", userId)
                 .log().ifValidationFails()
                 .when()
